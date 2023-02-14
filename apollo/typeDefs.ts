@@ -5,6 +5,7 @@ export const typeDefs = gql`
   type Query {
     hello: String
     test: String
+    a: String
   }
 `;
 

@@ -15,8 +15,7 @@ const createIsomorphLink = () => {
 };
 
 const client = new ApolloClient({
-  ssrMode: typeof window === "undefined",
-  // Instead of "createHttpLink" use SchemaLink here
+  ssrMode: true,
   link: createIsomorphLink(),
   cache: new InMemoryCache(),
 });

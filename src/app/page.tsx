@@ -2,9 +2,21 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
 
+import { gql, useQuery } from "@apollo/client";
+
 const inter = Inter({ subsets: ["latin"] });
 
+const GET_TEST = gql`
+  query hello {
+    hello
+  }
+`;
+
 export default function Home() {
+  const { loading, error, data } = useQuery(GET_TEST);
+  if (loading) return;
+  if (error) return;
+  console.info(data);
   return (
     <main className={styles.main}>
       <div className={styles.description}>
