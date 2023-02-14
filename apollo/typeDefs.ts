@@ -4,6 +4,7 @@ import { makeExecutableSchema } from "graphql-tools";
 export const typeDefs = gql`
   type Query {
     hello: String
+    test: String
   }
 `;
 

@@ -5,6 +5,7 @@ import { typeDefs } from "apollo/typeDefs";
 const resolvers = {
   Query: {
     hello: () => "world",
+    test: () => "hihi",
   },
 };
 
@@ -14,10 +15,5 @@ const server = new ApolloServer({
 });
 
 export default startServerAndCreateNextHandler(server, {
-  context: async (req, res) => ({ req, res, user: await getLoggedInUser(req) }),
+  context: async (req, res) => ({ req, res }),
 });
-
-function getLoggedInUser(req: any) {
-  console.log(req);
-  return "hi";
-}
