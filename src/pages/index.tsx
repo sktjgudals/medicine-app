@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 const GET_TEST = gql`
   query hello {
     hello
+    a
   }
 `;
 
