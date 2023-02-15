@@ -1,11 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import { gql, useQuery } from "@apollo/client";
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Inter({ subsets: ['latin'] })
+const GET_TEST = gql`
+  query hello {
+    hello
+  }
+`;
 
 export default function Home() {
+  const { loading, error, data } = useQuery(GET_TEST);
+  if (loading) return;
+  if (error) return;
+  console.info(data);
   return (
     <>
       <Head>
@@ -26,7 +36,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -119,5 +129,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }
