@@ -1,7 +1,9 @@
+import { test } from "./resolverFunc/test";
+
 export const resolvers = {
   Query: {
     hello: () => hello(),
-    test: () => "hihi",
+    test: () => test(),
     a: () => "aaaa",
   },
 };
