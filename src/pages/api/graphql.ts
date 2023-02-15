@@ -1,13 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { typeDefs } from "apollo/typeDefs";
-
-const resolvers = {
-  Query: {
-    hello: () => "world",
-  },
-};
-
+import { resolvers } from "apollo/resolvers";
 const server = new ApolloServer({
   resolvers,
   typeDefs,
