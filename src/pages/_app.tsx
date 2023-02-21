@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "assets/styles/globals.scss"; // 이곳에 공통 scss 선언
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "apollo/client";
 import type { AppProps } from "next/app";
