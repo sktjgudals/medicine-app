@@ -1,13 +1,18 @@
-import "assets/styles/globals.scss"; // 이곳에 공통 scss 선언
+import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "apollo/client";
-import type { AppProps } from "next/app";
+import { ThemeProvider } from "@/context/ThemeProvider";
+import { GlobalStyle } from "assets/styles/global";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps.initialApolloState);
+
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <ThemeProvider>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ApolloProvider>
   );
 };
