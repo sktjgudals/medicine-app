@@ -1,109 +1,111 @@
-.w-100 {
+.w_100 {
   width: 100%;
 }
 
-.w-fit {
+.w_fit {
   width: fit-content;
 }
 
 /* display 속성과 flex */
-.d-none {
+.d_none {
   display: none;
 }
-.d-block {
+.d_block {
   display: block;
 }
-.d-flex {
+.d_flex {
   display: flex;
 }
 
-.flex-row {
+.flex_row {
   display: flex;
   flex-direction: row;
 }
-.flex-start {
+.flex_start {
   display: flex;
   align-items: flex-start;
 }
-.flex-center {
+.flex_center {
   display: flex;
   align-items: center;
 }
-.flex-end {
+.flex_end {
   display: flex;
   align-items: flex-end;
 }
-.flex-start-between {
+.flex_start_between {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
-.flex-center-start {
+.flex_center_start {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.flex-center-center {
+.flex_center_center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.flex-center-end {
+.flex_center_end {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.flex-center-between {
+.flex_center_between {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 /* font 및 text */
-.font-weight-400 {
+.font_weight_400 {
   font-weight: 400;
 }
-.font-weight-500 {
+.font_weight_500 {
   font-weight: 500;
 }
-.font-weight-600 {
+.font_weight_600 {
   font-weight: 600;
 }
-.font-weight-700 {
+.font_weight_700 {
   font-weight: 700;
 }
 
-.text-center {
+.text_center {
   text-align: center;
 }
-.text-left {
+.text_left {
   text-align: left;
 }
-.text-right {
+.text_right {
   text-align: right;
 }
-.text-underline {
+.text_underline {
   text-decoration: underline;
 }
-.text-line {
+.text_line {
   text-decoration: line-through;
 }
-.no-wrap {
+
+.no_wrap {
   white-space: nowrap;
 }
-.pre-line {
+.pre_line {
   white-space: pre-line;
 }
-.cursor-pointer {
+.cursor_pointer {
   cursor: pointer;
 }
-.position-relative {
+
+.position_relative {
   position: relative;
 }
 
-.border-top {
+.border_top {
   border-top: 1px solid #000;
 }
-.border-bottom {
+.border_bottom {
   border-bottom: 1px solid #000;
 }
