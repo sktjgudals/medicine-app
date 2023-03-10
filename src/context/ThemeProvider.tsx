@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
-} from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 import { ThemeProvider as StyledProvider } from "styled-components";
 
 const lightTheme = {
@@ -31,13 +25,12 @@ const INITIAL = {
 const ThemeContext = createContext(INITIAL as ICONTEXT);
 
 const ThemeProvider = ({ children }: { children: JSX.Element[] }) => {
-  const [themeMode, setThemeMode] = useState<MODE>("light");
-  useEffect(() => {
-    const localTheme = window.localStorage.getItem("theme") as MODE;
-    if (localTheme) {
-      setThemeMode(localTheme);
-    }
-  }, []);
+  const localTheme =
+    typeof window !== "undefined"
+      ? (window.localStorage.getItem("theme") as MODE)
+      : "light";
+  const [themeMode, setThemeMode] = useState<MODE>(localTheme);
+
   const themeObject = themeMode === "light" ? lightTheme : darkTheme;
 
   return (
@@ -53,11 +46,11 @@ const useTheme = () => {
 
   const setToggleTheme = useCallback(() => {
     if (themeMode === "light") {
-      setThemeMode("dark");
       window.localStorage.setItem("theme", "dark");
+      setThemeMode("dark");
     } else {
-      setThemeMode("light");
       window.localStorage.setItem("theme", "light");
+      setThemeMode("light");
     }
   }, [themeMode]);
 
