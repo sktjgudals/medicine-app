@@ -3,6 +3,9 @@ import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "apollo/client";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { GlobalStyle } from "assets/styles/global";
+import { Inter } from "@next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const App = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps.initialApolloState);
@@ -11,7 +14,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ApolloProvider client={apolloClient}>
       <ThemeProvider>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <main className={inter.className}>
+          <Component {...pageProps} />
+        </main>
       </ThemeProvider>
     </ApolloProvider>
   );
