@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import { GlobalStyle } from "assets/styles/global";
 import { Inter } from "@next/font/google";
 
+import "../../assets/styles/common.scss";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const App = ({ Component, pageProps }: AppProps) => {
