@@ -1,9 +1,15 @@
 import { MODE, ICONTEXT } from "@/types/context/theme";
-import { createContext, useState, useContext, useCallback } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { ThemeProvider as StyledProvider } from "styled-components";
 
 const lightTheme = {
-  bgColor: "#F8F7F4",
+  bgColor: "#f7f7f8",
   textColor: "#31302E",
 };
 
@@ -18,13 +24,19 @@ const INITIAL = {
 
 const ThemeContext = createContext(INITIAL as ICONTEXT);
 
+const setHtmlTheme = (value: any) => {
+  document.documentElement.setAttribute("color-theme", value);
+};
+
 const ThemeProvider = ({ children }: { children: JSX.Element[] }) => {
   const localTheme =
     typeof window !== "undefined"
       ? (window.localStorage.getItem("theme") as MODE)
       : "light";
+  useEffect(() => {
+    setHtmlTheme(localTheme);
+  }, [localTheme]);
   const [themeMode, setThemeMode] = useState<MODE>(localTheme);
-
   const themeObject = themeMode === "light" ? lightTheme : darkTheme;
 
   return (
@@ -39,6 +51,7 @@ const useTheme = () => {
   const { themeMode, setThemeMode } = context as any;
 
   const setToggleTheme = useCallback(() => {
+    setHtmlTheme(themeMode);
     if (themeMode === "light") {
       window.localStorage.setItem("theme", "dark");
       setThemeMode("dark");
