@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Header from "../organisms/Header";
+import Header from "../organisms/Header/index";
 
 const Main: FC = () => {
   return (

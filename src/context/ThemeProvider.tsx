@@ -1,3 +1,4 @@
+import { MODE, ICONTEXT } from "@/types/context/theme";
 import { createContext, useState, useContext, useCallback } from "react";
 import { ThemeProvider as StyledProvider } from "styled-components";
 
@@ -10,13 +11,6 @@ const darkTheme = {
   bgColor: "#1E1E22",
   textColor: "#ccc",
 };
-
-type MODE = "dark" | "light";
-
-interface ICONTEXT {
-  themeMode: MODE;
-  setThemeMode: (type: MODE) => void;
-}
 
 const INITIAL = {
   themeMode: "light",
@@ -42,7 +36,7 @@ const ThemeProvider = ({ children }: { children: JSX.Element[] }) => {
 
 const useTheme = () => {
   const context = useContext(ThemeContext);
-  const { themeMode, setThemeMode } = context;
+  const { themeMode, setThemeMode } = context as any;
 
   const setToggleTheme = useCallback(() => {
     if (themeMode === "light") {
