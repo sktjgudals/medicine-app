@@ -1,0 +1,16 @@
+@import "../../bass.scss";
+
+.desktop_header_container {
+  @extend .d_flex, .w_100, .border_bottom;
+  background: red;
+  height: 50px;
+}
+
+.desktop_logo_container {
+  @extend .d_flex;
+  background-color: blue;
+}
+
+.desktop_main_title {
+  font-size: 40px;
+}
