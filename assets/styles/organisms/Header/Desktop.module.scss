@@ -1,16 +1,60 @@
 @import "../../bass.scss";
 
-.desktop_header_container {
-  @extend .d_flex, .w_100, .border_bottom;
-  background: red;
-  height: 50px;
+.top_nav {
+  @extend .w_100, .z_index1000;
+  height: 3rem;
+  border-bottom: 2px solid var(--color-brand-muted-smoke) !important;
 }
 
-.desktop_logo_container {
+.top_nav_menu {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  -webkit-box-align: stretch !important;
+  align-items: stretch !important;
+  flex-wrap: nowrap !important;
+  height: 100% !important;
+}
+
+.top_nav_menu_list_one {
+  -webkit-box-flex: 1 !important;
+  flex-grow: 1 !important;
+  flex-shrink: 2 !important;
+  width: 100% !important;
+  display: flex !important;
+  -webkit-box-align: stretch !important;
+  align-items: stretch !important;
+  -webkit-box-pack: start !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+}
+
+.logo_container {
   @extend .d_flex;
-  background-color: blue;
+  padding: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  overflow-clip-margin: content-box;
+  overflow: visible;
 }
 
-.desktop_main_title {
-  font-size: 40px;
+.text_container {
+  display: flex;
+  align-items: center;
+}
+
+.main_title {
+  font-size: var(--font-size-5);
+  color: var(--color-hinted-grey-1);
+}
+
+// dark theme
+
+.dark_nav {
+  box-shadow: var(--shadow-elevation-1) !important;
+  background-color: var(--color-background-base);
+  border-bottom: 1px solid black !important;
+}
+
+.dark_text {
+  color: white;
 }
