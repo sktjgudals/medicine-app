@@ -42,8 +42,12 @@ const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
             </div>
           </Link>
         </div>
-        <Search />
-        <ThemeToggle toggle={setThemeMode} mode={themeMode} />
+        <div className={styles.top_nav_menu_list_two}>
+          <Search />
+        </div>
+        <div className={styles.top_nav_menu_list_three}>
+          <ThemeToggle toggle={setThemeMode} mode={themeMode} />
+        </div>
       </div>
     </nav>
   );
