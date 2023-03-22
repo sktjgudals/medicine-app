@@ -2,7 +2,7 @@
 
 .top_nav {
   @extend .w_100, .z_index1000;
-  height: 3rem;
+  height: 52px;
   border-bottom: 2px solid var(--color-brand-muted-smoke) !important;
 }
 
@@ -16,16 +16,40 @@
 }
 
 .top_nav_menu_list_one {
+  display: flex !important;
   -webkit-box-flex: 1 !important;
   flex-grow: 1 !important;
   flex-shrink: 2 !important;
   width: 100% !important;
-  display: flex !important;
   -webkit-box-align: stretch !important;
   align-items: stretch !important;
   -webkit-box-pack: start !important;
   justify-content: flex-start !important;
   flex-wrap: nowrap !important;
+}
+
+.top_nav_menu_list_two {
+  display: flex !important;
+  -webkit-box-flex: 2 !important;
+  flex-grow: 2 !important;
+  flex-shrink: 1 !important;
+  width: 100% !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  -webkit-box-pack: center !important;
+  justify-content: center !important;
+}
+
+.top_nav_menu_list_three {
+  display: flex !important;
+  -webkit-box-flex: 1 !important;
+  flex-grow: 1 !important;
+  flex-shrink: 2 !important;
+  width: 100% !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  -webkit-box-pack: end !important;
+  justify-content: flex-end !important;
 }
 
 .logo_container {
@@ -56,5 +80,5 @@
 }
 
 .dark_text {
-  color: white;
+  color: var(--color-white);
 }
