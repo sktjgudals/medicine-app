@@ -3,9 +3,9 @@ import Header from "../organisms/Header/index";
 
 const Main: FC = () => {
   return (
-    <main>
+    <>
       <Header />
-    </main>
+    </>
   );
 };
 
