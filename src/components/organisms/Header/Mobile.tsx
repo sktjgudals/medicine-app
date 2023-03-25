@@ -13,15 +13,13 @@ interface Props extends ICONTEXT {}
 
 const Mobile: FC<Props> = ({ setThemeMode, themeMode }) => {
   return (
-    <div>
-      <div className={styles.desktop_header_container}>
-        <Link href="/" className={styles.desktop_logo_container}>
-          <Logo width={100} height={100} />
-          <p className={styles.desktop_main_title}>약정</p>
-        </Link>
-        <Search />
-        <ThemeToggle toggle={setThemeMode} mode={themeMode} />
-      </div>
+    <div className={styles.top_nav}>
+      <Link href="/" className={styles.logo_container}>
+        <Logo width={100} height={100} />
+        <p className={styles.main_title}>약정</p>
+      </Link>
+      <Search />
+      <ThemeToggle toggle={setThemeMode} mode={themeMode} />
     </div>
   );
 };
