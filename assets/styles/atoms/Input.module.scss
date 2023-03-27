@@ -14,8 +14,7 @@
 .search_box:focus,
 .search_box:hover {
   outline: none;
-  //   border: 2px solid gray;
-  box-shadow: 0 0 0 2px gray inset;
+  box-shadow: 0 0 0 1.5px gray inset;
   background-color: var(--color-background-input-focus);
   border-color: var(--color-border-input);
 }
