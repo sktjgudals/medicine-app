@@ -3,8 +3,6 @@ import styled from "styled-components";
 interface StyledButtonProps {
   width: number;
   height: number;
-  cursor?: boolean;
-  color?: string;
 }
 
 const Button = styled.button<StyledButtonProps>`
