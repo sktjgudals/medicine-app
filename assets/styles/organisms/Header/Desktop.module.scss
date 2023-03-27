@@ -4,6 +4,8 @@
   @extend .w_100, .z_index1000;
   height: 52px;
   border-bottom: 2px solid var(--color-brand-muted-smoke) !important;
+  position: fixed;
+  background-color: var(--color-background-base) !important;
 }
 
 .top_nav_menu {
