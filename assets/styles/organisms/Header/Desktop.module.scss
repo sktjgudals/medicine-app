@@ -54,6 +54,8 @@
 
 .logo_container {
   @extend .d_flex;
+  white-space: nowrap;
+  user-select: none;
   padding: 0.3rem;
   display: inline-flex;
   align-items: center;

@@ -1,22 +1,15 @@
-import { FC } from "react";
+import styled from "styled-components";
 
-interface Props {
-  text?: string;
+interface StyledButtonProps {
+  width: number;
+  height: number;
+  cursor?: boolean;
+  color?: string;
 }
 
-const Button: FC<Props> = ({ text }) => {
-  if (text) {
-    return (
-      <div>
-        <button>{text}</button>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <button></button>
-    </div>
-  );
-};
+const Button = styled.button<StyledButtonProps>`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
+`;
 
-export default Button;
+export { Button };
