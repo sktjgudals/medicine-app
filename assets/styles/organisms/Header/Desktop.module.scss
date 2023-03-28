@@ -3,7 +3,7 @@
 .top_nav {
   @extend .w_100, .z_index1000;
   height: 52px;
-  border-bottom: 2px solid var(--color-brand-muted-smoke) !important;
+  box-shadow: var(--shadow-elevation-1) !important;
   position: fixed;
   background-color: var(--color-background-base) !important;
 }
@@ -72,17 +72,5 @@
 
 .main_title {
   font-size: var(--font-size-5);
-  color: var(--color-hinted-grey-1);
-}
-
-// dark theme
-
-.dark_nav {
-  box-shadow: var(--shadow-elevation-1) !important;
-  background-color: var(--color-background-base);
-  border-bottom: 1px solid black !important;
-}
-
-.dark_text {
-  color: var(--color-white);
+  color: var(--color-text-base);
 }

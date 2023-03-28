@@ -1,9 +1,16 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ThemeToggle = ({ toggle, mode }: { toggle: any; mode: any }) => {
+  const [themeMode, setThemeMode] = useState<any>();
+  useEffect(() => {
+    if (mode === "dark") setThemeMode("🌚");
+    else setThemeMode("🌝");
+  }, []);
+
   return (
     <ToggleWrapper onClick={toggle} theme>
-      {mode === "dark" ? "🌚" : "🌝"}
+      {themeMode}
     </ToggleWrapper>
   );
 };

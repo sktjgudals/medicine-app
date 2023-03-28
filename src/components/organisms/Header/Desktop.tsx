@@ -16,13 +16,7 @@ interface Props extends ICONTEXT {}
 
 const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
   return (
-    <nav
-      className={
-        themeMode === "dark"
-          ? `${styles.top_nav} ${styles.dark_nav}`
-          : styles.top_nav
-      }
-    >
+    <nav className={styles.top_nav}>
       <div className={styles.top_nav_menu}>
         <div className={styles.top_nav_menu_list_one}>
           <Link href="/" className={styles.logo_container}>
@@ -30,15 +24,7 @@ const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
               <Logo width={40} height={40} />
             </figure>
             <div className={styles.text_container}>
-              <h2
-                className={
-                  themeMode === "dark"
-                    ? `${styles.main_title} ${styles.dark_text}`
-                    : styles.main_title
-                }
-              >
-                약정
-              </h2>
+              <h2 className={styles.main_title}>약정</h2>
             </div>
           </Link>
         </div>
