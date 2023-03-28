@@ -9,22 +9,22 @@ import SearchIcon from "../atoms/icons/SearchIcon";
 
 const Search: FC = () => {
   const [userFormInput, onChangeForm] = useInput("");
-  const searchInput: any = useRef();
+  const searchInput = useRef<any>();
 
-  const a = (e: React.FormEvent) => {
-    console.info(userFormInput.toString().length === 0);
+  const onSubmitHandler = (e: React.FormEvent) => {
     if (userFormInput.toString().length === 0) {
-      searchInput.current = null;
+      searchInput.current.blur();
       e.preventDefault();
     }
   };
+
   return (
     <form
       action={`/search`}
       role="search"
       method="GET"
       className={styles.top_nav_search_container}
-      onSubmit={a}
+      onSubmit={onSubmitHandler}
     >
       <div className={styles.search_box}>
         <div
