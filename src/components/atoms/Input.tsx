@@ -1,8 +1,8 @@
-import { FC } from "react";
-import styles from "../../../assets/styles/atoms/search.module.scss";
+import styled from "styled-components";
 
-const Input: FC = () => {
-  return <div className={styles.a}>hi</div>;
-};
+interface StyledInputProps {}
 
-export default Input;
+export const Input = styled.input<StyledInputProps>`
+  border: none;
+  outline: none;
+`;

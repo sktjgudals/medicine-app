@@ -8,18 +8,48 @@ import styles from "../../../../assets/styles/organisms/Header/Desktop.module.sc
 
 import { ICONTEXT } from "@/types/context/theme";
 
+import { Poppins } from "@next/font/google";
+
+const poppins = Poppins({ weight: "600", subsets: ["latin"] });
+
 interface Props extends ICONTEXT {}
 
 const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
   return (
-    <div className={styles.desktop_header_container}>
-      <Link href="/" className={styles.desktop_logo_container}>
-        <Logo width={100} height={100} />
-        <p className={styles.desktop_main_title}>약정</p>
-      </Link>
-      <Search />
-      <ThemeToggle toggle={setThemeMode} mode={themeMode} />
-    </div>
+    <nav
+      className={
+        themeMode === "dark"
+          ? `${styles.top_nav} ${styles.dark_nav}`
+          : styles.top_nav
+      }
+    >
+      <div className={styles.top_nav_menu}>
+        <div className={styles.top_nav_menu_list_one}>
+          <Link href="/" className={styles.logo_container}>
+            <figure>
+              <Logo width={40} height={40} />
+            </figure>
+            <div className={styles.text_container}>
+              <h2
+                className={
+                  themeMode === "dark"
+                    ? `${styles.main_title} ${styles.dark_text}`
+                    : styles.main_title
+                }
+              >
+                약정
+              </h2>
+            </div>
+          </Link>
+        </div>
+        <div className={styles.top_nav_menu_list_two}>
+          <Search />
+        </div>
+        <div className={styles.top_nav_menu_list_three}>
+          <ThemeToggle toggle={setThemeMode} mode={themeMode} />
+        </div>
+      </div>
+    </nav>
   );
 };
 
