@@ -34,7 +34,6 @@ const Search: FC = () => {
         >
           <div className={styles.search_input}>
             <SearchInput
-              className={styles.cancel}
               placeholder={"검색"}
               value={userFormInput}
               onChange={onChangeForm}
