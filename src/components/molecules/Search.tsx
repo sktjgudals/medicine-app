@@ -71,10 +71,12 @@ const SearchInput = styled(Input)`
   &:hover {
     box-shadow: 0 0 0 2px var(--color-hinted-grey-8) inset;
     background-color: var(--color-background-input-focus);
+    transition: all var(--timing-medium);
   }
   &:focus {
     box-shadow: 0 0 0 2px var(--color-green-9) inset;
     background-color: var(--color-background-input-focus);
+    transition: all var(--timing-medium);
   }
 `;
 
@@ -86,5 +88,6 @@ const SearchButton = styled(Button)`
   &:hover {
     background-color: var(--color-green-9);
     color: var(--color-brand-accent-moon);
+    transition: all var(--timing-medium);
   }
 `;
