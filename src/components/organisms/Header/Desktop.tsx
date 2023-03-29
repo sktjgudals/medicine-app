@@ -1,20 +1,16 @@
 import Logo from "@/components/atoms/Logo";
-import ThemeToggle from "@/components/atoms/Toggle";
-import Search from "@/components/molecules/Search";
+import Search from "@/components/molecules/Desktop/Header/Search";
 import Link from "next/link";
 import { FC } from "react";
 
 import styles from "../../../../assets/styles/organisms/Header/Desktop.module.scss";
 
-import { ICONTEXT } from "@/types/context/theme";
-
 import { Poppins } from "@next/font/google";
+import Menu from "@/components/molecules/Desktop/Header/Menu";
 
 const poppins = Poppins({ weight: "600", subsets: ["latin"] });
 
-interface Props extends ICONTEXT {}
-
-const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
+const Desktop: FC = () => {
   return (
     <nav className={styles.top_nav}>
       <div className={styles.top_nav_menu}>
@@ -32,7 +28,7 @@ const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
           <Search />
         </div>
         <div className={styles.top_nav_menu_list_three}>
-          <ThemeToggle toggle={setThemeMode} mode={themeMode} />
+          <Menu />
         </div>
       </div>
     </nav>

@@ -2,10 +2,10 @@ import { FC, useRef } from "react";
 import styled from "styled-components";
 import useInput from "@/hooks/useInput";
 
-import styles from "../../../assets/styles/molecules/Search.module.scss";
-import { Input } from "../atoms/Input";
-import { Button } from "../atoms/Button";
-import SearchIcon from "../atoms/icons/SearchIcon";
+import styles from "../../../../../assets/styles/molecules/Search.module.scss";
+import { Input } from "../../../atoms/Input";
+import { Button } from "../../../atoms/Button";
+import SearchIcon from "../../../atoms/icons/SearchIcon";
 
 const Search: FC = () => {
   const [userFormInput, onChangeForm] = useInput("");
@@ -82,6 +82,7 @@ const SearchInput = styled(Input)`
 
 const SearchButton = styled(Button)`
   border: none;
+  cursor: pointer;
   border-radius: 0px 0.6rem 0.6rem 0px !important;
   color: var(--color-text-button-secondary);
   background-color: var(--color-background-input);
