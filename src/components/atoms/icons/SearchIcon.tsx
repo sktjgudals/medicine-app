@@ -2,9 +2,14 @@ import { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-const SearchIcon: FC = () => {
-  // return <></>;
-  return <FontAwesomeIcon icon={faMagnifyingGlass} />;
+interface Props {
+  width: number;
+  height: number;
+}
+const SearchIcon: FC<Props> = ({ width, height }) => {
+  return (
+    <FontAwesomeIcon icon={faMagnifyingGlass} width={width} height={height} />
+  );
 };
 
 export default SearchIcon;

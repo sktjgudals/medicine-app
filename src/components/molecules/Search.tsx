@@ -48,7 +48,7 @@ const Search: FC = () => {
       </div>
       <div className={styles.search_icon}>
         <SearchButton width={40} height={39}>
-          <SearchIcon />
+          <SearchIcon width={14} height={14} />
         </SearchButton>
       </div>
     </form>
@@ -67,6 +67,7 @@ const SearchInput = styled(Input)`
   background-clip: padding-box;
   color: var(--color-text-input);
   background-color: var(--color-background-input);
+  font-weight: var(--font-weight-semibold);
   &:hover {
     box-shadow: 0 0 0 2px var(--color-hinted-grey-8) inset;
     background-color: var(--color-background-input-focus);
