@@ -84,7 +84,7 @@ const SearchButton = styled(Button)`
   color: var(--color-text-button-secondary);
   background-color: var(--color-background-input);
   &:hover {
-    color: var(--color-text-button-secondary);
-    background-color: var(--color-background-button-secondary-hover);
+    background-color: var(--color-green-9);
+    color: var(--color-brand-accent-moon);
   }
 `;

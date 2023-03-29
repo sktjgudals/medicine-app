@@ -8,7 +8,12 @@ interface Props {
 }
 const SearchIcon: FC<Props> = ({ width, height }) => {
   return (
-    <FontAwesomeIcon icon={faMagnifyingGlass} width={width} height={height} />
+    <FontAwesomeIcon
+      icon={faMagnifyingGlass}
+      width={width}
+      height={height}
+      // color={"green"}
+    />
   );
 };
 
