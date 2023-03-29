@@ -7,7 +7,7 @@
 }
 
 .search_box {
-  width: 100%;
+  @extend .w_100;
   margin-left: 2rem !important;
   margin-right: 1.6rem !important;
 }
@@ -22,6 +22,6 @@
 }
 
 .search_icon {
-  display: flex;
+  @extend .d_flex;
   align-items: center;
 }
