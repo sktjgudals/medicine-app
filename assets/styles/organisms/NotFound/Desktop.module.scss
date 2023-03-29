@@ -1,0 +1,8 @@
+@import "../../bass.scss";
+
+.main_container {
+  @extend .d_flex, .w_100;
+  height: 100vh;
+  padding-top: 100px;
+  background-color: red;
+}
