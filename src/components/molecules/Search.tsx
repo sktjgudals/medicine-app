@@ -47,7 +47,7 @@ const Search: FC = () => {
         </div>
       </div>
       <div className={styles.search_icon}>
-        <SearchButton width={40} height={39}>
+        <SearchButton width={40} height={40}>
           <SearchIcon width={14} height={14} />
         </SearchButton>
       </div>
