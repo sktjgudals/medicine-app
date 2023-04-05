@@ -1,11 +1,12 @@
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "apollo/client";
-import { ThemeProvider } from "@/context/ThemeProvider";
-import { GlobalStyle } from "assets/styles/global";
 import { Inter } from "@next/font/google";
 
-import "../../assets/styles/common.scss";
+import { ThemeProvider } from "@/context/ThemeProvider";
+
+import { GlobalStyle } from "#/styles/global";
+import "#/styles/common.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
