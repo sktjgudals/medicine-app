@@ -29,10 +29,11 @@ const setHtmlTheme = (value: any) => {
 };
 
 const ThemeProvider = ({ children }: { children: JSX.Element[] }) => {
-  const localTheme =
+  let localTheme =
     typeof window !== "undefined"
       ? (window.localStorage.getItem("theme") as MODE)
       : "light";
+  if (localTheme === null) localTheme = "light";
   useEffect(() => {
     setHtmlTheme(localTheme);
   }, [localTheme]);
