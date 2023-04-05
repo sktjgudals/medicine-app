@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import DropDown from "./DropDown";
 import HambergerBarIcon from "@/components/atoms/icons/HambergerBarIcon";
 
 import styles from "../../../../../assets/styles/molecules/Desktop/Header/Menu.module.scss";
 
-const Menu: React.FC = (): JSX.Element => {
+const Menu: FC = (): JSX.Element => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -20,11 +20,11 @@ const Menu: React.FC = (): JSX.Element => {
     <div className={styles.menu_container}>
       <div>
         <button
+          className={styles.hamberger_icon_button}
           onClick={(): void => toggleDropDown()}
           onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
             dismissHandler(e)
           }
-          className={styles.hamberger_icon_button}
         >
           <HambergerBarIcon width={30} height={30} size={"2xl"} />
         </button>
