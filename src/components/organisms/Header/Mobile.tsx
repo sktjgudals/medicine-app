@@ -2,7 +2,6 @@ import { FC } from "react";
 import Link from "next/link";
 
 import Logo from "@/components/atoms/Logo";
-import ThemeToggle from "@/components/atoms/Toggle";
 import Search from "@/components/molecules/Desktop/Header/Search";
 
 import styles from "../../../../assets/styles/organisms/Header/Mobile.module.scss";
@@ -18,7 +17,6 @@ const Mobile: FC = () => {
         <p className={styles.main_title}>약정</p>
       </Link>
       <Search />
-      <ThemeToggle toggle={setToggleTheme} mode={themeMode} />
     </div>
   );
 };

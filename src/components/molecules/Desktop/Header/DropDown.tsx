@@ -1,49 +1,61 @@
-import { FC, useEffect, useState } from "react";
-
+import { FC, memo } from "react";
 import Link from "next/link";
+import styled from "styled-components";
+
+import { useTheme } from "@/context/ThemeProvider";
+import { ToggleProps, Toggle, Circle } from "@/components/atoms/Toggle";
 
 import styles from "../../../../../assets/styles/molecules/Desktop/Header/DropDown.module.scss";
 
-interface DropDownProps {
-  showDropDown: boolean;
+interface Props {
   toggleDropDown: () => void;
 }
 
-const DropDown: FC<DropDownProps> = ({
-  toggleDropDown,
-}: DropDownProps): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-
-  useEffect(() => {
-    setShowDropDown(showDropDown);
-  }, [showDropDown]);
-
-  const TogglecloseHandler = () => {
-    toggleDropDown();
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => e.preventDefault();
-
-  const logoutHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    localStorage.removeItem("access_token");
-    window.location.href = "/";
-  };
+const DropDown: FC<Props> = ({ toggleDropDown }): JSX.Element => {
+  const [themeMode, setToggleTheme] = useTheme();
 
   return (
     <nav className={styles.dropdown_menu}>
-      <Link
-        href="/"
-        className={styles.Drop_Down_Button_Container}
-        onMouseDown={handleMouseDown}
-        // onClick={(): void => TogglecloseHandler()}
-      >
-        {/* <ShopingCartIcon /> */}
-        <p className={styles.Drop_Down_Text}>상품보기</p>
-      </Link>
+      <Link href="/" onClick={(): void => toggleDropDown()}></Link>
+      <div className={styles.darkmode_container} onClick={setToggleTheme}>
+        <p className={styles.darkmode_text}>다크모드</p>
+        <ToggleBtn
+          onClick={setToggleTheme}
+          toggle={themeMode}
+          width={35}
+          height={20}
+        >
+          <ToggleCircle toggle={themeMode} width={19} height={19} />
+        </ToggleBtn>
+      </div>
     </nav>
   );
 };
 
-export default DropDown;
+export default memo(DropDown);
+
+interface StyledProps extends ToggleProps {
+  toggle: "dark" | "light";
+}
+
+const ToggleBtn = styled(Toggle)<StyledProps>`
+  background-color: ${(props) =>
+    props.toggle === "light" ? "none" : "var(--color-green-9)"};
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+`;
+
+const ToggleCircle = styled(Circle)<StyledProps>`
+  position: absolute;
+  left: 5%;
+  background-color: white;
+  transition: all 0.5s ease-in-out;
+  ${(props) =>
+    props.toggle === "dark" &&
+    `
+      transform: translate(14px, 0);
+    `}
+`;
