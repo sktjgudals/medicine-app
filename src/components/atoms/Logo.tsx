@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import styles from "../../../assets/styles/atoms/Logo.module.scss";
+import styles from "#/styles/atoms/Logo.module.scss";
 
 interface Props {
   width: number;

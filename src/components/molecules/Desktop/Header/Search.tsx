@@ -2,10 +2,11 @@ import { FC, useRef } from "react";
 import styled from "styled-components";
 import useInput from "@/hooks/useInput";
 
-import styles from "../../../../../assets/styles/molecules/Search.module.scss";
-import { Input } from "../../../atoms/Input";
-import { Button } from "../../../atoms/Button";
-import SearchIcon from "../../../atoms/icons/SearchIcon";
+import { Input } from "@/components/atoms/Input";
+import { Button } from "@/components/atoms/Button";
+import SearchIcon from "@/components/atoms/icons/SearchIcon";
+
+import styles from "#/styles/molecules/Search.module.scss";
 
 const Search: FC = () => {
   const [userFormInput, onChangeForm] = useInput("");

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import Logo from "@/components/atoms/Logo";
-import styles from "../../../../assets/styles/organisms/NotFound/Desktop.module.scss";
+import styles from "#/styles/organisms/NotFound/Desktop.module.scss";
 import Link from "next/link";
 
 const Desktop: FC = () => {

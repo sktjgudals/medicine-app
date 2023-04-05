@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import Link from "next/link";
 
-import styles from "../../../../../assets/styles/molecules/Desktop/Header/DropDown.module.scss";
+import styles from "#/styles/molecules/Desktop/Header/DropDown.module.scss";
 import Darkmode from "./Nav/Darkmode";
 
 interface Props {

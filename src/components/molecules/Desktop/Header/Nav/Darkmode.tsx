@@ -1,10 +1,10 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { useTheme } from "@/context/ThemeProvider";
 
+import { useTheme } from "@/context/ThemeProvider";
 import { ToggleProps, Toggle, Circle } from "@/components/atoms/Toggle";
 
-import styles from "../../../../../../assets/styles/molecules/Desktop/Header/Nav/Darkmode.module.scss";
+import styles from "#/styles/molecules/Desktop/Header/Nav/Darkmode.module.scss";
 
 const Darkmode: FC = () => {
   const [themeMode, setToggleTheme] = useTheme();

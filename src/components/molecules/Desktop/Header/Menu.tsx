@@ -3,7 +3,7 @@ import DropDown from "./DropDown";
 import HambergerBarIcon from "@/components/atoms/icons/HambergerBarIcon";
 import useDropdown from "@/hooks/useDropdown";
 
-import styles from "../../../../../assets/styles/molecules/Desktop/Header/Menu.module.scss";
+import styles from "#/styles/molecules/Desktop/Header/Menu.module.scss";
 
 const Menu: FC = (): JSX.Element => {
   const { isOpen, dropdownRef, toggleDropdown } = useDropdown();

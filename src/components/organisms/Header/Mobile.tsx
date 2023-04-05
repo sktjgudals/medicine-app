@@ -4,7 +4,7 @@ import Link from "next/link";
 import Logo from "@/components/atoms/Logo";
 import Search from "@/components/molecules/Desktop/Header/Search";
 
-import styles from "../../../../assets/styles/organisms/Header/Mobile.module.scss";
+import styles from "#/styles/organisms/Header/Mobile.module.scss";
 
 import { useTheme } from "@/context/ThemeProvider";
 
