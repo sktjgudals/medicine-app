@@ -1,0 +1,6 @@
+@import "../../../bass.scss";
+.dropdown_menu {
+  @extend .w_100, .h_100;
+  background-color: red;
+  padding: 200px;
+}

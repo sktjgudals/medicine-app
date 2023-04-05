@@ -1,0 +1,25 @@
+@import "../../../bass.scss";
+
+.menu_container {
+  @extend .flex_center_end, .w_100, .h_100;
+  margin-right: 15px;
+}
+
+.hamberger_icon_button {
+  background: inherit;
+  border: none;
+  overflow: visible;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text-base);
+  background-color: var(--color-background-base) !important;
+}
+
+.dropdown_container {
+  position: absolute;
+  inset: 0px auto auto 0px;
+  transform: translate(1689px, 46px);
+  margin-top: 50px;
+}
