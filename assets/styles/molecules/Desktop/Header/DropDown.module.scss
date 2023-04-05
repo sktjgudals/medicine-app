@@ -1,6 +1,27 @@
 @import "../../../bass.scss";
+
 .dropdown_menu {
   @extend .w_100, .h_100;
-  background-color: red;
-  padding: 200px;
+  padding: 1rem !important;
+  max-height: calc(100vh - 5rem);
+  max-width: 90vw;
+  min-width: 0px;
+  white-space: nowrap;
+  border-radius: 0.6rem !important;
+  background-color: var(--color-background-float) !important;
+  box-shadow: var(--shadow-elevation-2) !important;
+  transition-property: transform, opacity;
+  transform: translateX(10px);
+  opacity: 1;
+}
+
+.darkmode_container {
+  @extend .w_100, .h_100, .flex_center_center;
+  gap: 40px;
+  cursor: pointer;
+}
+
+.darkmode_text {
+  font-size: var(--font-size-8);
+  font-weight: var(--font-weight-semibold);
 }
