@@ -13,4 +13,8 @@
   transition-property: transform, opacity;
   transform: translateX(10px);
   opacity: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

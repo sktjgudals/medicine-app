@@ -1,0 +1,18 @@
+@import "../../../../bass.scss";
+.signin_container {
+  @extend .w_100, .h_100, .flex_center_center;
+  cursor: pointer;
+  padding: 20px 0px 0px 0px;
+}
+
+.signin_label {
+  @extend .d_flex, .w_100, .h_100;
+  padding-right: 25px;
+  gap: 5px;
+}
+
+.signin_text {
+  opacity: 0.8;
+  font-size: var(--font-size-8);
+  font-weight: var(--font-weight-semibold);
+}
