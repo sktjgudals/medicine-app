@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 
 import { GlobalStyle } from "#/styles/global";
 import "#/styles/common.scss";
+import Header from "@/components/organisms/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ThemeProvider>
         <GlobalStyle />
         <main className={inter.className}>
+          <Header />
           <Component {...pageProps} />
         </main>
       </ThemeProvider>
