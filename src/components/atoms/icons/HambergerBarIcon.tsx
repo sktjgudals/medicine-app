@@ -7,11 +7,23 @@ import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
 interface Props extends BasicIconProps {
   size: SizeProp;
+  color: string;
 }
 
-const HambergerBarIcon: FC<Props> = ({ width, height, size }) => {
+const HambergerBarIcon: FC<Props> = ({
+  width,
+  height,
+  size,
+  color,
+}): JSX.Element => {
   return (
-    <FontAwesomeIcon icon={faBars} width={width} height={height} size={size} />
+    <FontAwesomeIcon
+      icon={faBars}
+      width={width}
+      height={height}
+      size={size}
+      color={color}
+    />
   );
 };
 
