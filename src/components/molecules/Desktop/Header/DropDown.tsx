@@ -1,8 +1,9 @@
 import { FC, memo } from "react";
 import Link from "next/link";
 
-import styles from "#/styles/molecules/Desktop/Header/DropDown.module.scss";
 import Darkmode from "./Nav/Darkmode";
+
+import styles from "#/styles/molecules/Desktop/Header/DropDown.module.scss";
 
 interface Props {
   toggleDropDown: () => void;

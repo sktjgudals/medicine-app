@@ -5,16 +5,20 @@ import { useTheme } from "@/context/ThemeProvider";
 import { ToggleProps, Toggle, Circle } from "@/components/atoms/Toggle";
 
 import styles from "#/styles/molecules/Desktop/Header/Nav/Darkmode.module.scss";
+import MoonIcon from "@/components/atoms/icons/MoonIcon";
 
 const Darkmode: FC = () => {
   const [themeMode, setToggleTheme] = useTheme();
   return (
     <div className={styles.darkmode_container} onClick={setToggleTheme}>
-      <p className={styles.darkmode_text}>다크모드</p>
+      <div className={styles.darkmode_label}>
+        <MoonIcon width={19} height={19} />
+        <p className={styles.darkmode_text}>다크모드</p>
+      </div>
       <ToggleBtn
         onClick={setToggleTheme}
         toggle={themeMode}
-        width={35}
+        width={40}
         height={20}
       >
         <ToggleCircle toggle={themeMode} width={19} height={19} />
@@ -41,12 +45,12 @@ const ToggleBtn = styled(Toggle)<StyledProps>`
 
 const ToggleCircle = styled(Circle)<StyledProps>`
   position: absolute;
-  left: 5%;
+  left: 2%;
   background-color: white;
   transition: all 0.5s ease-in-out;
   ${(props) =>
     props.toggle === "dark" &&
     `
-      transform: translate(14px, 0);
+      transform: translate(12px, 0);
     `}
 `;

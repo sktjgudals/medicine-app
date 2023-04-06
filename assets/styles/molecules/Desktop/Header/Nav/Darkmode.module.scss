@@ -2,8 +2,13 @@
 
 .darkmode_container {
   @extend .w_100, .h_100, .flex_center_center;
-  gap: 40px;
   cursor: pointer;
+}
+
+.darkmode_label {
+  @extend .d_flex, .w_100, .h_100;
+  padding-right: 25px;
+  gap: 5px;
 }
 
 .darkmode_text {
