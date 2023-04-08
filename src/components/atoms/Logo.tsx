@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import styles from "../../../assets/styles/atoms/Logo.module.scss";
+import styles from "#/styles/atoms/Logo.module.scss";
 
 interface Props {
   width: number;
@@ -15,6 +15,7 @@ const Logo: FC<Props> = ({ width = 100, height = 100 }) => {
       alt="logo"
       width={width}
       height={height}
+      priority={true}
     />
   );
 };

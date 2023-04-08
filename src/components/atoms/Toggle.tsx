@@ -1,21 +1,20 @@
 import styled from "styled-components";
 
-const ThemeToggle = ({ toggle, mode }: { toggle: any; mode: any }) => {
-  return (
-    <ToggleWrapper onClick={toggle} theme>
-      {mode === "dark" ? "🌚" : "🌝"}
-    </ToggleWrapper>
-  );
-};
+export interface ToggleProps {
+  width: number;
+  height: number;
+}
 
-export default ThemeToggle;
-
-const ToggleWrapper = styled.button`
-  background-color: ${({ theme }) => theme.bgColor};
-  border: ${({ theme }) => theme.borderColor};
-  font-size: 20px;
-  align-items: center;
-  width: 96px;
-  height: 48px;
+export const Toggle = styled.button<ToggleProps>`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   border-radius: 30px;
+  border: none;
+  cursor: pointer;
+`;
+
+export const Circle = styled.div<ToggleProps>`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
+  border-radius: 50px;
 `;

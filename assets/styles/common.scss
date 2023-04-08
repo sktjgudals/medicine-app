@@ -301,7 +301,7 @@
   --font-size-8: 1rem;
   --font-size-base: 1.3rem;
   --font-weight-normal: 400;
-  --font-weight-semibold: 600;
+  --font-weight-semibold: 500;
   --font-weight-bold: 700;
   --font-weight-hdr: 400;
   --line-height-body: 1.5;
@@ -340,9 +340,9 @@
   --space-10: 10rem;
   --space-auto: auto;
   --space-05: 0.5rem;
-  --timing-short: 100ms;
-  --timing-medium: 150ms;
-  --timing-long: 200ms;
+  --timing-short: 200ms;
+  --timing-medium: 500ms;
+  --timing-long: 1000ms;
   --z-index-modal: 5000;
   --z-index-notification: 4000;
   --z-index-overlay: 3000;

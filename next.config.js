@@ -7,6 +7,9 @@ const nextConfig = {
     // prependData:
     //   "@import 'public/styles/colors.scss'; @import 'public/styles/mixin.scss';",
   },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 module.exports = nextConfig;

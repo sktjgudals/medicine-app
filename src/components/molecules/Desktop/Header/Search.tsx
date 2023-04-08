@@ -2,10 +2,11 @@ import { FC, useRef } from "react";
 import styled from "styled-components";
 import useInput from "@/hooks/useInput";
 
-import styles from "../../../assets/styles/molecules/Search.module.scss";
-import { Input } from "../atoms/Input";
-import { Button } from "../atoms/Button";
-import SearchIcon from "../atoms/icons/SearchIcon";
+import { Input } from "@/components/atoms/Input";
+import { Button } from "@/components/atoms/Button";
+import SearchIcon from "@/components/atoms/icons/SearchIcon";
+
+import styles from "#/styles/molecules/Search.module.scss";
 
 const Search: FC = () => {
   const [userFormInput, onChangeForm] = useInput("");
@@ -47,8 +48,8 @@ const Search: FC = () => {
         </div>
       </div>
       <div className={styles.search_icon}>
-        <SearchButton width={40} height={39}>
-          <SearchIcon />
+        <SearchButton width={40} height={40}>
+          <SearchIcon width={14} height={14} />
         </SearchButton>
       </div>
     </form>
@@ -67,23 +68,28 @@ const SearchInput = styled(Input)`
   background-clip: padding-box;
   color: var(--color-text-input);
   background-color: var(--color-background-input);
+  font-weight: var(--font-weight-semibold);
   &:hover {
     box-shadow: 0 0 0 2px var(--color-hinted-grey-8) inset;
     background-color: var(--color-background-input-focus);
+    transition: all var(--timing-medium);
   }
   &:focus {
     box-shadow: 0 0 0 2px var(--color-green-9) inset;
     background-color: var(--color-background-input-focus);
+    transition: all var(--timing-medium);
   }
 `;
 
 const SearchButton = styled(Button)`
   border: none;
+  cursor: pointer;
   border-radius: 0px 0.6rem 0.6rem 0px !important;
   color: var(--color-text-button-secondary);
   background-color: var(--color-background-input);
   &:hover {
-    color: var(--color-text-button-secondary);
-    background-color: var(--color-background-button-secondary-hover);
+    background-color: var(--color-green-9);
+    color: var(--color-brand-accent-moon);
+    transition: all var(--timing-medium);
   }
 `;

@@ -7,6 +7,7 @@
 }
 
 .search_box {
+  @extend .w_100;
   margin-left: 2rem !important;
   margin-right: 1.6rem !important;
 }
@@ -16,12 +17,11 @@
 }
 
 .search_input {
-  width: 300px;
   -webkit-box-flex: 1;
   flex-grow: 1;
 }
 
 .search_icon {
-  display: flex;
+  @extend .d_flex;
   align-items: center;
 }

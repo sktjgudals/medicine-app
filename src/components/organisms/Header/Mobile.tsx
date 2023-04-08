@@ -2,16 +2,14 @@ import { FC } from "react";
 import Link from "next/link";
 
 import Logo from "@/components/atoms/Logo";
-import ThemeToggle from "@/components/atoms/Toggle";
-import Search from "@/components/molecules/Search";
+import Search from "@/components/molecules/Desktop/Header/Search";
 
-import styles from "../../../../assets/styles/organisms/Header/Mobile.module.scss";
+import styles from "#/styles/organisms/Header/Mobile.module.scss";
 
-import { ICONTEXT } from "@/types/context/theme";
+import { useTheme } from "@/context/ThemeProvider";
 
-interface Props extends ICONTEXT {}
-
-const Mobile: FC<Props> = ({ setThemeMode, themeMode }) => {
+const Mobile: FC = () => {
+  const [themeMode, setToggleTheme] = useTheme();
   return (
     <div className={styles.top_nav}>
       <Link href="/" className={styles.logo_container}>
@@ -19,7 +17,6 @@ const Mobile: FC<Props> = ({ setThemeMode, themeMode }) => {
         <p className={styles.main_title}>약정</p>
       </Link>
       <Search />
-      <ThemeToggle toggle={setThemeMode} mode={themeMode} />
     </div>
   );
 };

@@ -1,17 +1,19 @@
 import { FC } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { BasicIconProps } from "@/types/context/icon/basic";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
 interface Props extends BasicIconProps {
+  size?: SizeProp;
   color?: string;
 }
 
-const SearchIcon: FC<Props> = ({ width, height, color }): JSX.Element => {
+const MoonIcon: FC<Props> = ({ size, width, height, color }): JSX.Element => {
   return (
     <FontAwesomeIcon
-      icon={faMagnifyingGlass}
+      icon={faMoon}
       width={width}
       height={height}
       color={color}
@@ -19,4 +21,4 @@ const SearchIcon: FC<Props> = ({ width, height, color }): JSX.Element => {
   );
 };
 
-export default SearchIcon;
+export default MoonIcon;

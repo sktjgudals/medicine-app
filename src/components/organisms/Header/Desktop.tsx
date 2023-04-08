@@ -1,28 +1,18 @@
-import Logo from "@/components/atoms/Logo";
-import ThemeToggle from "@/components/atoms/Toggle";
-import Search from "@/components/molecules/Search";
-import Link from "next/link";
 import { FC } from "react";
-
-import styles from "../../../../assets/styles/organisms/Header/Desktop.module.scss";
-
-import { ICONTEXT } from "@/types/context/theme";
-
+import Link from "next/link";
 import { Poppins } from "@next/font/google";
+
+import Logo from "@/components/atoms/Logo";
+import Search from "@/components/molecules/Desktop/Header/Search";
+import Menu from "@/components/molecules/Desktop/Header/Menu";
+
+import styles from "#/styles/organisms/Header/Desktop.module.scss";
 
 const poppins = Poppins({ weight: "600", subsets: ["latin"] });
 
-interface Props extends ICONTEXT {}
-
-const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
+const Desktop: FC = () => {
   return (
-    <nav
-      className={
-        themeMode === "dark"
-          ? `${styles.top_nav} ${styles.dark_nav}`
-          : styles.top_nav
-      }
-    >
+    <nav className={styles.top_nav}>
       <div className={styles.top_nav_menu}>
         <div className={styles.top_nav_menu_list_one}>
           <Link href="/" className={styles.logo_container}>
@@ -30,15 +20,7 @@ const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
               <Logo width={40} height={40} />
             </figure>
             <div className={styles.text_container}>
-              <h2
-                className={
-                  themeMode === "dark"
-                    ? `${styles.main_title} ${styles.dark_text}`
-                    : styles.main_title
-                }
-              >
-                약정
-              </h2>
+              <h2 className={styles.main_title}>약정</h2>
             </div>
           </Link>
         </div>
@@ -46,7 +28,7 @@ const Desktop: FC<Props> = ({ setThemeMode, themeMode }) => {
           <Search />
         </div>
         <div className={styles.top_nav_menu_list_three}>
-          <ThemeToggle toggle={setThemeMode} mode={themeMode} />
+          <Menu />
         </div>
       </div>
     </nav>

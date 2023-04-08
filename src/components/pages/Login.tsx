@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-const Main: FC = () => {
+const Login: FC = () => {
   return <></>;
 };
 
-export default Main;
+export default Login;
