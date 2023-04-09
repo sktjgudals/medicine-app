@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { gql, useQuery } from "@apollo/client";
 import Main from "@/components/pages/Main";
+import Title from "@/components/atoms/Title";
 
 const GET_TEST = gql`
   query hello {
@@ -16,12 +17,7 @@ export default function Home() {
   console.info(data);
   return (
     <>
-      <Head>
-        <title>약정</title>
-        <meta name="description" content="약을 찾아주는 요정" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Title title={"약정"} content={"약을 찾아주는 요정"} />
       <Main />
     </>
   );
