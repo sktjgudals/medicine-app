@@ -7,7 +7,6 @@ const useDropdown = () => {
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
-      console.info("click");
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpen]);
@@ -18,7 +17,6 @@ const useDropdown = () => {
 
   const handleOutsideClick = (e: Event) => {
     const current = dropdownRef.current;
-    console.log("click2");
     if (isOpen && current && !current.contains(e.target as Node))
       setIsOpen(false);
   };
