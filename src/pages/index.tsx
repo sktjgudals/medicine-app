@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
+
 import Main from "@/components/pages/Main";
 import Title from "@/components/atoms/Title";
-import Portal from "@/components/atoms/Portal";
 
 const GET_TEST = gql`
   query hello {

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import NotFound from "@/components/pages/404";
-import Head from "next/head";
+
 import Title from "@/components/atoms/Title";
 
 const NotFoundPage: FC = () => {
