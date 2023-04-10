@@ -51,19 +51,8 @@ class MyDocument extends Document {
     const { redirectIEToEdge } = this;
     return (
       <Html lang="ko">
+        <head id="custom_title" />
         <Head>
-          {/* <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-          /> */}
-          {/* <script
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}',{page_path: window.location.pathname,});`,
-            }}
-          /> */}
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <meta name="theme-color" content="#ffffff" />
           {redirectIEToEdge()}
@@ -78,6 +67,7 @@ class MyDocument extends Document {
           {/* <meta name="twitter:creator:id" content="@staku" /> */}
         </Head>
         <body>
+          <div id="modal"></div>
           <Main />
           <NextScript />
         </body>

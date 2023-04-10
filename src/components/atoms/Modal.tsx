@@ -12,7 +12,7 @@ const Modal = styled.div<StyledModalProps>`
 `;
 
 const ModalWrapper = styled.div`
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: var(--color-background-modal-overlay);
   width: 100%;
   height: 100%;
 `;

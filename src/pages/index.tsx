@@ -1,7 +1,7 @@
-import Head from "next/head";
 import { gql, useQuery } from "@apollo/client";
 import Main from "@/components/pages/Main";
 import Title from "@/components/atoms/Title";
+import Portal from "@/components/atoms/Portal";
 
 const GET_TEST = gql`
   query hello {
@@ -17,7 +17,10 @@ export default function Home() {
   console.info(data);
   return (
     <>
-      <Title title={"약정"} content={"약을 찾아주는 요정"} />
+      <Portal
+        children={<Title title={"약정"} content={"약을 찾아주는 요정"} />}
+        selector={"custom_title"}
+      />
       <Main />
     </>
   );
