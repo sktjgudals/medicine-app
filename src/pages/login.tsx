@@ -1,3 +1,4 @@
+import Portal from "@/components/atoms/Portal";
 import Title from "@/components/atoms/Title";
 import { FC } from "react";
 

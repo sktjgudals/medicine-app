@@ -7,9 +7,13 @@ interface PortalProps {
 }
 
 const Portal: FC<PortalProps> = ({ children, selector }) => {
-  const selectedElement = document.getElementById(selector);
-  if (selectedElement === null) return <></>;
-  return createPortal(children, selectedElement);
+  if (typeof window === "object") {
+    return createPortal(
+      children,
+      document.getElementById(selector) as HTMLElement
+    );
+  }
+  return null;
 };
 
 export default Portal;

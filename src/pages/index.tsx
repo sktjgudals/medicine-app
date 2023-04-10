@@ -17,10 +17,7 @@ export default function Home() {
   console.info(data);
   return (
     <>
-      <Portal
-        children={<Title title={"약정"} content={"약을 찾아주는 요정"} />}
-        selector={"custom_title"}
-      />
+      <Title title={"약정"} content={"약을 찾아주는 요정"} />
       <Main />
     </>
   );

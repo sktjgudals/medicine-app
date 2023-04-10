@@ -51,7 +51,6 @@ class MyDocument extends Document {
     const { redirectIEToEdge } = this;
     return (
       <Html lang="ko">
-        <head id="custom_title" />
         <Head>
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <meta name="theme-color" content="#ffffff" />
