@@ -6,12 +6,13 @@ import { Button } from "@/components/atoms/Button";
 import { Modal } from "@/components/atoms/Modal";
 
 import styles from "#/styles/molecules/Desktop/LoginModal.module.scss";
+
 const LoginModal: FC = () => {
   return (
     <StyledLoginModal width={300} height={300}>
       <div className={styles.modal_container}></div>
       <div className={styles.close_button_container}>
-        <StyledXButton width={30} height={30}>
+        <StyledXButton width={30} height={30} aria-label="팝업 닫기">
           <XIcon width={20} height={20} />
         </StyledXButton>
       </div>
@@ -21,7 +22,20 @@ const LoginModal: FC = () => {
 
 export default LoginModal;
 
-const StyledXButton = styled(Button)``;
+const StyledXButton = styled(Button)`
+  position: relative;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  border-radius: var(--border-radius-medium);
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-background-button-text-default);
+  color: var(--color-fill-button-icon);
+`;
 
 const StyledLoginModal = styled(Modal)`
   display: flex !important;

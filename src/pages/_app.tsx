@@ -21,6 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <main className={inter.className}>
           <Header />
           <Component {...pageProps} />
+          <div id="modal" />
         </main>
       </ThemeProvider>
     </ApolloProvider>

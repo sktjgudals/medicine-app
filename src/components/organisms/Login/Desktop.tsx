@@ -1,10 +1,10 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-import { ModalWrapper } from "../atoms/Modal";
-import LoginModal from "../molecules/Desktop/LoginModal";
+import { ModalWrapper } from "../../atoms/Modal";
+import LoginModal from "../../molecules/Desktop/LoginModal";
 
-const Login: FC = () => {
+const DesktopLogin: FC = () => {
   return (
     <StyledLoginModalWrapper>
       <LoginModal />
@@ -12,7 +12,7 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default DesktopLogin;
 
 const StyledLoginModalWrapper = styled(ModalWrapper)`
   display: flex;

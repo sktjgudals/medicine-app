@@ -66,7 +66,6 @@ class MyDocument extends Document {
           {/* <meta name="twitter:creator:id" content="@staku" /> */}
         </Head>
         <body>
-          <div id="modal" />
           <Main />
           <NextScript />
         </body>

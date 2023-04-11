@@ -6,14 +6,14 @@ import Desktop from "./Desktop";
 
 const Header: FC = () => {
   return (
-    <header>
+    <>
       <MobileView>
         <Mobile />
       </MobileView>
       <BrowserView>
         <Desktop />
       </BrowserView>
-    </header>
+    </>
   );
 };
 
