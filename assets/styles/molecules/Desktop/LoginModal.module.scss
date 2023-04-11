@@ -1,0 +1,15 @@
+@import "../../bass.scss";
+
+.close_button_container {
+  position: absolute;
+  left: auto;
+  right: 1rem;
+  top: 1rem;
+  margin-left: 0.5rem;
+}
+
+.modal_container {
+  @extend .w_100, .h_100, .d_flex;
+  padding: 3rem !important;
+  flex-direction: column !important;
+}
