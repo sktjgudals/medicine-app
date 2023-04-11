@@ -6,7 +6,7 @@ import { Input } from "@/components/atoms/Input";
 import { Button } from "@/components/atoms/Button";
 import SearchIcon from "@/components/atoms/icons/SearchIcon";
 
-import styles from "#/styles/molecules/Search.module.scss";
+import styles from "#/styles/molecules/Desktop/Header/Search.module.scss";
 
 const Search: FC = () => {
   const [userFormInput, onChangeForm] = useInput("");
@@ -82,8 +82,6 @@ const SearchInput = styled(Input)`
 `;
 
 const SearchButton = styled(Button)`
-  border: none;
-  cursor: pointer;
   border-radius: 0px 0.6rem 0.6rem 0px !important;
   color: var(--color-text-button-secondary);
   background-color: var(--color-background-input);
