@@ -17,7 +17,12 @@ const Menu: FC = (): JSX.Element => {
         <HambergerBarIcon width={30} height={30} size={"2xl"} color={"grey"} />
       </button>
       <div className={styles.dropdown_container}>
-        {isOpen && <DropDown toggleDropDown={(): void => toggleDropdown()} />}
+        {
+          <DropDown
+            toggleDropDown={(): void => toggleDropdown()}
+            isOpen={isOpen}
+          />
+        }
       </div>
     </div>
   );

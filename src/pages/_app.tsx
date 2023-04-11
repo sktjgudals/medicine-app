@@ -4,10 +4,10 @@ import { useApollo } from "apollo/client";
 import { Inter } from "@next/font/google";
 
 import { ThemeProvider } from "@/context/ThemeProvider";
+import Header from "@/components/organisms/Header";
 
 import { GlobalStyle } from "#/styles/global";
 import "#/styles/common.scss";
-import Header from "@/components/organisms/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         <main className={inter.className}>
           <Header />
           <Component {...pageProps} />
-          <div id="modal" />
         </main>
       </ThemeProvider>
     </ApolloProvider>

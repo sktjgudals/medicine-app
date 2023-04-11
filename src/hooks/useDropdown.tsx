@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const useDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,9 +11,10 @@ const useDropdown = () => {
     };
   }, [isOpen]);
 
-  const toggleDropdown = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
-  };
+  const toggleDropdown = useCallback(
+    () => setIsOpen((prevIsOpen) => !prevIsOpen),
+    [isOpen]
+  );
 
   const handleOutsideClick = (e: Event) => {
     const current = dropdownRef.current;

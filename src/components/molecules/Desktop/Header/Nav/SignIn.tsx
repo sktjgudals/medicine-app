@@ -12,16 +12,21 @@ interface Props {
 
 const SignIn: FC<Props> = ({ toggleDropDown }) => {
   const { clickModal, isOpenModal } = useModal();
-  const handleClick = () => {
+  console.info(isOpenModal);
+  const handleClick = async () => {
     clickModal();
-    toggleDropDown();
   };
+
   return (
-    <div className={styles.signin_container} onClick={handleClick}>
+    <div
+      className={styles.signin_container}
+      onClick={() => handleClick().then(toggleDropDown)}
+    >
       <div className={styles.signin_label}>
         <SignInIcon width={19} height={19} />
         <p className={styles.signin_text}>로그인</p>
       </div>
+      {/* {isOpenModal && } */}
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const useModal = () => {
+  console.info("초기화");
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -9,9 +10,12 @@ const useModal = () => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [isOpenModal]);
-  console.info(isOpenModal);
-  const clickModal = () => setIsOpenModal((prev) => !prev);
+  });
+
+  const clickModal = useCallback(
+    () => setIsOpenModal((prev) => !prev),
+    [isOpenModal]
+  );
 
   const handleOutsideClick = (e: Event) => {
     const current = modalRef.current;
