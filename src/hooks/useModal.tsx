@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
+import { modalState } from "apollo/cache/modal";
+import { useReactiveVar } from "@apollo/client";
 
 const useModal = () => {
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  let isOpenModal = useReactiveVar(modalState);
   // const modalRef = useRef<HTMLDivElement>(null);
 
-  const clickModal = useCallback(
-    () => setIsOpenModal((prev) => !prev),
-    [isOpenModal]
-  );
+  const clickModal = useCallback(() => {
+    modalState(!isOpenModal);
+  }, [isOpenModal]);
 
   //     useEffect(() => {
   //       console.info("clickoutside");

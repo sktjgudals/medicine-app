@@ -2,21 +2,16 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { Modal } from "@/components/atoms/Modal";
-
 import LoginCloseButton from "./LoginCloseButton";
 import LoginInput from "./LoginInput";
 
-interface Props {
-  clickModal: () => void;
-}
-
-const LoginModal: FC<Props> = ({ clickModal }) => {
+const LoginModal: FC = () => {
   return (
     <StyledLoginModal width={300} height={300}>
       <ModalContainer>
         <LoginInput />
       </ModalContainer>
-      <LoginCloseButton clickModal={clickModal} />
+      <LoginCloseButton />
     </StyledLoginModal>
   );
 };

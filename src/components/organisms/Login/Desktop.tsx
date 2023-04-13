@@ -4,14 +4,10 @@ import styled from "styled-components";
 import { ModalWrapper } from "../../atoms/Modal";
 import LoginModal from "../../molecules/Desktop/Login/LoginModal";
 
-interface Props {
-  clickModal: () => void;
-}
-
-const DesktopLogin: FC<Props> = ({ clickModal }) => {
+const DesktopLogin: FC = () => {
   return (
     <StyledLoginModalWrapper>
-      <LoginModal clickModal={clickModal} />
+      <LoginModal />
     </StyledLoginModalWrapper>
   );
 };
