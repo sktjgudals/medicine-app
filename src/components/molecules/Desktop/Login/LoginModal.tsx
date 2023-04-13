@@ -1,13 +1,31 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { Modal } from "@/components/atoms/Modal";
 import LoginCloseButton from "./LoginCloseButton";
 import LoginInput from "./LoginInput";
+import { modalState } from "apollo/cache";
+import { useReactiveVar } from "@apollo/client";
 
 const LoginModal: FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  let isOpenModal = useReactiveVar(modalState);
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [ref]);
+
+  const handleOutsideClick = (e: Event) => {
+    const current = ref.current;
+    if (isOpenModal && current && !current.contains(e.target as Node))
+      modalState(false);
+  };
+
   return (
-    <StyledLoginModal width={300} height={300}>
+    <StyledLoginModal width={300} height={300} ref={ref}>
       <ModalContainer>
         <LoginInput />
       </ModalContainer>
