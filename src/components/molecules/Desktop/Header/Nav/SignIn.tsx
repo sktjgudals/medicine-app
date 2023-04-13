@@ -28,7 +28,12 @@ const SignIn: FC<Props> = ({ toggleDropDown }) => {
         <SignInIcon width={19} height={19} />
         <p className={styles.signin_text}>로그인</p>
       </div>
-      {isOpenModal && <Portal selector={"modal"} children={<Login />} />}
+      {isOpenModal && (
+        <Portal
+          selector={"modal"}
+          children={<Login clickModal={clickModal} />}
+        />
+      )}
     </div>
   );
 };

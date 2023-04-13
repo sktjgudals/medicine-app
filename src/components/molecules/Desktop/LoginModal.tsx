@@ -7,12 +7,20 @@ import { Modal } from "@/components/atoms/Modal";
 
 import styles from "#/styles/molecules/Desktop/LoginModal.module.scss";
 
-const LoginModal: FC = () => {
+interface Props {
+  clickModal: () => void;
+}
+const LoginModal: FC<Props> = ({ clickModal }) => {
   return (
     <StyledLoginModal width={300} height={300}>
       <div className={styles.modal_container}></div>
       <div className={styles.close_button_container}>
-        <StyledXButton width={30} height={30} aria-label="팝업 닫기">
+        <StyledXButton
+          width={30}
+          height={30}
+          aria-label="팝업 닫기"
+          onClick={clickModal}
+        >
           <XIcon width={20} height={20} />
         </StyledXButton>
       </div>

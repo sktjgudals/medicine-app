@@ -4,12 +4,16 @@ import { BrowserView, MobileView } from "react-device-detect";
 // import Mobile from "./Mobile";
 import Desktop from "./Desktop";
 
-const Login: FC = () => {
+interface Props {
+  clickModal: () => void;
+}
+
+const Login: FC<Props> = ({ clickModal }) => {
   return (
     <>
       <MobileView>{/* <Mobile /> */}</MobileView>
       <BrowserView>
-        <Desktop />
+        <Desktop clickModal={clickModal} />
       </BrowserView>
     </>
   );
