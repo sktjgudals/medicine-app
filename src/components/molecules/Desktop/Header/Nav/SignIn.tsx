@@ -15,7 +15,6 @@ interface Props {
 const SignIn: FC<Props> = ({ toggleDropDown }) => {
   const { clickModal, isOpenModal } = useModal();
   const handleClick = async () => {
-    console.info("click");
     clickModal();
   };
 

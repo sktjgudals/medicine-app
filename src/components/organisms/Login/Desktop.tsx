@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { ModalWrapper } from "../../atoms/Modal";
-import LoginModal from "../../molecules/Desktop/LoginModal";
+import LoginModal from "../../molecules/Desktop/Login/LoginModal";
 
 interface Props {
   clickModal: () => void;
