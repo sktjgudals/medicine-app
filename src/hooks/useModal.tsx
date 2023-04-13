@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-import { modalState } from "apollo/cache/modal";
+import { modalState } from "apollo/cache";
 import { useReactiveVar } from "@apollo/client";
 
 const useModal = () => {

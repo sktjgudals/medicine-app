@@ -1,4 +1,4 @@
-import { modalState } from "apollo/cache/modal";
+import { modalState } from "apollo/cache";
 
 import { FC } from "react";
 import styled from "styled-components";
