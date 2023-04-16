@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { ModalWrapper } from "../../atoms/Modal";
-import LoginModal from "../../molecules/Desktop/Login/LoginModal";
+import LoginModal from "../../molecules/Desktop/Login/Modal/LoginModal";
 
 const DesktopLogin: FC = () => {
   return (
