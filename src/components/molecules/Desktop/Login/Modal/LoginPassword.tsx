@@ -35,7 +35,6 @@ const LoginPassword: FC = () => {
           style={{ display: isShow ? "none" : "block" }}
           value={userFormInput}
           onChange={onChangeForm}
-          id="password_input"
           type="text"
           autoComplete="new-password"
           autoCapitalize="off"

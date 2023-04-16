@@ -61,7 +61,6 @@ const NameInput = styled(Input)`
   border-radius: 0.4rem !important;
   padding-left: 10px;
   font-family: inherit;
-  line-height: 1.5;
   border-style: solid;
   border-width: var(--border-width-input);
   border-color: var(--color-border-input);
