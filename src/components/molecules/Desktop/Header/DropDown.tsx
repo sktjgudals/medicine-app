@@ -8,11 +8,12 @@ import SignIn from "./Nav/SignIn";
 
 interface Props {
   toggleDropDown: () => void;
+  isOpen: boolean;
 }
 
-const DropDown: FC<Props> = ({ toggleDropDown }): JSX.Element => {
+const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
   return (
-    <nav className={styles.dropdown_menu}>
+    <nav className={isOpen ? styles.dropdown_menu : styles.dropdown_menu_none}>
       <Link href="/" onClick={(): void => toggleDropDown()}></Link>
       <Darkmode />
       <SignIn toggleDropDown={toggleDropDown} />

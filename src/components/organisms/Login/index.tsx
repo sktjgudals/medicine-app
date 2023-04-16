@@ -1,15 +1,13 @@
 import { FC } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 
-import Mobile from "./Mobile";
+// import Mobile from "./Mobile";
 import Desktop from "./Desktop";
 
-const Header: FC = () => {
+const Login: FC = () => {
   return (
     <>
-      <MobileView>
-        <Mobile />
-      </MobileView>
+      <MobileView>{/* <Mobile /> */}</MobileView>
       <BrowserView>
         <Desktop />
       </BrowserView>
@@ -17,4 +15,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default Login;

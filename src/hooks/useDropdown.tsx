@@ -1,26 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
+import { dropdownState } from "apollo/cache";
+import { useReactiveVar } from "@apollo/client";
 
 const useDropdown = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  let isOpen = useReactiveVar(dropdownState);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
-      console.info("click");
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpen]);
 
-  const toggleDropdown = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
-  };
+  const toggleDropdown = useCallback(() => dropdownState(!isOpen), [isOpen]);
 
   const handleOutsideClick = (e: Event) => {
     const current = dropdownRef.current;
-    console.log("click2");
     if (isOpen && current && !current.contains(e.target as Node))
-      setIsOpen(false);
+      dropdownState(false);
   };
 
   return { isOpen, dropdownRef, toggleDropdown };
