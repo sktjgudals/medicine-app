@@ -1,15 +1,19 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Input } from "@/components/atoms/Input";
-import useInput from "@/hooks/useInput";
 import EyeIcon from "@/components/atoms/icons/EyeIcon";
 import { Button } from "@/components/atoms/Button";
 import EyeSlashIcon from "@/components/atoms/icons/EyeSlashIcon";
 
-const LoginPassword: FC = () => {
-  const [userFormInput, onChangeForm] = useInput("");
+interface Props {
+  value: string;
+  onChangeValue: () => void;
+}
+
+const LoginPassword: FC<Props> = ({ value, onChangeValue }) => {
   const [isShow, setIsShow] = useState<boolean>(true);
+
   const handleShow = () => {
     setIsShow((prev) => !prev);
   };
@@ -21,8 +25,8 @@ const LoginPassword: FC = () => {
       </PasswordLabelContainer>
       <PasswordInputContainer>
         <PasswordInput
-          value={userFormInput}
-          onChange={onChangeForm}
+          value={value}
+          onChange={onChangeValue}
           id="password_input"
           type="password"
           autoComplete="new-password"
@@ -33,8 +37,8 @@ const LoginPassword: FC = () => {
         />
         <PasswordInput
           style={{ display: isShow ? "none" : "block" }}
-          value={userFormInput}
-          onChange={onChangeForm}
+          value={value}
+          onChange={onChangeValue}
           type="text"
           autoComplete="new-password"
           autoCapitalize="off"

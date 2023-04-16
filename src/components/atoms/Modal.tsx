@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 interface StyledModalProps {
   width: number;
-  height: number;
+  height?: number;
 }
 
 const Modal = styled.div<StyledModalProps>`
   width: ${(props) => props.width}px;
-  height: ${(props) => props.height}px;
+  height: ${(props) => (props.height ? `${props.height}px` : "100%")}
   pointer-events: auto;
 `;
 

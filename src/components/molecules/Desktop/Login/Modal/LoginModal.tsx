@@ -26,7 +26,7 @@ const LoginModal: FC = () => {
   };
 
   return (
-    <StyledLoginModal width={500} height={400} ref={ref}>
+    <StyledLoginModal width={500} ref={ref}>
       <ModalContainer>
         <LoginLogo />
         <LoginInput />

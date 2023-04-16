@@ -9,11 +9,11 @@ import SearchIcon from "@/components/atoms/icons/SearchIcon";
 import styles from "#/styles/molecules/Desktop/Header/Search.module.scss";
 
 const Search: FC = () => {
-  const [userFormInput, onChangeForm] = useInput("");
+  const [value, onChangeValue] = useInput("");
   const searchInput = useRef<any>();
 
   const onSubmitHandler = (e: React.FormEvent) => {
-    if (userFormInput.toString().length === 0) {
+    if (value.toString().length === 0) {
       searchInput.current.blur();
       e.preventDefault();
     }
@@ -36,11 +36,11 @@ const Search: FC = () => {
           <div className={styles.search_input}>
             <SearchInput
               placeholder={"검색"}
-              value={userFormInput}
-              onChange={onChangeForm}
+              value={value}
+              onChange={onChangeValue}
               ref={searchInput}
             />
-            <input type="hidden" name="keyword" value={userFormInput} />
+            <input type="hidden" name="keyword" value={value} />
             <input type="hidden" name="sort" value={"like_count"} />
             <input type="hidden" name="order" value={"ascending"} />
             <input type="hidden" name="page" value={"1"} />

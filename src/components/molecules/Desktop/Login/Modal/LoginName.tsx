@@ -2,11 +2,13 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { Input } from "@/components/atoms/Input";
-import useInput from "@/hooks/useInput";
 
-const LoginName: FC = () => {
-  const [userFormInput, onChangeForm] = useInput("");
+interface Props {
+  value: string;
+  onChangeValue: () => void;
+}
 
+const LoginName: FC<Props> = ({ value, onChangeValue }) => {
   return (
     <NameContainer>
       <NameLabelContainer>
@@ -14,8 +16,8 @@ const LoginName: FC = () => {
       </NameLabelContainer>
       <NameInputContainer>
         <NameInput
-          value={userFormInput}
-          onChange={onChangeForm}
+          value={value}
+          onChange={onChangeValue}
           id="name_input"
           autoComplete="username"
           autoCapitalize="off"
