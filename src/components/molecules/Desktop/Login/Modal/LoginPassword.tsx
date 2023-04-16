@@ -29,6 +29,18 @@ const LoginPassword: FC = () => {
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck="false"
+          style={{ display: isShow ? "block" : "none" }}
+        />
+        <PasswordInput
+          style={{ display: isShow ? "none" : "block" }}
+          value={userFormInput}
+          onChange={onChangeForm}
+          id="password_input"
+          type="text"
+          autoComplete="new-password"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck="false"
         />
         <PasswordEyeContainer>
           <EyeButton width={30} height={10} type="button" onClick={handleShow}>
@@ -71,11 +83,13 @@ const PasswordInputContainer = styled.div`
 const PasswordInput = styled(Input)`
   width: 100%;
   height: var(--input-size-xsmall);
+  font-size: var(--input-text-default);
   border-radius: 0.4rem !important;
-  font-family: inherit;
   border-style: solid;
+  font-family: inherit;
   border-width: var(--border-width-input);
   border-color: var(--color-border-input);
+  padding-left: 10px;
   color: var(--color-text-input);
   background-color: var(--color-background-input);
   &:hover {

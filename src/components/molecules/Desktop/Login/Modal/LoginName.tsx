@@ -59,10 +59,9 @@ const NameInput = styled(Input)`
   height: var(--input-size-xsmall);
   font-size: var(--input-text-default);
   border-radius: 0.4rem !important;
+  padding-left: 10px;
   font-family: inherit;
   line-height: 1.5;
-  transition: border var(--timing-short) ease-in,
-    background-color var(--timing-short) ease-in;
   border-style: solid;
   border-width: var(--border-width-input);
   border-color: var(--color-border-input);
