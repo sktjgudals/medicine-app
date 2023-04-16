@@ -283,6 +283,7 @@
   --input-text-small: 1rem;
   --input-text-default: 1rem;
   --input-text-large: 1.4rem;
+  --input-size-xsmall: 1.5rem;
   --input-size-small: 2.4rem;
   --input-size-default: 3rem;
   --input-size-large: 3.6rem;
@@ -733,7 +734,7 @@
   --color-border-warn: var(--color-orange-8);
   --color-border-success: var(--color-green-8);
   --color-border-info: var(--color-blue-8);
-  --color-border-brand: var(--color-twitch-purple-8);
+  --color-border-brand: var(--color-green);
   --color-border-error-decorative: var(--color-red-10);
   --color-border-warn-decorative: var(--color-orange-12);
   --color-border-success-decorative: var(--color-green-12);
@@ -1292,7 +1293,7 @@
   --color-border-warn: var(--color-orange-12);
   --color-border-success: var(--color-green-12);
   --color-border-info: var(--color-blue-10);
-  --color-border-brand: var(--color-twitch-purple-10);
+  --color-border-brand: var(--color-green);
   --color-border-error-decorative: var(--color-red-10);
   --color-border-warn-decorative: var(--color-orange-12);
   --color-border-success-decorative: var(--color-green-12);
