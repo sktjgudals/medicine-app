@@ -6,6 +6,7 @@ import LoginName from "./LoginName";
 import LoginSubmitButton from "./LoginSubmitButton";
 
 import useInput from "@/hooks/useInput";
+import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 
 const LoginInput: FC = () => {
   const [name, onChangeName] = useInput("");
@@ -17,15 +18,18 @@ const LoginInput: FC = () => {
     e.preventDefault();
 
     setLoginError(!loginError);
-    setErrorMessage("잘못된 비밀번호입니다. 다시 시도하세요.");
+    setErrorMessage(`잘못된 비밀번호입니다. 다시 시도하세요.`);
   };
 
   return (
     <>
       {loginError && (
-        <LoginContainer>
-          <LoginError>{errorMessage}</LoginError>
-        </LoginContainer>
+        <ErrorContainer>
+          <ErrorIcon>
+            <ExclamationIcon width={30} height={30} color={"red"} />
+          </ErrorIcon>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+        </ErrorContainer>
       )}
       <FormContainer>
         <InputContainer>
@@ -53,18 +57,22 @@ const InputContainer = styled.div`
 
 const FormContainer = styled.form``;
 
-const LoginContainer = styled.div`
-  width: 100%;
-  height: 80px;
+const ErrorContainer = styled.div`
+  display: flex;
+  height: 70px;
+  background-color: var(--color-background-alt-2);
   border-left: 0.4rem solid #e91916;
-  background-color: var(--color-background-alt-2) !important;
-  /* border-radius: 0.6rem !important; */
-  display: flex !important;
-  margin-top: 2rem !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding: 1rem 2rem 1rem 1rem !important;
-  position: relative !important;
+  border-radius: 0.3rem;
+  margin-top: 2rem;
+  padding: 1rem 2rem 1rem 1rem;
 `;
 
-const LoginError = styled.div``;
+const ErrorMessage = styled.div`
+  font-size: var(--font-size-9);
+  font-weight: var(--font-weight-bold);
+`;
+
+const ErrorIcon = styled.div`
+  align-items: center;
+  padding-right: 10px;
+`;

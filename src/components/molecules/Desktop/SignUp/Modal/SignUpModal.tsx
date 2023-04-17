@@ -1,18 +1,15 @@
 import { FC, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { modalState } from "apollo/cache";
-import { useReactiveVar } from "@apollo/client";
-
 import { Modal } from "@/components/atoms/Modal";
-
-import LoginInput from "./LoginInput";
-import ModalCloseButton from "../../Modal/ModalCloseButton";
+import { useReactiveVar } from "@apollo/client";
+import { signUpModalState } from "apollo/cache";
 import ModalLogo from "../../Modal/ModalLogo";
+import ModalCloseButton from "../../Modal/ModalCloseButton";
 
-const LoginModal: FC = () => {
+const SignUpModal: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
-  let isOpenModal = useReactiveVar(modalState);
+  let isOpenModal = useReactiveVar(signUpModalState);
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
@@ -24,21 +21,20 @@ const LoginModal: FC = () => {
   const handleOutsideClick = (e: Event) => {
     const current = ref.current;
     if (isOpenModal && current && !current.contains(e.target as Node))
-      modalState(false);
+      signUpModalState(false);
   };
 
   return (
-    <StyledLoginModal width={500} ref={ref}>
+    <StyledModal width={500} ref={ref}>
       <ModalContainer>
         <ModalLogo width={50} height={50} />
-        <LoginInput />
-        <ModalCloseButton cb={modalState} />
+        <ModalCloseButton cb={signUpModalState} />
       </ModalContainer>
-    </StyledLoginModal>
+    </StyledModal>
   );
 };
 
-export default LoginModal;
+export default SignUpModal;
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -47,7 +43,7 @@ const ModalContainer = styled.div`
   flex-direction: column !important;
 `;
 
-const StyledLoginModal = styled(Modal)`
+const StyledModal = styled(Modal)`
   display: flex !important;
   position: relative !important;
   background-color: var(--color-background-base) !important;

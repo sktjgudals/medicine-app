@@ -3,12 +3,17 @@ import { FC } from "react";
 import Logo from "@/components/atoms/Logo";
 import styled from "styled-components";
 
-const LoginLogo: FC = () => {
+interface Props {
+  width: number;
+  height: number;
+}
+
+const ModalLogo: FC<Props> = ({ width, height }) => {
   return (
     <div>
       <LogoMainContainer>
         <LogoSubContainer>
-          <Logo width={50} height={50} />
+          <Logo width={width} height={height} />
           <TextContainer>
             <Text>약정</Text>
           </TextContainer>
@@ -18,7 +23,7 @@ const LoginLogo: FC = () => {
   );
 };
 
-export default LoginLogo;
+export default ModalLogo;
 
 const LogoMainContainer = styled.div`
   display: flex !important;

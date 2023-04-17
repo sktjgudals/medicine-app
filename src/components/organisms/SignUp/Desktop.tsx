@@ -1,20 +1,21 @@
 import { FC } from "react";
+
 import styled from "styled-components";
 
 import { ModalWrapper } from "../../atoms/Modal";
-import LoginModal from "../../molecules/Desktop/Login/Modal/LoginModal";
+import SignUpModal from "@/components/molecules/Desktop/SignUp/Modal/SignUpModal";
 
-const DesktopLogin: FC = () => {
+const Desktop: FC = () => {
   return (
-    <StyledLoginModalWrapper>
-      <LoginModal />
-    </StyledLoginModalWrapper>
+    <StyledModalWrapper>
+      <SignUpModal />
+    </StyledModalWrapper>
   );
 };
 
-export default DesktopLogin;
+export default Desktop;
 
-const StyledLoginModalWrapper = styled(ModalWrapper)`
+const StyledModalWrapper = styled(ModalWrapper)`
   display: flex;
   position: fixed;
   z-index: var(--z-index-modal);

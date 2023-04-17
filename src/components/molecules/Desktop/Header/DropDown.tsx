@@ -5,6 +5,7 @@ import Darkmode from "./Nav/Darkmode";
 
 import styles from "#/styles/molecules/Desktop/Header/DropDown.module.scss";
 import SignIn from "./Nav/SignIn";
+import SignUpNav from "./Nav/SignUpNav";
 
 interface Props {
   toggleDropDown: () => void;
@@ -16,6 +17,7 @@ const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
     <nav className={isOpen ? styles.dropdown_menu : styles.dropdown_menu_none}>
       <Link href="/" onClick={(): void => toggleDropDown()}></Link>
       <Darkmode />
+      <SignUpNav toggleDropDown={toggleDropDown} />
       <SignIn toggleDropDown={toggleDropDown} />
     </nav>
   );
