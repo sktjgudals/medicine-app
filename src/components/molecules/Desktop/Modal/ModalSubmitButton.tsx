@@ -5,18 +5,12 @@ import styled from "styled-components";
 interface Props {
   name: string;
   password: string;
-  loginFunc: (e: MouseEvent<HTMLButtonElement>) => void;
+  cb: (e: MouseEvent<HTMLButtonElement>) => void;
   text: string;
   status: "signIn" | "signUp";
 }
 
-const ModalSubmitButton: FC<Props> = ({
-  name,
-  password,
-  loginFunc,
-  text,
-  status,
-}) => {
+const ModalSubmitButton: FC<Props> = ({ name, password, cb, text, status }) => {
   const [submitOk, setSubmitOk] = useState(false);
 
   const submitCheckHandler = useCallback(() => {
@@ -39,8 +33,8 @@ const ModalSubmitButton: FC<Props> = ({
       </ButtonNotAllow>
       <ButtonAllow
         type={submitOk ? "submit" : "button"}
-        onClick={loginFunc}
-        onSubmit={loginFunc}
+        onClick={cb}
+        onSubmit={cb}
         style={{ display: submitOk ? "block" : "none" }}
       >
         {text}

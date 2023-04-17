@@ -9,7 +9,7 @@ import useInput from "@/hooks/useInput";
 import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 
 const LoginInput: FC = () => {
-  const [name, onChangeName] = useInput("");
+  const [Email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [loginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,16 +34,16 @@ const LoginInput: FC = () => {
       <FormContainer>
         <InputContainer>
           <LoginName
-            value={name}
-            onChangeValue={onChangeName}
-            text={"아이디"}
+            value={Email}
+            onChangeValue={onChangeEmail}
+            text={"이메일"}
             id={"signin_id"}
           />
           <ModalPassword value={password} onChangeValue={onChangePassword} />
           <LoginSubmitButton
-            name={name}
+            name={Email}
             password={password}
-            loginFunc={loginHandler}
+            cb={loginHandler}
             status="signIn"
             text={"로그인"}
           />
