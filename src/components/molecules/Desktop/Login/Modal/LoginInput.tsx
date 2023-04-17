@@ -1,8 +1,8 @@
 import { FC, MouseEvent, useState } from "react";
 import styled from "styled-components";
 
-import LoginPassword from "./LoginPassword";
-import LoginName from "./LoginName";
+import ModalPassword from "../../Modal/ModalPassword";
+import LoginName from "../../Modal/ModalName";
 import LoginSubmitButton from "./LoginSubmitButton";
 
 import useInput from "@/hooks/useInput";
@@ -33,8 +33,13 @@ const LoginInput: FC = () => {
       )}
       <FormContainer>
         <InputContainer>
-          <LoginName value={name} onChangeValue={onChangeName} />
-          <LoginPassword value={password} onChangeValue={onChangePassword} />
+          <LoginName
+            value={name}
+            onChangeValue={onChangeName}
+            text={"아이디"}
+            id={"signin_id"}
+          />
+          <ModalPassword value={password} onChangeValue={onChangePassword} />
           <LoginSubmitButton
             name={name}
             password={password}

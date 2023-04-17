@@ -6,6 +6,7 @@ import { useReactiveVar } from "@apollo/client";
 import { signUpModalState } from "apollo/cache";
 import ModalLogo from "../../Modal/ModalLogo";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
+import SignUpInput from "./SignUpInput";
 
 const SignUpModal: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,6 +29,7 @@ const SignUpModal: FC = () => {
     <StyledModal width={500} ref={ref}>
       <ModalContainer>
         <ModalLogo width={50} height={50} />
+        <SignUpInput />
         <ModalCloseButton cb={signUpModalState} />
       </ModalContainer>
     </StyledModal>

@@ -6,19 +6,21 @@ import { Input } from "@/components/atoms/Input";
 interface Props {
   value: string;
   onChangeValue: () => void;
+  text: string;
+  id: string;
 }
 
-const ModalName: FC<Props> = ({ value, onChangeValue }) => {
+const ModalName: FC<Props> = ({ value, onChangeValue, text, id }) => {
   return (
     <NameContainer>
       <NameLabelContainer>
-        <NameLabel htmlFor="name_input">아이디</NameLabel>
+        <NameLabel htmlFor={`${text}_input`}>{text}</NameLabel>
       </NameLabelContainer>
       <NameInputContainer>
         <NameInput
           value={value}
           onChange={onChangeValue}
-          id="name_input"
+          id={`${id}_input`}
           autoComplete="username"
           autoCapitalize="off"
           autoCorrect="off"
