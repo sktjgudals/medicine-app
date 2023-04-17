@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import ModalPassword from "../../Modal/ModalPassword";
 import LoginName from "../../Modal/ModalName";
-import LoginSubmitButton from "./LoginSubmitButton";
+import LoginSubmitButton from "../../Modal/ModalSubmitButton";
 
 import useInput from "@/hooks/useInput";
 import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
@@ -44,6 +44,8 @@ const LoginInput: FC = () => {
             name={name}
             password={password}
             loginFunc={loginHandler}
+            status="signIn"
+            text={"로그인"}
           />
         </InputContainer>
       </FormContainer>

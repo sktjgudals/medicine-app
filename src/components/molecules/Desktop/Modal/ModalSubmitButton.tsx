@@ -6,9 +6,17 @@ interface Props {
   name: string;
   password: string;
   loginFunc: (e: MouseEvent<HTMLButtonElement>) => void;
+  text: string;
+  status: "signIn" | "signUp";
 }
 
-const LoginSubmitButton: FC<Props> = ({ name, password, loginFunc }) => {
+const ModalSubmitButton: FC<Props> = ({
+  name,
+  password,
+  loginFunc,
+  text,
+  status,
+}) => {
   const [submitOk, setSubmitOk] = useState(false);
 
   const submitCheckHandler = useCallback(() => {
@@ -27,7 +35,7 @@ const LoginSubmitButton: FC<Props> = ({ name, password, loginFunc }) => {
         disabled={true}
         style={{ display: submitOk ? "none" : "block" }}
       >
-        로그인
+        {text}
       </ButtonNotAllow>
       <ButtonAllow
         type={submitOk ? "submit" : "button"}
@@ -35,13 +43,13 @@ const LoginSubmitButton: FC<Props> = ({ name, password, loginFunc }) => {
         onSubmit={loginFunc}
         style={{ display: submitOk ? "block" : "none" }}
       >
-        로그인
+        {text}
       </ButtonAllow>
     </SubmitButtonContainer>
   );
 };
 
-export default LoginSubmitButton;
+export default ModalSubmitButton;
 
 const SubmitButtonContainer = styled.div`
   margin-top: 2rem !important;

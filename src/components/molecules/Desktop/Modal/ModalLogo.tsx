@@ -6,16 +6,17 @@ import styled from "styled-components";
 interface Props {
   width: number;
   height: number;
+  text: string;
 }
 
-const ModalLogo: FC<Props> = ({ width, height }) => {
+const ModalLogo: FC<Props> = ({ width, height, text }) => {
   return (
     <div>
       <LogoMainContainer>
         <LogoSubContainer>
           <Logo width={width} height={height} />
           <TextContainer>
-            <Text>약정</Text>
+            <Text>{text}</Text>
           </TextContainer>
         </LogoSubContainer>
       </LogoMainContainer>
