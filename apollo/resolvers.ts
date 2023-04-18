@@ -1,16 +1,23 @@
 import prisma from "prisma/prisma";
+import GraphQLJSON from "graphql-type-json";
+
 import { test } from "./resolverFunc/test";
+import { createLocalUserFunc } from "./resolverFunc/signup";
 
 export const resolvers = {
+  JSON: GraphQLJSON,
   Query: {
-    hello: () => hello(),
     test: () => test<string>(prisma),
     a: () => "aaaa",
   },
+  Mutation: {
+    createLocalUser: async (
+      _: any,
+      {
+        email,
+        nickname,
+        password,
+      }: { email: string; nickname: string; password: string }
+    ) => createLocalUserFunc(email, nickname, password),
+  },
 };
-
-function hello() {
-  // 디비 호출 해서
-  // orm으로 꺼내줘서 디비
-  return "hello test";
-}
