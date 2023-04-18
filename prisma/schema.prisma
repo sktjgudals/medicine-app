@@ -31,8 +31,7 @@ model Account {
 model User {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   email        String?   @unique
-  name         String    @unique
-  nickname     String?
+  nickname     String    @unique
   password     String?
   introduction String?
   image        String?
