@@ -8,8 +8,6 @@ interface Props {
 }
 
 const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk }) => {
-  //   console.info("hi");
-  //   console.info("submi" + submitOk);
   return (
     <SubmitButtonContainer>
       <ButtonNotAllow
@@ -20,7 +18,7 @@ const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk }) => {
         {text}
       </ButtonNotAllow>
       <ButtonAllow
-        type={submitOk ? "submit" : "button"}
+        type={"button"}
         onClick={cb}
         onSubmit={cb}
         style={{ display: submitOk ? "block" : "none" }}

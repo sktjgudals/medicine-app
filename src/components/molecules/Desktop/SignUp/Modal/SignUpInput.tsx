@@ -1,8 +1,10 @@
-import useInput from "@/hooks/useInput";
 import { FC, useCallback, useEffect, useState } from "react";
+import styled from "styled-components";
+
+import useInput from "@/hooks/useInput";
+
 import ModalName from "../../Modal/ModalName";
 import ModalEmail from "../../Modal/ModalEmail";
-import styled from "styled-components";
 import ModalPassword from "../../Modal/ModalPassword";
 import ModalSubmitButton from "../../Modal/ModalSubmitButton";
 
@@ -11,31 +13,52 @@ import {
   nicknameCheckFunc,
   passwordCheckFunc,
 } from "@/utils/func/signUp";
+import { useMutation } from "@apollo/client";
+import { CREATE_LOCAL_USER } from "apollo/querys/signup";
 
-const INITIAL_STATE = {
+const CHECK_INITIAL_STATE = {
   email: false,
   password: false,
   nickName: false,
 };
 
+const MESSAGE_INITIAL_STATE = {
+  email: "",
+  password: "",
+  nickName: "",
+};
+
 const SignUpInput: FC = () => {
+  const [createUserFunc, { data, loading, error }] =
+    useMutation(CREATE_LOCAL_USER);
   const [email, onChangeEmail] = useInput("");
   const [nickName, onChangeNickName] = useInput("");
   const [password, onChangePassword] = useInput("");
 
-  const [check, setCheck] = useState(INITIAL_STATE);
+  const [check, setCheck] = useState(CHECK_INITIAL_STATE);
+  const [message, setMessage] = useState(MESSAGE_INITIAL_STATE);
 
   const signUpCheckHandler = useCallback(() => {
-    emailCheckFunc(setCheck, email, check);
-    passwordCheckFunc(setCheck, password, check);
-    nicknameCheckFunc(setCheck, nickName, check);
+    emailCheckFunc(setCheck, email, check, setMessage);
+    passwordCheckFunc(setCheck, password, check, setMessage);
+    nicknameCheckFunc(setCheck, nickName, check, setMessage);
   }, [email, password, nickName]);
 
   useEffect(() => {
     signUpCheckHandler();
   }, [signUpCheckHandler]);
 
-  const signUpHandler = () => {};
+  let submitOk =
+    check["email"] &&
+    check["password"] &&
+    check["nickName"] &&
+    password.length > 0 &&
+    nickName.length > 0 &&
+    email.length > 0;
+
+  const signUpHandler = () => {
+    createUserFunc({ variables: { email, nickname: nickName, password } });
+  };
 
   return (
     <FormContainer>
@@ -46,19 +69,19 @@ const SignUpInput: FC = () => {
           text={"이메일"}
           id={"signup_id"}
         />
-        <EmailErrorContainer></EmailErrorContainer>
+        <ErrorContainer>{message["email"]}</ErrorContainer>
         <ModalName
           value={nickName}
           onChangeValue={onChangeNickName}
           text={"닉네임"}
           id={"nickName_id"}
         />
-        <NickNameErrorContainer></NickNameErrorContainer>
+        <ErrorContainer>{message["nickName"]}</ErrorContainer>
         <ModalPassword value={password} onChangeValue={onChangePassword} />
-        <PasswordErrorContainer></PasswordErrorContainer>
+        <ErrorContainer>{message["password"]}</ErrorContainer>
         <ModalSubmitButton
           cb={signUpHandler}
-          submitOk={check["email"] && check["password"] && check["nickName"]}
+          submitOk={submitOk}
           text={"회원가입"}
         />
       </InputContainer>
@@ -77,8 +100,8 @@ const InputContainer = styled.div`
 
 const FormContainer = styled.form``;
 
-const EmailErrorContainer = styled.div``;
-
-const NickNameErrorContainer = styled.div``;
-
-const PasswordErrorContainer = styled.div``;
+const ErrorContainer = styled.div`
+  padding-top: 0.5rem !important;
+  font-size: var(--font-size-9) !important;
+  color: var(--color-text-error) !important;
+`;
