@@ -5,7 +5,6 @@ import Title from "@/components/atoms/Title";
 
 const GET_TEST = gql`
   query hello {
-    hello
     a
   }
 `;
