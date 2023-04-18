@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import ModalPassword from "../../Modal/ModalPassword";
@@ -7,12 +7,22 @@ import LoginSubmitButton from "../../Modal/ModalSubmitButton";
 
 import useInput from "@/hooks/useInput";
 import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
+import { emailVerify } from "@/utils/refexp";
 
 const LoginInput: FC = () => {
-  const [Email, onChangeEmail] = useInput("");
+  const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [loginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [submitOk, setSubmitOk] = useState(false);
+
+  const signInCheckHandler = useCallback(async () => {
+    if (email.length > 0 && password.length > 0) {
+      const emailCheck = await emailVerify(email);
+      if (emailCheck) setSubmitOk(true);
+      else setSubmitOk(false);
+    } else setSubmitOk(false);
+  }, [email, password]);
 
   const loginHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -20,6 +30,10 @@ const LoginInput: FC = () => {
     setLoginError(!loginError);
     setErrorMessage(`잘못된 비밀번호입니다. 다시 시도하세요.`);
   };
+
+  useEffect(() => {
+    signInCheckHandler();
+  }, [signInCheckHandler]);
 
   return (
     <>
@@ -34,18 +48,16 @@ const LoginInput: FC = () => {
       <FormContainer>
         <InputContainer>
           <LoginName
-            value={Email}
+            value={email}
             onChangeValue={onChangeEmail}
             text={"이메일"}
             id={"signin_id"}
           />
           <ModalPassword value={password} onChangeValue={onChangePassword} />
           <LoginSubmitButton
-            name={Email}
-            password={password}
             cb={loginHandler}
-            status="signIn"
             text={"로그인"}
+            submitOk={submitOk}
           />
         </InputContainer>
       </FormContainer>

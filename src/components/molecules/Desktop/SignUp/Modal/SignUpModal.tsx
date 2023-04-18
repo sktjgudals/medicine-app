@@ -28,7 +28,7 @@ const SignUpModal: FC = () => {
   return (
     <StyledModal width={500} ref={ref}>
       <ModalContainer>
-        <ModalLogo width={50} height={50} text={"약정 "} />
+        <ModalLogo width={50} height={50} text={"회원가입"} />
         <SignUpInput />
         <ModalCloseButton cb={signUpModalState} />
       </ModalContainer>

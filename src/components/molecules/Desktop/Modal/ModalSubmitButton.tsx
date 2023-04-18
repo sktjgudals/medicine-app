@@ -1,27 +1,15 @@
-import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
-
 import styled from "styled-components";
+import { FC, MouseEvent } from "react";
 
 interface Props {
-  name: string;
-  password: string;
   cb: (e: MouseEvent<HTMLButtonElement>) => void;
   text: string;
-  status: "signIn" | "signUp";
+  submitOk: boolean;
 }
 
-const ModalSubmitButton: FC<Props> = ({ name, password, cb, text, status }) => {
-  const [submitOk, setSubmitOk] = useState(false);
-
-  const submitCheckHandler = useCallback(() => {
-    if (name.length > 0 && password.length > 0) setSubmitOk(true);
-    else setSubmitOk(false);
-  }, [name, password]);
-
-  useEffect(() => {
-    submitCheckHandler();
-  }, [submitCheckHandler]);
-
+const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk }) => {
+  //   console.info("hi");
+  //   console.info("submi" + submitOk);
   return (
     <SubmitButtonContainer>
       <ButtonNotAllow

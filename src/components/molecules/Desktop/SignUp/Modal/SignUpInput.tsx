@@ -1,43 +1,68 @@
 import useInput from "@/hooks/useInput";
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import ModalName from "../../Modal/ModalName";
+import ModalEmail from "../../Modal/ModalEmail";
 import styled from "styled-components";
 import ModalPassword from "../../Modal/ModalPassword";
 import ModalSubmitButton from "../../Modal/ModalSubmitButton";
+
+import {
+  emailCheckFunc,
+  nicknameCheckFunc,
+  passwordCheckFunc,
+} from "@/utils/func/signUp";
+
+const INITIAL_STATE = {
+  email: false,
+  password: false,
+  nickName: false,
+};
 
 const SignUpInput: FC = () => {
   const [email, onChangeEmail] = useInput("");
   const [nickName, onChangeNickName] = useInput("");
   const [password, onChangePassword] = useInput("");
 
+  const [check, setCheck] = useState(INITIAL_STATE);
+
+  const signUpCheckHandler = useCallback(() => {
+    emailCheckFunc(setCheck, email, check);
+    passwordCheckFunc(setCheck, password, check);
+    nicknameCheckFunc(setCheck, nickName, check);
+  }, [email, password, nickName]);
+
+  useEffect(() => {
+    signUpCheckHandler();
+  }, [signUpCheckHandler]);
+
   const signUpHandler = () => {};
+
   return (
-    <>
-      <FormContainer>
-        <InputContainer>
-          <ModalName
-            value={email}
-            onChangeValue={onChangeEmail}
-            text={"이메일"}
-            id={"signup_id"}
-          />
-          <ModalName
-            value={nickName}
-            onChangeValue={onChangeNickName}
-            text={"닉네임"}
-            id={"nickName_id"}
-          />
-          <ModalPassword value={password} onChangeValue={onChangePassword} />
-          <ModalSubmitButton
-            name={email}
-            password={password}
-            cb={signUpHandler}
-            status="signUp"
-            text={"회원가입"}
-          />
-        </InputContainer>
-      </FormContainer>
-    </>
+    <FormContainer>
+      <InputContainer>
+        <ModalEmail
+          value={email}
+          onChangeValue={onChangeEmail}
+          text={"이메일"}
+          id={"signup_id"}
+        />
+        <EmailErrorContainer></EmailErrorContainer>
+        <ModalName
+          value={nickName}
+          onChangeValue={onChangeNickName}
+          text={"닉네임"}
+          id={"nickName_id"}
+        />
+        <NickNameErrorContainer></NickNameErrorContainer>
+        <ModalPassword value={password} onChangeValue={onChangePassword} />
+        <PasswordErrorContainer></PasswordErrorContainer>
+        <ModalSubmitButton
+          cb={signUpHandler}
+          submitOk={check["email"] && check["password"] && check["nickName"]}
+          text={"회원가입"}
+        />
+      </InputContainer>
+    </FormContainer>
   );
 };
 
@@ -51,3 +76,9 @@ const InputContainer = styled.div`
 `;
 
 const FormContainer = styled.form``;
+
+const EmailErrorContainer = styled.div``;
+
+const NickNameErrorContainer = styled.div``;
+
+const PasswordErrorContainer = styled.div``;

@@ -30,7 +30,7 @@ const LoginModal: FC = () => {
   return (
     <StyledLoginModal width={500} ref={ref}>
       <ModalContainer>
-        <ModalLogo width={50} height={50} text={"약정"} />
+        <ModalLogo width={50} height={50} text={"로그인"} />
         <LoginInput />
         <ModalCloseButton cb={modalState} />
       </ModalContainer>
