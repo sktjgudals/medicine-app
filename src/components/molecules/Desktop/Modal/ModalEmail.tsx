@@ -50,7 +50,7 @@ const EmailLabel = styled.label`
 `;
 
 const EmailContainer = styled.div`
-  margin-top: 2rem !important;
+  margin-top: 1.5rem !important;
 `;
 
 const EmailInputContainer = styled.div`

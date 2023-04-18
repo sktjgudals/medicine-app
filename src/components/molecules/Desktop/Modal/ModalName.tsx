@@ -50,7 +50,7 @@ const NameLabel = styled.label`
 `;
 
 const NameContainer = styled.div`
-  margin-top: 2rem !important;
+  margin-top: 1.5rem !important;
 `;
 
 const NameInputContainer = styled.div`

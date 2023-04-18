@@ -59,7 +59,7 @@ const ModalPassword: FC<Props> = ({ value, onChangeValue }) => {
 export default ModalPassword;
 
 const PasswordContainer = styled.div`
-  margin-top: 2rem !important;
+  margin-top: 1.5rem !important;
 `;
 
 const PasswordLabelContainer = styled.div`
