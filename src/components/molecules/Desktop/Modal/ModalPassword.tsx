@@ -5,14 +5,16 @@ import { Input } from "@/components/atoms/Input";
 import EyeIcon from "@/components/atoms/icons/EyeIcon";
 import { Button } from "@/components/atoms/Button";
 import EyeSlashIcon from "@/components/atoms/icons/EyeSlashIcon";
+import DuplicatedValue from "./DuplicatedValue";
 
 interface Props {
   value: string;
   onChangeValue: () => void;
   cb: (e: any) => void;
+  pwdCheck?: boolean;
 }
 
-const ModalPassword: FC<Props> = ({ value, onChangeValue, cb }) => {
+const ModalPassword: FC<Props> = ({ value, onChangeValue, cb, pwdCheck }) => {
   const [isShow, setIsShow] = useState<boolean>(true);
 
   const handleShow = () => {
@@ -23,6 +25,9 @@ const ModalPassword: FC<Props> = ({ value, onChangeValue, cb }) => {
     <PasswordContainer>
       <PasswordLabelContainer>
         <PasswordLabel htmlFor="password_input">패스워드</PasswordLabel>
+        {value.length > 0 && pwdCheck !== undefined && (
+          <DuplicatedValue loading={false} check={pwdCheck} />
+        )}
       </PasswordLabelContainer>
       <PasswordInputContainer>
         <PasswordInput

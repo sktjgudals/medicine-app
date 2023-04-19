@@ -1,14 +1,13 @@
-import { ChangeEvent, FC, useCallback, useState } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import styled from "styled-components";
 
 import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
 
 import { Input } from "@/components/atoms/Input";
-import Loading from "@/components/atoms/Loading";
-import SubmitCheck from "./SubmitCheck";
 import { findUserEmail } from "apollo/querys/signup";
-import { useReactiveVar } from "@apollo/client";
 import { emailVerify } from "@/utils/refexp";
+import DuplicatedValue from "./DuplicatedValue";
+import { useReactiveVar } from "@apollo/client";
 
 interface Props {
   value: string;
@@ -18,27 +17,6 @@ interface Props {
   checkDuplicate: boolean;
 }
 
-const DuplicatedValue: FC = () => {
-  const loading = useReactiveVar(emailLoadingCheck);
-  return (
-    <>
-      {loading ? (
-        <Loading
-          width={20}
-          height={20}
-          strokeWidth={10}
-          top={0}
-          bottom={0}
-          right={0}
-          left={0}
-        />
-      ) : (
-        <SubmitCheck />
-      )}
-    </>
-  );
-};
-
 const ModalEmail: FC<Props> = ({
   value,
   onChangeValue,
@@ -46,6 +24,8 @@ const ModalEmail: FC<Props> = ({
   id,
   checkDuplicate,
 }) => {
+  const loading = useReactiveVar(emailLoadingCheck);
+  const checkEmail = useReactiveVar(emailSubmitCheck);
   // 이거 훅으로 만들수있을거같음
   const debounceFunction = (callback: any, delay: any) => {
     let timer: NodeJS.Timeout;
@@ -96,9 +76,11 @@ const ModalEmail: FC<Props> = ({
       <EmailLabelContainer>
         <EmailLabel htmlFor={`${text}_input`}>{text}</EmailLabel>
         {value.length > 0 && (
-          <EmailLoadingContainer>
-            {checkDuplicate && <DuplicatedValue />}
-          </EmailLoadingContainer>
+          <>
+            {checkDuplicate && (
+              <DuplicatedValue loading={loading} check={checkEmail} />
+            )}
+          </>
         )}
       </EmailLabelContainer>
       <EmailInputContainer>
@@ -117,12 +99,6 @@ const ModalEmail: FC<Props> = ({
 };
 
 export default ModalEmail;
-
-const EmailLoadingContainer = styled.div`
-  position: absolute;
-  right: 0;
-  padding-right: 40px;
-`;
 
 const EmailLabelContainer = styled.div`
   margin-bottom: 0.5rem !important;

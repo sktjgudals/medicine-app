@@ -94,12 +94,14 @@ const SignUpInput: FC = () => {
           onChangeValue={onChangeNickName}
           text={"닉네임"}
           id={"nickName_id"}
+          nicknameCheck={check["nickName"]}
         />
         <ErrorContainer>{message["nickName"]}</ErrorContainer>
         <ModalPassword
           value={password}
           onChangeValue={onChangePassword}
           cb={signUpHandler}
+          pwdCheck={check["password"]}
         />
         <ErrorContainer>{message["password"]}</ErrorContainer>
         <ModalSubmitButton

@@ -2,19 +2,30 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { Input } from "@/components/atoms/Input";
+import DuplicatedValue from "./DuplicatedValue";
 
 interface Props {
   value: string;
   onChangeValue: () => void;
   text: string;
   id: string;
+  nicknameCheck: boolean;
 }
 
-const ModalName: FC<Props> = ({ value, onChangeValue, text, id }) => {
+const ModalName: FC<Props> = ({
+  value,
+  onChangeValue,
+  text,
+  id,
+  nicknameCheck,
+}) => {
   return (
     <NameContainer>
       <NameLabelContainer>
         <NameLabel htmlFor={`${text}_input`}>{text}</NameLabel>
+        {value.length > 0 && (
+          <DuplicatedValue loading={false} check={nicknameCheck} />
+        )}
       </NameLabelContainer>
       <NameInputContainer>
         <NameInput

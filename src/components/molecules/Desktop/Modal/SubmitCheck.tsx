@@ -3,15 +3,15 @@ import styled from "styled-components";
 
 import CheckIcon from "@/components/atoms/icons/CheckIcon";
 import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
-import { useReactiveVar } from "@apollo/client";
-import { emailSubmitCheck } from "apollo/cache";
 
-const SubmitCheck: FC = () => {
-  const checkEmail = useReactiveVar(emailSubmitCheck);
+interface Props {
+  check: boolean;
+}
 
+const SubmitCheck: FC<Props> = ({ check }) => {
   return (
     <SubmitContainer>
-      {checkEmail ? (
+      {check ? (
         <CheckIcon color="green" width={20} height={20} />
       ) : (
         <ExclamationIcon width={20} height={20} color="red" />
