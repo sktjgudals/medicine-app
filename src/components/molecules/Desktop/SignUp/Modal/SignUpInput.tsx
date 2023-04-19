@@ -13,9 +13,10 @@ import {
   nicknameCheckFunc,
   passwordCheckFunc,
 } from "@/utils/func/signUp";
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { CREATE_LOCAL_USER } from "apollo/querys/signup";
 import { useRouter } from "next/router";
+import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
 
 const CHECK_INITIAL_STATE = {
   email: false,
@@ -34,6 +35,10 @@ const SignUpInput: FC = () => {
   const [createUserFunc, { loading, error }] = useMutation(CREATE_LOCAL_USER, {
     errorPolicy: "all",
   });
+
+  const checkEmail = useReactiveVar(emailSubmitCheck);
+  const checkEmailLoading = useReactiveVar(emailLoadingCheck);
+
   const [email, onChangeEmail] = useInput("");
   const [nickName, onChangeNickName] = useInput("");
   const [password, onChangePassword] = useInput("");
@@ -57,10 +62,12 @@ const SignUpInput: FC = () => {
     check["nickName"] &&
     password.length > 0 &&
     nickName.length > 0 &&
-    email.length > 0;
+    email.length > 0 &&
+    checkEmail &&
+    !checkEmailLoading;
 
   const signUpHandler = async () => {
-    const { data, errors } = await createUserFunc({
+    const { data } = await createUserFunc({
       variables: { email, nickname: nickName, password },
     });
     if (data["createLocalUser"]) {
