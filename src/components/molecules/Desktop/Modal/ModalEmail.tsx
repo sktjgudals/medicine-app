@@ -8,6 +8,7 @@ import Loading from "@/components/atoms/Loading";
 import SubmitCheck from "./SubmitCheck";
 import { findUserEmail } from "apollo/querys/signup";
 import { useReactiveVar } from "@apollo/client";
+import { emailVerify } from "@/utils/refexp";
 
 interface Props {
   value: string;
@@ -67,10 +68,16 @@ const ModalEmail: FC<Props> = ({
   );
 
   const apiCall = async (value: string) => {
-    const { data } = await findUserEmail(value);
-    if (data.findUserEmail === null) {
-      emailSubmitCheck(true);
-      emailLoadingCheck(false);
+    const res = await emailVerify(value);
+    if (res) {
+      const { data } = await findUserEmail(value);
+      if (data.findUserEmail === null) {
+        emailSubmitCheck(true);
+        emailLoadingCheck(false);
+      } else {
+        emailSubmitCheck(false);
+        emailLoadingCheck(false);
+      }
     } else {
       emailSubmitCheck(false);
       emailLoadingCheck(false);
