@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+import jwt_decode from "jwt-decode";
 const generateUserToken = async (
   id: string,
   email: string,
@@ -37,4 +38,8 @@ const tokenVerify = (token: any) => {
   }
 };
 
-export { tokenVerify, generateUserToken };
+const localTokenVerify = (token: string) => {
+  return jwt_decode(token);
+};
+
+export { tokenVerify, generateUserToken, localTokenVerify };
