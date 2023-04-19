@@ -5,7 +5,8 @@ const useInput = (initialValue: any) => {
   const onChangeValue = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      setValue(e.target.value);
+      const newValue = e.target.value.replace(" ", "");
+      setValue(newValue);
     },
     [value]
   );
