@@ -51,7 +51,6 @@ const SignUpButton = styled.div`
 `;
 
 const SignUpText = styled.p`
-  opacity: 0.8;
   font-size: var(--font-size-8);
   font-weight: var(--font-weight-semibold);
 `;
