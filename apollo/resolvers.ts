@@ -1,17 +1,15 @@
-import prisma from "prisma/prisma";
 import GraphQLJSON from "graphql-type-json";
 
-import { test } from "./resolverFunc/test";
 import {
   createLocalUserFunc,
   findUserEmailFunc,
   findUserNicknameFunc,
 } from "./resolverFunc/signup";
+import { signinLocalUserFunc } from "./resolverFunc/signin";
 
 export const resolvers = {
   JSON: GraphQLJSON,
   Query: {
-    test: () => test<string>(prisma),
     a: () => "aaaa",
     findUserEmail: async (_: any, { email }: { email: string }) =>
       findUserEmailFunc(email),
@@ -28,5 +26,9 @@ export const resolvers = {
         password,
       }: { email: string; nickname: string; password: string }
     ) => createLocalUserFunc(email, nickname, password),
+    signinLocalUser: async (
+      _: any,
+      { email, password }: { email: string; password: string }
+    ) => signinLocalUserFunc(email, password),
   },
 };

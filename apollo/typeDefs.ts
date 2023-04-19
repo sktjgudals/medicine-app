@@ -10,7 +10,7 @@ export const typeDefs = gql`
     image: String
   }
 
-  type CreateUserResponse {
+  type UserResponse {
     id: String
     token: JSON
   }
@@ -27,7 +27,8 @@ export const typeDefs = gql`
       email: String!
       nickname: String!
       password: String!
-    ): CreateUserResponse
+    ): UserResponse
+    signinLocalUser(email: String!, password: String!): UserResponse
   }
 `;
 
