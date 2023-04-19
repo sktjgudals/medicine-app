@@ -1,6 +1,6 @@
+import prisma from "prisma/prisma";
 import { bcryptGenSalt, bcryptHash } from "@/utils/secure";
 import { generateUserToken } from "@/utils/token";
-import prisma from "prisma/prisma";
 
 const findUserEmailFunc = async (email: string) => {
   try {
