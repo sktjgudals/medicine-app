@@ -66,13 +66,15 @@ const SignUpInput: FC = () => {
     checkEmail &&
     !checkEmailLoading;
 
-  const signUpHandler = async () => {
-    const { data } = await createUserFunc({
-      variables: { email, nickname: nickName, password },
-    });
-    if (data["createLocalUser"]) {
-      localStorage.setItem("access_token", data["createLocalUser"]["token"]);
-      router.reload();
+  const signUpHandler = async (e: any) => {
+    if (e.key === "Enter" || e.key === undefined) {
+      const { data } = await createUserFunc({
+        variables: { email, nickname: nickName, password },
+      });
+      if (data["createLocalUser"]) {
+        localStorage.setItem("access_token", data["createLocalUser"]["token"]);
+        router.reload();
+      }
     }
   };
 
@@ -94,7 +96,11 @@ const SignUpInput: FC = () => {
           id={"nickName_id"}
         />
         <ErrorContainer>{message["nickName"]}</ErrorContainer>
-        <ModalPassword value={password} onChangeValue={onChangePassword} />
+        <ModalPassword
+          value={password}
+          onChangeValue={onChangePassword}
+          cb={signUpHandler}
+        />
         <ErrorContainer>{message["password"]}</ErrorContainer>
         <ModalSubmitButton
           cb={signUpHandler}

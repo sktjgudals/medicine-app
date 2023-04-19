@@ -4,7 +4,7 @@ import { FC, MouseEvent } from "react";
 import Loading from "@/components/atoms/Loading";
 
 interface Props {
-  cb: (e: MouseEvent<HTMLButtonElement>) => void;
+  cb: (e: any) => void;
   text: string;
   submitOk: boolean;
   loading: boolean;

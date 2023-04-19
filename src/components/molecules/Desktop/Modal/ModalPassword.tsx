@@ -9,9 +9,10 @@ import EyeSlashIcon from "@/components/atoms/icons/EyeSlashIcon";
 interface Props {
   value: string;
   onChangeValue: () => void;
+  cb: (e: any) => void;
 }
 
-const ModalPassword: FC<Props> = ({ value, onChangeValue }) => {
+const ModalPassword: FC<Props> = ({ value, onChangeValue, cb }) => {
   const [isShow, setIsShow] = useState<boolean>(true);
 
   const handleShow = () => {
@@ -33,6 +34,7 @@ const ModalPassword: FC<Props> = ({ value, onChangeValue }) => {
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck="false"
+          onKeyDown={cb}
           style={{ display: isShow ? "block" : "none" }}
         />
         <PasswordInput
@@ -44,6 +46,7 @@ const ModalPassword: FC<Props> = ({ value, onChangeValue }) => {
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck="false"
+          onKeyDown={cb}
         />
         <PasswordEyeContainer>
           <EyeButton width={30} height={10} type="button" onClick={handleShow}>
