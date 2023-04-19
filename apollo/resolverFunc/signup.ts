@@ -43,7 +43,6 @@ const createLocalUserFunc = async (
           {
             email: email.toLowerCase(),
           },
-          { nickname },
         ],
       },
     });
