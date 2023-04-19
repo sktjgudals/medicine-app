@@ -11,14 +11,15 @@ export const typeDefs = gql`
   }
 
   type CreateUserResponse {
+    id: String
     token: JSON
-    error: Boolean!
   }
 
   type Query {
-    hello: String
     test: String
     a: String
+    findUserEmail(email: String): User
+    findUserNickname(nickname: String): User
   }
 
   type Mutation {
