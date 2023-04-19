@@ -6,4 +6,6 @@ const signUpModalState = makeVar<boolean>(false);
 
 const dropdownState = makeVar<boolean>(false);
 
-export { modalState, dropdownState, signUpModalState };
+const emailSubmitCheck = makeVar<boolean>(false);
+
+export { modalState, dropdownState, signUpModalState, emailSubmitCheck };

@@ -3,13 +3,31 @@ import { generateUserToken } from "@/utils/token";
 import prisma from "prisma/prisma";
 
 const findUserEmailFunc = async (email: string) => {
-  console.info(email);
-  return { id: "1" };
+  try {
+    const res = await prisma.user.findFirst({
+      where: { email: email.toLocaleLowerCase() },
+    });
+    if (!res) {
+      return null;
+    }
+    return res;
+  } catch (e) {
+    return null;
+  }
 };
 
 const findUserNicknameFunc = async (nickname: string) => {
-  console.info(nickname);
-  return { id: "1" };
+  try {
+    const res = await prisma.user.findFirst({
+      where: { nickname },
+    });
+    if (!res) {
+      return null;
+    }
+    return res;
+  } catch (e) {
+    return null;
+  }
 };
 
 const createLocalUserFunc = async (

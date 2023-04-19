@@ -15,6 +15,7 @@ import {
 } from "@/utils/func/signUp";
 import { useMutation } from "@apollo/client";
 import { CREATE_LOCAL_USER } from "apollo/querys/signup";
+import { useRouter } from "next/router";
 
 const CHECK_INITIAL_STATE = {
   email: false,
@@ -29,8 +30,10 @@ const MESSAGE_INITIAL_STATE = {
 };
 
 const SignUpInput: FC = () => {
-  const [createUserFunc, { data, loading, error }] =
-    useMutation(CREATE_LOCAL_USER);
+  const router = useRouter();
+  const [createUserFunc, { loading, error }] = useMutation(CREATE_LOCAL_USER, {
+    errorPolicy: "all",
+  });
   const [email, onChangeEmail] = useInput("");
   const [nickName, onChangeNickName] = useInput("");
   const [password, onChangePassword] = useInput("");
@@ -56,8 +59,14 @@ const SignUpInput: FC = () => {
     nickName.length > 0 &&
     email.length > 0;
 
-  const signUpHandler = () => {
-    createUserFunc({ variables: { email, nickname: nickName, password } });
+  const signUpHandler = async () => {
+    const { data, errors } = await createUserFunc({
+      variables: { email, nickname: nickName, password },
+    });
+    if (data["createLocalUser"]) {
+      localStorage.setItem("access_token", data["createLocalUser"]["token"]);
+      router.reload();
+    }
   };
 
   return (
@@ -68,6 +77,7 @@ const SignUpInput: FC = () => {
           onChangeValue={onChangeEmail}
           text={"이메일"}
           id={"signup_id"}
+          checkDuplicate={true}
         />
         <ErrorContainer>{message["email"]}</ErrorContainer>
         <ModalName
@@ -83,7 +93,9 @@ const SignUpInput: FC = () => {
           cb={signUpHandler}
           submitOk={submitOk}
           text={"회원가입"}
+          loading={loading}
         />
+        <ErrorContainer>{error && "회원 생성에 실패했습니다."}</ErrorContainer>
       </InputContainer>
     </FormContainer>
   );

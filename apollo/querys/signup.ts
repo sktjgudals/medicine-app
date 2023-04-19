@@ -15,9 +15,12 @@ const CREATE_LOCAL_USER = gql`
 `;
 
 const findUserEmail = (email: string) => {
+  const reg = /[`~!#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gim;
+  const newEmail = email.replace(reg, "");
+
   const data = gql`
     query data{
-        findUserEmail(email:"${email}"){
+        findUserEmail(email:"${newEmail}"){
         id
         }
 }`;
@@ -28,9 +31,12 @@ const findUserEmail = (email: string) => {
 };
 
 const findUserName = (nickname: string) => {
+  const reg = /[`~!#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gim;
+  const newNickname = nickname.replace(reg, "");
+
   const data = gql`
     query data{
-        findUserNickname(nickname:"${nickname}"){
+        findUserNickname(nickname:"${newNickname}"){
           id
         }
 }`;

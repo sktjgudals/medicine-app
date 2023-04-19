@@ -2,7 +2,7 @@ import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import ModalPassword from "../../Modal/ModalPassword";
-import LoginName from "../../Modal/ModalName";
+import LoginEmail from "../../Modal/ModalEmail";
 import LoginSubmitButton from "../../Modal/ModalSubmitButton";
 
 import useInput from "@/hooks/useInput";
@@ -47,17 +47,19 @@ const LoginInput: FC = () => {
       )}
       <FormContainer>
         <InputContainer>
-          <LoginName
+          <LoginEmail
             value={email}
             onChangeValue={onChangeEmail}
             text={"이메일"}
             id={"signin_id"}
+            checkDuplicate={false}
           />
           <ModalPassword value={password} onChangeValue={onChangePassword} />
           <LoginSubmitButton
             cb={loginHandler}
             text={"로그인"}
             submitOk={submitOk}
+            loading={false}
           />
         </InputContainer>
       </FormContainer>
