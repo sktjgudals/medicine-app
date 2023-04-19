@@ -1,5 +1,6 @@
 import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import ModalPassword from "../../Modal/ModalPassword";
 import LoginEmail from "../../Modal/ModalEmail";
@@ -8,8 +9,14 @@ import LoginSubmitButton from "../../Modal/ModalSubmitButton";
 import useInput from "@/hooks/useInput";
 import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 import { emailVerify } from "@/utils/refexp";
+import { useMutation } from "@apollo/client";
+import { SIGNIN_LOCAL_USER } from "apollo/querys/signin";
 
 const LoginInput: FC = () => {
+  const router = useRouter();
+  const [signinUserFunc, { loading, error }] = useMutation(SIGNIN_LOCAL_USER, {
+    errorPolicy: "all",
+  });
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [loginError, setLoginError] = useState(false);
@@ -24,11 +31,19 @@ const LoginInput: FC = () => {
     } else setSubmitOk(false);
   }, [email, password]);
 
-  const loginHandler = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    setLoginError(!loginError);
-    setErrorMessage(`잘못된 비밀번호입니다. 다시 시도하세요.`);
+  const signinHandler = async (e: any) => {
+    if (e.key === "Enter" || e.key === undefined) {
+      const { data } = await signinUserFunc({ variables: { email, password } });
+      if (data["signinLocalUser"] !== null) {
+        localStorage.setItem("access_token", data["signinLocalUser"]["token"]);
+        setLoginError(false);
+        setErrorMessage("");
+        router.reload();
+      } else {
+        setLoginError(true);
+        setErrorMessage(`잘못된 비밀번호입니다. 다시 시도하세요.`);
+      }
+    }
   };
 
   useEffect(() => {
@@ -54,12 +69,16 @@ const LoginInput: FC = () => {
             id={"signin_id"}
             checkDuplicate={false}
           />
-          <ModalPassword value={password} onChangeValue={onChangePassword} />
+          <ModalPassword
+            value={password}
+            onChangeValue={onChangePassword}
+            cb={signinHandler}
+          />
           <LoginSubmitButton
-            cb={loginHandler}
+            cb={signinHandler}
             text={"로그인"}
             submitOk={submitOk}
-            loading={false}
+            loading={loading}
           />
         </InputContainer>
       </FormContainer>
