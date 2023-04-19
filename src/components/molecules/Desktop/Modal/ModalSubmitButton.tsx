@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { FC, MouseEvent } from "react";
 
+import Loading from "@/components/atoms/Loading";
+
 interface Props {
   cb: (e: MouseEvent<HTMLButtonElement>) => void;
   text: string;
   submitOk: boolean;
+  loading: boolean;
 }
 
-const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk }) => {
+const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk, loading }) => {
   return (
     <SubmitButtonContainer>
       <ButtonNotAllow
@@ -23,7 +26,19 @@ const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk }) => {
         onSubmit={cb}
         style={{ display: submitOk ? "block" : "none" }}
       >
-        {text}
+        {loading ? (
+          <Loading
+            width={30}
+            height={30}
+            strokeWidth={10}
+            top={0}
+            bottom={0}
+            right={0}
+            left={45}
+          />
+        ) : (
+          text
+        )}
       </ButtonAllow>
     </SubmitButtonContainer>
   );
@@ -57,6 +72,9 @@ const ButtonNotAllow = styled(SubmitButton)`
 `;
 
 const ButtonAllow = styled(SubmitButton)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--color-background-button-primary-default);
   color: var(--color-text-button-primary);
   transition: 0.2s all;
