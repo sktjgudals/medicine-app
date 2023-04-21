@@ -2,21 +2,36 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { Input } from "@/components/atoms/Input";
-import useInput from "@/hooks/useInput";
+import DuplicatedValue from "./DuplicatedValue";
 
-const LoginName: FC = () => {
-  const [userFormInput, onChangeForm] = useInput("");
+interface Props {
+  value: string;
+  onChangeValue: () => void;
+  text: string;
+  id: string;
+  nicknameCheck: boolean;
+}
 
+const ModalName: FC<Props> = ({
+  value,
+  onChangeValue,
+  text,
+  id,
+  nicknameCheck,
+}) => {
   return (
     <NameContainer>
       <NameLabelContainer>
-        <NameLabel htmlFor="name_input">아이디</NameLabel>
+        <NameLabel htmlFor={`${text}_input`}>{text}</NameLabel>
+        {value.length > 0 && (
+          <DuplicatedValue loading={false} check={nicknameCheck} />
+        )}
       </NameLabelContainer>
       <NameInputContainer>
         <NameInput
-          value={userFormInput}
-          onChange={onChangeForm}
-          id="name_input"
+          value={value}
+          onChange={onChangeValue}
+          id={`${id}_input`}
           autoComplete="username"
           autoCapitalize="off"
           autoCorrect="off"
@@ -27,7 +42,7 @@ const LoginName: FC = () => {
   );
 };
 
-export default LoginName;
+export default ModalName;
 
 const NameLabelContainer = styled.div`
   margin-bottom: 0.5rem !important;
@@ -46,7 +61,7 @@ const NameLabel = styled.label`
 `;
 
 const NameContainer = styled.div`
-  margin-top: 2rem !important;
+  margin-top: 1.5rem !important;
 `;
 
 const NameInputContainer = styled.div`

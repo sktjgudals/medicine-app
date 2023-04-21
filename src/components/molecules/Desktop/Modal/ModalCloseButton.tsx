@@ -1,19 +1,21 @@
-import { modalState } from "apollo/cache";
-
 import { FC } from "react";
 import styled from "styled-components";
 
 import XIcon from "@/components/atoms/icons/XIcon";
 import { Button } from "@/components/atoms/Button";
 
-const LoginCloseButton: FC = () => {
+interface Props {
+  cb: (e: boolean) => void;
+}
+
+const ModalCloseButton: FC<Props> = ({ cb }) => {
   return (
     <StyledButtonContainer>
       <StyledXButton
         width={30}
         height={30}
         aria-label="팝업 닫기"
-        onClick={() => modalState(false)}
+        onClick={() => cb(false)}
       >
         <XIcon width={20} height={20} />
       </StyledXButton>
@@ -21,7 +23,7 @@ const LoginCloseButton: FC = () => {
   );
 };
 
-export default LoginCloseButton;
+export default ModalCloseButton;
 
 const StyledButtonContainer = styled.div`
   position: absolute;

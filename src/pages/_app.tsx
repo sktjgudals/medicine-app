@@ -8,6 +8,7 @@ import Header from "@/components/organisms/Header";
 
 import { GlobalStyle } from "#/styles/global";
 import "#/styles/common.scss";
+import { SessionProvider } from "@/hooks/useSession";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,15 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <ThemeProvider>
-        <GlobalStyle />
-        <main className={inter.className}>
-          <Header />
-          <Component {...pageProps} />
-        </main>
-      </ThemeProvider>
+      <SessionProvider>
+        <ThemeProvider>
+          <GlobalStyle />
+          <main className={inter.className}>
+            <Header />
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
+      </SessionProvider>
     </ApolloProvider>
   );
 };

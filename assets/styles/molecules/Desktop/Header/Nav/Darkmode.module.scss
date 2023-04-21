@@ -3,6 +3,7 @@
 .darkmode_container {
   @extend .w_100, .h_100, .flex_center_center;
   cursor: pointer;
+  padding-bottom: 15px;
 }
 
 .darkmode_label {
