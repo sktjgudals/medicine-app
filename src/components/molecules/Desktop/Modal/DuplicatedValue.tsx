@@ -1,9 +1,7 @@
 import { FC } from "react";
+import styled from "styled-components";
 import Loading from "@/components/atoms/Loading";
 import SubmitCheck from "./SubmitCheck";
-import { useReactiveVar } from "@apollo/client";
-import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
-import styled from "styled-components";
 
 interface Props {
   loading: boolean;
