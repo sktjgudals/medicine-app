@@ -8,7 +8,8 @@ const Index = () => {
   return (
     <>
       <MobileView>
-        <Mobile />
+        {/* <Mobile /> */}
+        <Desktop />
       </MobileView>
       <BrowserView>
         <Desktop />

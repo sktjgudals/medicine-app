@@ -8,7 +8,8 @@ const Header: FC = () => {
   return (
     <>
       <MobileView>
-        <Mobile />
+        {/* <Mobile /> */}
+        <Desktop />
       </MobileView>
       <BrowserView>
         <Desktop />

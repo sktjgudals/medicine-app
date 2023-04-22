@@ -7,7 +7,10 @@ import Desktop from "./Desktop";
 const Login: FC = () => {
   return (
     <>
-      <MobileView>{/* <Mobile /> */}</MobileView>
+      <MobileView>
+        {/* <Mobile /> */}
+        <Desktop />
+      </MobileView>
       <BrowserView>
         <Desktop />
       </BrowserView>
