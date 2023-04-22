@@ -87,6 +87,7 @@ const SignUpInput: FC = () => {
           text={"이메일"}
           id={"signup_id"}
           checkDuplicate={true}
+          setMessage={setMessage}
         />
         <ErrorContainer>{message["email"]}</ErrorContainer>
         <ModalName
