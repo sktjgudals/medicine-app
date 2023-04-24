@@ -9,6 +9,7 @@ import { Modal } from "@/components/atoms/Modal";
 import LoginInput from "./LoginInput";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
 import ModalLogo from "../../Modal/ModalLogo";
+import ModalOauth from "../../Modal/ModalOauth";
 
 const LoginModal: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,6 +34,7 @@ const LoginModal: FC = () => {
         <ModalLogo width={50} height={50} text={"로그인"} />
         <LoginInput />
         <ModalCloseButton cb={modalState} />
+        <ModalOauth text={"로그인"} />
       </ModalContainer>
     </StyledLoginModal>
   );
