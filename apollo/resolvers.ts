@@ -6,6 +6,10 @@ import {
   findUserNicknameFunc,
 } from "./resolverFunc/signup";
 import { signinLocalUserFunc } from "./resolverFunc/signin";
+import {
+  oauthKakaoUserCodeFunc,
+  oauthKakaoUserLinkFunc,
+} from "./resolverFunc/oauth";
 
 export const resolvers = {
   JSON: GraphQLJSON,
@@ -26,6 +30,9 @@ export const resolvers = {
         password,
       }: { email: string; nickname: string; password: string }
     ) => createLocalUserFunc(email, nickname, password),
+    oauthKakaoUserCode: async (_: any, { code }: { code: string }) =>
+      oauthKakaoUserCodeFunc(code),
+    oauthKakaoUserLink: async () => oauthKakaoUserLinkFunc(),
     signinLocalUser: async (
       _: any,
       { email, password }: { email: string; password: string }
