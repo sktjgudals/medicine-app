@@ -13,6 +13,7 @@ export const typeDefs = gql`
   type UserResponse {
     id: String
     token: JSON
+    error: Boolean
   }
 
   type Query {
