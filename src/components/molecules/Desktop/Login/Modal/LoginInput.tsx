@@ -35,6 +35,12 @@ const LoginInput: FC = () => {
     if (e.key === "Enter" || e.key === undefined) {
       const { data } = await signinUserFunc({ variables: { email, password } });
       if (data["signinLocalUser"] !== null) {
+        if (data["signinLocalUser"]["error"]) {
+          setLoginError(true);
+          return setErrorMessage(
+            `서비스 오류입니다. 다시 시도해주시거나 문의해주시기 바랍니다.`
+          );
+        }
         localStorage.setItem("access_token", data["signinLocalUser"]["token"]);
         setLoginError(false);
         setErrorMessage("");
@@ -105,6 +111,7 @@ const ErrorContainer = styled.div`
   border-radius: 0.3rem;
   margin-top: 2rem;
   padding: 1rem 2rem 1rem 1rem;
+  align-items: center;
 `;
 
 const ErrorMessage = styled.div`
