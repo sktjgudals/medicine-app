@@ -4,6 +4,7 @@ const SIGNIN_LOCAL_USER = gql`
   mutation SigninLocalUser($email: String!, $password: String!) {
     signinLocalUser(email: $email, password: $password) {
       token
+      error
     }
   }
 `;

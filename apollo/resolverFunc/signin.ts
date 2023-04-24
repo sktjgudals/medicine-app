@@ -21,7 +21,7 @@ const signinLocalUserFunc = async (email: string, password: string) => {
       return null;
     }
   } catch (e) {
-    return null;
+    return { error: true };
   }
 };
 
