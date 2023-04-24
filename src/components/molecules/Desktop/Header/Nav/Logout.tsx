@@ -9,6 +9,7 @@ const Logout: FC = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     router.reload();
   };
 

@@ -29,9 +29,10 @@ export const SessionProvider = ({ children }: { children: JSX.Element }) => {
   const [session, setSession] = useState<StateSession | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      const user = localTokenVerify(token) as StateSession;
+    const access_token = localStorage.getItem("access_token");
+    const refresh_token = localStorage.getItem("refresh_token");
+    if (access_token) {
+      const user = localTokenVerify(access_token) as StateSession;
       setSession(user);
       setLoading(false);
     } else {

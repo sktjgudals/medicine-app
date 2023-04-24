@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 
 import { Modal } from "@/components/atoms/Modal";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { signUpModalState } from "apollo/cache";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
 import ModalLogo from "../../Modal/ModalLogo";
@@ -10,8 +10,13 @@ import ModalOauth from "../../Modal/ModalOauth";
 import LocalSignUpModal from "./LocalSignUpModal";
 import SignUpInput from "../Modal/SignUpInput";
 import ModalBackButton from "../../Modal/ModalBackButton";
+import { OAUTH_TYPE } from "@/types/signup";
+import { OAUTH_KAKAO_USER_LINK } from "apollo/querys/oauth";
 
 const SignUpModal: FC = () => {
+  const [oauthKakaoFunc, { loading, error }] = useMutation(
+    OAUTH_KAKAO_USER_LINK
+  );
   const [localLogin, setLocalLogin] = useState<"block" | "none">("none");
   const ref = useRef<HTMLDivElement>(null);
   let isOpenModal = useReactiveVar(signUpModalState);
@@ -28,6 +33,24 @@ const SignUpModal: FC = () => {
     if (isOpenModal && current && !current.contains(e.target as Node))
       signUpModalState(false);
   };
+
+  const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
+    if (type === "kakao") {
+      const { data } = await oauthKakaoFunc();
+      if (data["oauthKakaoUserLink"]) {
+        const { url } = data["oauthKakaoUserLink"];
+        if (url) {
+          window.location.href = url;
+        } else {
+          console.info("error");
+        }
+      }
+    } else if (type === "naver") {
+    } else {
+      console.info("error");
+    }
+  };
+
   return (
     <StyledModal width={500} ref={ref}>
       <ModalContainer>
@@ -39,7 +62,7 @@ const SignUpModal: FC = () => {
         <SecondStage display={localLogin === "none" ? "block" : "none"}>
           <LocalSignUpModal setLocalLogin={setLocalLogin} />
           <ModalMiddle />
-          <ModalOauth text={"회원가입"} />
+          <ModalOauth text={"회원가입"} cb={OauthClickHandler} />
           <ModalCloseButton cb={signUpModalState} />
         </SecondStage>
       </ModalContainer>

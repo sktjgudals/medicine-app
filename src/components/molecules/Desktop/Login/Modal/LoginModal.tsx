@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, MouseEvent, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { modalState } from "apollo/cache";
@@ -10,6 +10,8 @@ import LoginInput from "./LoginInput";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
 import ModalLogo from "../../Modal/ModalLogo";
 import ModalOauth from "../../Modal/ModalOauth";
+
+import { OAUTH_TYPE } from "@/types/signup";
 
 const LoginModal: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,6 +29,22 @@ const LoginModal: FC = () => {
     if (isOpenModal && current && !current.contains(e.target as Node))
       modalState(false);
   };
+  const OauthClickHandler = (e: MouseEvent, type: OAUTH_TYPE) => {
+    if (type === "kakao") {
+      //  const formData = {
+      //    grant_type: "authorization_code",
+      //    client_id: process.env.KAKAO_API_KEY,
+      //    redirect_uri: process.env.OAUTH_CALLBAK_URI,
+      //    code,
+      //  };
+      // getValidTokenFromOauth(
+      //   `https://kauth.kakao.com/oauth/token?${queryString.stringify(formData)}`
+      // );
+    } else if (type === "naver") {
+    } else {
+      console.info("error");
+    }
+  };
 
   return (
     <StyledLoginModal width={500} ref={ref}>
@@ -34,7 +52,7 @@ const LoginModal: FC = () => {
         <ModalLogo width={50} height={50} text={"로그인"} />
         <LoginInput />
         <ModalCloseButton cb={modalState} />
-        <ModalOauth text={"로그인"} />
+        <ModalOauth text={"로그인"} cb={OauthClickHandler} />
       </ModalContainer>
     </StyledLoginModal>
   );
