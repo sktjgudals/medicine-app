@@ -1,14 +1,18 @@
-import { FC, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { FC, useEffect, useRef, useState } from "react";
 
 import { Modal } from "@/components/atoms/Modal";
 import { useReactiveVar } from "@apollo/client";
 import { signUpModalState } from "apollo/cache";
-import ModalLogo from "../../Modal/ModalLogo";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
-import SignUpInput from "./SignUpInput";
+import ModalLogo from "../../Modal/ModalLogo";
+import ModalOauth from "../../Modal/ModalOauth";
+import LocalSignUpModal from "./LocalSignUpModal";
+import SignUpInput from "../Modal/SignUpInput";
+import ModalBackButton from "../../Modal/ModalBackButton";
 
 const SignUpModal: FC = () => {
+  const [localLogin, setLocalLogin] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   let isOpenModal = useReactiveVar(signUpModalState);
 
@@ -24,13 +28,20 @@ const SignUpModal: FC = () => {
     if (isOpenModal && current && !current.contains(e.target as Node))
       signUpModalState(false);
   };
-
   return (
     <StyledModal width={500} ref={ref}>
       <ModalContainer>
         <ModalLogo width={50} height={50} text={"회원가입"} />
-        <SignUpInput />
-        <ModalCloseButton cb={signUpModalState} />
+        <FirstStage display={localLogin}>
+          <SignUpInput />
+          <ModalBackButton cb={setLocalLogin} />
+        </FirstStage>
+        <SecondStage display={!localLogin}>
+          <LocalSignUpModal setLocalLogin={setLocalLogin} />
+          <ModalMiddle />
+          <ModalOauth text={"회원가입"} />
+          <ModalCloseButton cb={signUpModalState} />
+        </SecondStage>
       </ModalContainer>
     </StyledModal>
   );
@@ -56,4 +67,23 @@ const StyledModal = styled(Modal)`
     max-width: 400px;
     min-width: 200px;
   }
+`;
+
+const ModalMiddle = styled.div`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-modal-default-background) !important;
+`;
+
+interface StageProps {
+  display: boolean;
+}
+
+const FirstStage = styled.div<StageProps>`
+  display: ${(props) => (props.display ? "block" : "none")};
+`;
+
+const SecondStage = styled.div<StageProps>`
+  display: ${(props) => (props.display ? "block" : "none")};
 `;
