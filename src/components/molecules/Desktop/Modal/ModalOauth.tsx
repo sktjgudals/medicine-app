@@ -1,15 +1,17 @@
-import Image from "next/image";
-import { FC } from "react";
 import styled from "styled-components";
+import { OAUTH_TYPE } from "@/types/signup";
+import Image from "next/image";
+import { FC, MouseEvent } from "react";
 
 interface Props {
   text: string;
+  cb: (e: MouseEvent, type: OAUTH_TYPE) => void;
 }
 
-const ModalOauth: FC<Props> = ({ text }) => {
+const ModalOauth: FC<Props> = ({ text, cb }) => {
   return (
     <OauthContainer>
-      <FlexContainer>
+      <ButtonContainer onClick={(e: MouseEvent) => cb(e, "kakao")}>
         <ImageContainer>
           <Image
             src="/kakao.png"
@@ -20,8 +22,8 @@ const ModalOauth: FC<Props> = ({ text }) => {
           />
         </ImageContainer>
         <TextContainer>카카오 {text}</TextContainer>
-      </FlexContainer>
-      <FlexContainer>
+      </ButtonContainer>
+      <ButtonContainer onClick={(e: MouseEvent) => cb(e, "naver")}>
         <ImageContainer>
           <Image
             src="/naver.png"
@@ -32,7 +34,7 @@ const ModalOauth: FC<Props> = ({ text }) => {
           />
         </ImageContainer>
         <TextContainer>네이버 {text}</TextContainer>
-      </FlexContainer>
+      </ButtonContainer>
     </OauthContainer>
   );
 };
@@ -54,7 +56,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const FlexContainer = styled.button`
+const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   width: 100%;

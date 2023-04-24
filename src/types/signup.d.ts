@@ -9,5 +9,6 @@ interface ERROR_PROPS {
   password: string;
   nickName: string;
 }
+type OAUTH_TYPE = "naver" | "kakao";
 
-export { ERROR_PROPS, CHECK_PROPS };
+export { ERROR_PROPS, CHECK_PROPS, OAUTH_TYPE };

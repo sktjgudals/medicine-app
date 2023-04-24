@@ -16,9 +16,7 @@ model Account {
   providerAccountId  String
   refresh_token      String?
   access_token       String?
-  token_type         String?
   scope              String?
-  id_token           String?
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
