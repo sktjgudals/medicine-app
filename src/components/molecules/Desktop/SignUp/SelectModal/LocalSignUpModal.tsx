@@ -3,13 +3,13 @@ import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 
 interface Props {
-  setLocalLogin: Dispatch<SetStateAction<boolean>>;
+  setLocalLogin: Dispatch<SetStateAction<"block" | "none">>;
 }
 
 const LocalSignUpModal: FC<Props> = ({ setLocalLogin }) => {
   return (
     <LocalSignUpContainer>
-      <FlexContainer onClick={() => setLocalLogin(true)}>
+      <FlexContainer onClick={() => setLocalLogin("block")}>
         <IconContainer>
           <EmailIcon width={30} height={30} />
         </IconContainer>

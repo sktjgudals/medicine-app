@@ -12,7 +12,7 @@ import SignUpInput from "../Modal/SignUpInput";
 import ModalBackButton from "../../Modal/ModalBackButton";
 
 const SignUpModal: FC = () => {
-  const [localLogin, setLocalLogin] = useState<boolean>(false);
+  const [localLogin, setLocalLogin] = useState<"block" | "none">("none");
   const ref = useRef<HTMLDivElement>(null);
   let isOpenModal = useReactiveVar(signUpModalState);
 
@@ -36,7 +36,7 @@ const SignUpModal: FC = () => {
           <SignUpInput />
           <ModalBackButton cb={setLocalLogin} />
         </FirstStage>
-        <SecondStage display={!localLogin}>
+        <SecondStage display={localLogin === "none" ? "block" : "none"}>
           <LocalSignUpModal setLocalLogin={setLocalLogin} />
           <ModalMiddle />
           <ModalOauth text={"회원가입"} />
@@ -77,13 +77,13 @@ const ModalMiddle = styled.div`
 `;
 
 interface StageProps {
-  display: boolean;
+  display: string;
 }
 
 const FirstStage = styled.div<StageProps>`
-  display: ${(props) => (props.display ? "block" : "none")};
+  display: ${(props) => props.display};
 `;
 
 const SecondStage = styled.div<StageProps>`
-  display: ${(props) => (props.display ? "block" : "none")};
+  display: ${(props) => props.display};
 `;

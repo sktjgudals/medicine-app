@@ -4,7 +4,7 @@ import BackIcon from "@/components/atoms/icons/BackIcon";
 import styled from "styled-components";
 
 interface Props {
-  cb: Dispatch<SetStateAction<boolean>>;
+  cb: Dispatch<SetStateAction<"block" | "none">>;
 }
 
 const ModalBackButton: FC<Props> = ({ cb }) => {
@@ -14,7 +14,7 @@ const ModalBackButton: FC<Props> = ({ cb }) => {
         width={30}
         height={30}
         aria-label="뒤로 가기"
-        onClick={() => cb(false)}
+        onClick={() => cb("none")}
       >
         <BackIcon width={20} height={20} />
       </StyledButton>
