@@ -17,7 +17,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { CREATE_LOCAL_USER } from "apollo/querys/signup";
 import { useRouter } from "next/router";
 import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
-import { signInSetToken } from "@/utils/func/signin";
+import { signInSetToken } from "@/utils/func/signIn";
 
 const CHECK_INITIAL_STATE = {
   email: false,

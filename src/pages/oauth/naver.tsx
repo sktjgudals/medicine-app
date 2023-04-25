@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Title from "@/components/atoms/Title";
 import { GetServerSideProps } from "next";
 import { oauthNaverUserCode } from "@/utils/func/oauth";
-import { signInSetToken } from "@/utils/func/signin";
+import { signInSetToken } from "@/utils/func/signIn";
 
 interface Props {
   access_token: string | null;

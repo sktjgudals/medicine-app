@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { signInSetToken } from "@/utils/func/signin";
+import { signInSetToken } from "@/utils/func/signIn";
 import { oauthKakaoUserCode } from "@/utils/func/oauth";
 
 import Title from "@/components/atoms/Title";

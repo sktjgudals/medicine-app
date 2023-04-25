@@ -11,7 +11,7 @@ import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 import { emailVerify } from "@/utils/refexp";
 import { useMutation } from "@apollo/client";
 import { SIGNIN_LOCAL_USER } from "apollo/querys/signin";
-import { signInSetToken } from "@/utils/func/signin";
+import { signInSetToken } from "@/utils/func/signIn";
 
 const LoginInput: FC = () => {
   const router = useRouter();
