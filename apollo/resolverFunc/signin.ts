@@ -15,7 +15,7 @@ const signinLocalUserFunc = async (email: string, password: string) => {
           res.email as string,
           res.nickname
         )) as string;
-        const refresh_token = await generateRefreshToken(access_token);
+        const refresh_token = await generateRefreshToken(access_token, "local");
         return { access_token, refresh_token };
       }
     } else {

@@ -32,9 +32,9 @@ export const typeDefs = gql`
       nickname: String!
       password: String!
     ): UserResponse
-    oauthKakaoUserCode(code: String!): UserResponse
-    oauthKakaoUserLink: UserResponse
     signinLocalUser(email: String!, password: String!): UserResponse
+    oauthKakaoUserLink: UserResponse
+    oauthNaverLink: UserResponse
   }
 `;
 

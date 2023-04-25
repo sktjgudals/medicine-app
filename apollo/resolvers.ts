@@ -7,8 +7,8 @@ import {
 } from "./resolverFunc/signup";
 import { signinLocalUserFunc } from "./resolverFunc/signin";
 import {
-  oauthKakaoUserCodeFunc,
   oauthKakaoUserLinkFunc,
+  oauthNaverLinkFunc,
 } from "./resolverFunc/oauth";
 
 export const resolvers = {
@@ -22,7 +22,7 @@ export const resolvers = {
       findUserNicknameFunc(nickname),
   },
   Mutation: {
-    createLocalUser: async (
+    createLocalUser: (
       _: any,
       {
         email,
@@ -30,12 +30,11 @@ export const resolvers = {
         password,
       }: { email: string; nickname: string; password: string }
     ) => createLocalUserFunc(email, nickname, password),
-    oauthKakaoUserCode: async (_: any, { code }: { code: string }) =>
-      oauthKakaoUserCodeFunc(code),
-    oauthKakaoUserLink: async () => oauthKakaoUserLinkFunc(),
-    signinLocalUser: async (
+    signinLocalUser: (
       _: any,
       { email, password }: { email: string; password: string }
     ) => signinLocalUserFunc(email, password),
+    oauthKakaoUserLink: () => oauthKakaoUserLinkFunc(),
+    oauthNaverLink: () => oauthNaverLinkFunc(),
   },
 };

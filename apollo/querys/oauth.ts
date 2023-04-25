@@ -8,13 +8,12 @@ const OAUTH_KAKAO_USER_LINK = gql`
   }
 `;
 
-const OAUTH_KAKAO_USER_CODE = gql`
-  mutation OauthKakaoUserCode($code: String!) {
-    oauthKakaoUserCode(code: $code) {
-      access_token
-      refresh_token
+const OAUTH_NAVER_LINK = gql`
+  mutation OauthNaverLink {
+    oauthNaverLink {
+      url
     }
   }
 `;
 
-export { OAUTH_KAKAO_USER_LINK, OAUTH_KAKAO_USER_CODE };
+export { OAUTH_KAKAO_USER_LINK, OAUTH_NAVER_LINK };
