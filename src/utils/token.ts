@@ -32,11 +32,12 @@ const generateAccessToken = async (
   });
 };
 
-const generateRefreshToken = async (token: string) => {
+const generateRefreshToken = async (token: string, type: string) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
       {
         access_token: token,
+        type: type,
       },
       process.env.NEXT_PUBLIC_TOKEN_SECRET as string,
       {
