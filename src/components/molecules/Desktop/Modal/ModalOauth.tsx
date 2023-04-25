@@ -2,13 +2,24 @@ import styled from "styled-components";
 import { OAUTH_TYPE } from "@/types/signup";
 import Image from "next/image";
 import { FC, MouseEvent } from "react";
+import Loading from "@/components/atoms/Loading";
+import { ApolloError } from "@apollo/client";
 
 interface Props {
   text: string;
   cb: (e: MouseEvent, type: OAUTH_TYPE) => void;
+  kakaoLoading: boolean;
+  kakaoError: ApolloError | undefined;
+  naverLoading: boolean;
 }
 
-const ModalOauth: FC<Props> = ({ text, cb }) => {
+const ModalOauth: FC<Props> = ({
+  text,
+  cb,
+  kakaoLoading,
+  kakaoError,
+  naverLoading,
+}) => {
   return (
     <OauthContainer>
       <ButtonContainer onClick={(e: MouseEvent) => cb(e, "kakao")}>
@@ -21,7 +32,21 @@ const ModalOauth: FC<Props> = ({ text, cb }) => {
             priority={true}
           />
         </ImageContainer>
-        <TextContainer>카카오 {text}</TextContainer>
+        <TextContainer>
+          {kakaoLoading ? (
+            <Loading
+              width={30}
+              height={30}
+              strokeWidth={10}
+              top={0}
+              bottom={0}
+              right={0}
+              left={45}
+            />
+          ) : (
+            <>카카오 {text}</>
+          )}
+        </TextContainer>
       </ButtonContainer>
       <ButtonContainer onClick={(e: MouseEvent) => cb(e, "naver")}>
         <ImageContainer>
@@ -33,7 +58,21 @@ const ModalOauth: FC<Props> = ({ text, cb }) => {
             priority={true}
           />
         </ImageContainer>
-        <TextContainer>네이버 {text}</TextContainer>
+        <TextContainer>
+          {naverLoading ? (
+            <Loading
+              width={30}
+              height={30}
+              strokeWidth={10}
+              top={0}
+              bottom={0}
+              right={0}
+              left={45}
+            />
+          ) : (
+            <>네이버 {text}</>
+          )}
+        </TextContainer>
       </ButtonContainer>
     </OauthContainer>
   );

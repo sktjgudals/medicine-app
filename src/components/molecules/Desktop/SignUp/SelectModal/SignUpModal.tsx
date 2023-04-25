@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FC, MouseEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 import { Modal } from "@/components/atoms/Modal";
 import { useMutation, useReactiveVar } from "@apollo/client";
@@ -11,12 +12,12 @@ import LocalSignUpModal from "./LocalSignUpModal";
 import SignUpInput from "../Modal/SignUpInput";
 import ModalBackButton from "../../Modal/ModalBackButton";
 import { OAUTH_TYPE } from "@/types/signup";
-import { OAUTH_KAKAO_USER_LINK } from "apollo/querys/oauth";
+import { OAUTH_KAKAO_USER_LINK, OAUTH_NAVER_LINK } from "apollo/querys/oauth";
 
 const SignUpModal: FC = () => {
-  const [oauthKakaoFunc, { loading, error }] = useMutation(
-    OAUTH_KAKAO_USER_LINK
-  );
+  const router = useRouter();
+  const [oauthKakaoFunc, kakao] = useMutation(OAUTH_KAKAO_USER_LINK);
+  const [oauthNaverFunc, naver] = useMutation(OAUTH_NAVER_LINK);
   const [localLogin, setLocalLogin] = useState<"block" | "none">("none");
   const ref = useRef<HTMLDivElement>(null);
   let isOpenModal = useReactiveVar(signUpModalState);
@@ -35,6 +36,7 @@ const SignUpModal: FC = () => {
   };
 
   const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
+    localStorage.setItem("redirect_uri", router.asPath);
     if (type === "kakao") {
       const { data } = await oauthKakaoFunc();
       if (data["oauthKakaoUserLink"]) {
@@ -46,6 +48,15 @@ const SignUpModal: FC = () => {
         }
       }
     } else if (type === "naver") {
+      const { data } = await oauthNaverFunc();
+      if (data["oauthNaverLink"]) {
+        const { url } = data["oauthNaverLink"];
+        if (url) {
+          window.location.href = url;
+        } else {
+          console.info("error");
+        }
+      }
     } else {
       console.info("error");
     }
@@ -62,7 +73,13 @@ const SignUpModal: FC = () => {
         <SecondStage display={localLogin === "none" ? "block" : "none"}>
           <LocalSignUpModal setLocalLogin={setLocalLogin} />
           <ModalMiddle />
-          <ModalOauth text={"회원가입"} cb={OauthClickHandler} />
+          <ModalOauth
+            text={"회원가입"}
+            cb={OauthClickHandler}
+            kakaoLoading={kakao.loading}
+            kakaoError={kakao.error}
+            naverLoading={false}
+          />
           <ModalCloseButton cb={signUpModalState} />
         </SecondStage>
       </ModalContainer>

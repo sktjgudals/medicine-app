@@ -1,8 +1,9 @@
 import { FC, MouseEvent, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import { modalState } from "apollo/cache";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 
 import { Modal } from "@/components/atoms/Modal";
 
@@ -12,9 +13,13 @@ import ModalLogo from "../../Modal/ModalLogo";
 import ModalOauth from "../../Modal/ModalOauth";
 
 import { OAUTH_TYPE } from "@/types/signup";
+import { OAUTH_KAKAO_USER_LINK } from "apollo/querys/oauth";
 
 const LoginModal: FC = () => {
+  const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
+  const [oauthKakaoFunc, kakao] = useMutation(OAUTH_KAKAO_USER_LINK);
+
   let isOpenModal = useReactiveVar(modalState);
 
   useEffect(() => {
@@ -29,17 +34,18 @@ const LoginModal: FC = () => {
     if (isOpenModal && current && !current.contains(e.target as Node))
       modalState(false);
   };
-  const OauthClickHandler = (e: MouseEvent, type: OAUTH_TYPE) => {
+  const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
+    localStorage.setItem("redirect_uri", router.asPath);
     if (type === "kakao") {
-      //  const formData = {
-      //    grant_type: "authorization_code",
-      //    client_id: process.env.KAKAO_API_KEY,
-      //    redirect_uri: process.env.OAUTH_CALLBAK_URI,
-      //    code,
-      //  };
-      // getValidTokenFromOauth(
-      //   `https://kauth.kakao.com/oauth/token?${queryString.stringify(formData)}`
-      // );
+      const { data } = await oauthKakaoFunc();
+      if (data["oauthKakaoUserLink"]) {
+        const { url } = data["oauthKakaoUserLink"];
+        if (url) {
+          window.location.href = url;
+        } else {
+          console.info("error");
+        }
+      }
     } else if (type === "naver") {
     } else {
       console.info("error");
@@ -52,7 +58,14 @@ const LoginModal: FC = () => {
         <ModalLogo width={50} height={50} text={"로그인"} />
         <LoginInput />
         <ModalCloseButton cb={modalState} />
-        <ModalOauth text={"로그인"} cb={OauthClickHandler} />
+        <ModalOauth
+          text={"로그인"}
+          cb={OauthClickHandler}
+          kakaoLoading={kakao.loading}
+          kakaoError={kakao.error}
+          naverLoading={false}
+          // naverError={}
+        />
       </ModalContainer>
     </StyledLoginModal>
   );

@@ -74,7 +74,7 @@ const SignUpInput: FC = () => {
       });
       if (data["createLocalUser"]) {
         signInSetToken(
-          data["createLocalUser"]["token"],
+          data["createLocalUser"]["access_token"],
           data["createLocalUser"]["refresh_token"]
         );
         router.reload();
