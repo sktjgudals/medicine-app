@@ -59,7 +59,7 @@ const generateRefreshToken = async (token: string, type: string) => {
 const generateAccessOauthToken = (
   id: string,
   nickname: string,
-  email?: string
+  email?: string | null
 ) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
