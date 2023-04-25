@@ -13,12 +13,13 @@ import ModalLogo from "../../Modal/ModalLogo";
 import ModalOauth from "../../Modal/ModalOauth";
 
 import { OAUTH_TYPE } from "@/types/signup";
-import { OAUTH_KAKAO_USER_LINK } from "apollo/querys/oauth";
+import { OAUTH_KAKAO_USER_LINK, OAUTH_NAVER_LINK } from "apollo/querys/oauth";
 
 const LoginModal: FC = () => {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const [oauthKakaoFunc, kakao] = useMutation(OAUTH_KAKAO_USER_LINK);
+  const [oauthNaverFunc, naver] = useMutation(OAUTH_NAVER_LINK);
 
   let isOpenModal = useReactiveVar(modalState);
 
@@ -47,8 +48,17 @@ const LoginModal: FC = () => {
         }
       }
     } else if (type === "naver") {
-    } else {
-      console.info("error");
+      const { data } = await oauthNaverFunc();
+      if (data["oauthNaverLink"]) {
+        const { url } = data["oauthNaverLink"];
+        if (url) {
+          window.location.href = url;
+        } else {
+          console.info("error");
+        }
+      } else {
+        console.info("error");
+      }
     }
   };
 
@@ -63,8 +73,8 @@ const LoginModal: FC = () => {
           cb={OauthClickHandler}
           kakaoLoading={kakao.loading}
           kakaoError={kakao.error}
-          naverLoading={false}
-          // naverError={}
+          naverLoading={naver.loading}
+          naverError={naver.error}
         />
       </ModalContainer>
     </StyledLoginModal>

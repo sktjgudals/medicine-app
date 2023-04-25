@@ -78,7 +78,8 @@ const SignUpModal: FC = () => {
             cb={OauthClickHandler}
             kakaoLoading={kakao.loading}
             kakaoError={kakao.error}
-            naverLoading={false}
+            naverLoading={naver.loading}
+            naverError={naver.error}
           />
           <ModalCloseButton cb={signUpModalState} />
         </SecondStage>

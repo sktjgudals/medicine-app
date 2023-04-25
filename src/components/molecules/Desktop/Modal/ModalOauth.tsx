@@ -11,6 +11,7 @@ interface Props {
   kakaoLoading: boolean;
   kakaoError: ApolloError | undefined;
   naverLoading: boolean;
+  naverError: ApolloError | undefined;
 }
 
 const ModalOauth: FC<Props> = ({
@@ -19,6 +20,7 @@ const ModalOauth: FC<Props> = ({
   kakaoLoading,
   kakaoError,
   naverLoading,
+  naverError,
 }) => {
   return (
     <OauthContainer>
