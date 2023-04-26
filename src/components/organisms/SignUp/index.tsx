@@ -6,7 +6,10 @@ import Desktop from "./Desktop";
 const index: FC = () => {
   return (
     <>
-      <MobileView>{/* <Mobile /> */}</MobileView>
+      <MobileView>
+        <Desktop />
+        {/* <Mobile /> */}
+      </MobileView>
       <BrowserView>
         <Desktop />
       </BrowserView>
