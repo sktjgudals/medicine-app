@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -11,6 +11,7 @@ import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 import { emailVerify } from "@/utils/refexp";
 import { useMutation } from "@apollo/client";
 import { SIGNIN_LOCAL_USER } from "apollo/querys/signin";
+import { signInSetToken } from "@/utils/func/signIn";
 
 const LoginInput: FC = () => {
   const router = useRouter();
@@ -35,9 +36,16 @@ const LoginInput: FC = () => {
     if (e.key === "Enter" || e.key === undefined) {
       const { data } = await signinUserFunc({ variables: { email, password } });
       if (data["signinLocalUser"] !== null) {
-        localStorage.setItem("access_token", data["signinLocalUser"]["token"]);
-        setLoginError(false);
-        setErrorMessage("");
+        if (data["signinLocalUser"]["error"]) {
+          setLoginError(true);
+          return setErrorMessage(
+            `서비스 오류입니다. 다시 시도해주시거나 문의해주시기 바랍니다.`
+          );
+        }
+        signInSetToken(
+          data["signinLocalUser"]["access_token"],
+          data["signinLocalUser"]["refresh_token"]
+        );
         router.reload();
       } else {
         setLoginError(true);
@@ -105,6 +113,7 @@ const ErrorContainer = styled.div`
   border-radius: 0.3rem;
   margin-top: 2rem;
   padding: 1rem 2rem 1rem 1rem;
+  align-items: center;
 `;
 
 const ErrorMessage = styled.div`

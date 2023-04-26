@@ -1,27 +1,26 @@
-import { FC, MouseEvent, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
-import { modalState } from "apollo/cache";
-import { useMutation, useReactiveVar } from "@apollo/client";
-
 import { Modal } from "@/components/atoms/Modal";
-
-import LoginInput from "./LoginInput";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { signUpModalState } from "apollo/cache";
 import ModalCloseButton from "../../Modal/ModalCloseButton";
 import ModalLogo from "../../Modal/ModalLogo";
 import ModalOauth from "../../Modal/ModalOauth";
-
+import LocalSignUpModal from "./LocalSignUpModal";
+import SignUpInput from "../Modal/SignUpInput";
+import ModalBackButton from "../../Modal/ModalBackButton";
 import { OAUTH_TYPE } from "@/types/signup";
 import { OAUTH_KAKAO_USER_LINK, OAUTH_NAVER_LINK } from "apollo/querys/oauth";
 
-const LoginModal: FC = () => {
+const SignUpModal: FC = () => {
   const router = useRouter();
-  const ref = useRef<HTMLDivElement>(null);
   const [oauthKakaoFunc, kakao] = useMutation(OAUTH_KAKAO_USER_LINK);
   const [oauthNaverFunc, naver] = useMutation(OAUTH_NAVER_LINK);
-
-  let isOpenModal = useReactiveVar(modalState);
+  const [localLogin, setLocalLogin] = useState<"block" | "none">("none");
+  const ref = useRef<HTMLDivElement>(null);
+  let isOpenModal = useReactiveVar(signUpModalState);
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
@@ -33,8 +32,9 @@ const LoginModal: FC = () => {
   const handleOutsideClick = (e: Event) => {
     const current = ref.current;
     if (isOpenModal && current && !current.contains(e.target as Node))
-      modalState(false);
+      signUpModalState(false);
   };
+
   const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
     localStorage.setItem("redirect_uri", router.asPath);
     if (type === "kakao") {
@@ -56,32 +56,39 @@ const LoginModal: FC = () => {
         } else {
           console.info("error");
         }
-      } else {
-        console.info("error");
       }
+    } else {
+      console.info("error");
     }
   };
 
   return (
-    <StyledLoginModal width={500} ref={ref}>
+    <StyledModal width={500} ref={ref}>
       <ModalContainer>
-        <ModalLogo width={50} height={50} text={"로그인"} />
-        <LoginInput />
-        <ModalCloseButton cb={modalState} />
-        <ModalOauth
-          text={"로그인"}
-          cb={OauthClickHandler}
-          kakaoLoading={kakao.loading}
-          kakaoError={kakao.error}
-          naverLoading={naver.loading}
-          naverError={naver.error}
-        />
+        <ModalLogo width={50} height={50} text={"회원가입"} />
+        <FirstStage display={localLogin}>
+          <SignUpInput />
+          <ModalBackButton cb={setLocalLogin} />
+        </FirstStage>
+        <SecondStage display={localLogin === "none" ? "block" : "none"}>
+          <LocalSignUpModal setLocalLogin={setLocalLogin} />
+          <ModalMiddle />
+          <ModalOauth
+            text={"회원가입"}
+            cb={OauthClickHandler}
+            kakaoLoading={kakao.loading}
+            kakaoError={kakao.error}
+            naverLoading={naver.loading}
+            naverError={naver.error}
+          />
+          <ModalCloseButton cb={signUpModalState} />
+        </SecondStage>
       </ModalContainer>
-    </StyledLoginModal>
+    </StyledModal>
   );
 };
 
-export default LoginModal;
+export default SignUpModal;
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -90,7 +97,7 @@ const ModalContainer = styled.div`
   flex-direction: column !important;
 `;
 
-const StyledLoginModal = styled(Modal)`
+const StyledModal = styled(Modal)`
   display: flex !important;
   position: relative !important;
   background-color: var(--color-background-base) !important;
@@ -101,4 +108,23 @@ const StyledLoginModal = styled(Modal)`
     max-width: 400px;
     min-width: 200px;
   }
+`;
+
+const ModalMiddle = styled.div`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-modal-default-background) !important;
+`;
+
+interface StageProps {
+  display: string;
+}
+
+const FirstStage = styled.div<StageProps>`
+  display: ${(props) => props.display};
+`;
+
+const SecondStage = styled.div<StageProps>`
+  display: ${(props) => props.display};
 `;

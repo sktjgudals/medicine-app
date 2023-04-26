@@ -9,7 +9,8 @@ const CREATE_LOCAL_USER = gql`
   ) {
     createLocalUser(email: $email, nickname: $nickname, password: $password) {
       id
-      token
+      access_token
+      refresh_token
     }
   }
 `;

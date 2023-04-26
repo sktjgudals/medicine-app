@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback } from "react";
+import { ChangeEvent, Dispatch, FC, SetStateAction, useCallback } from "react";
 import styled from "styled-components";
 
 import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
@@ -8,6 +8,7 @@ import { findUserEmail } from "apollo/querys/signup";
 import { emailVerify } from "@/utils/refexp";
 import DuplicatedValue from "./DuplicatedValue";
 import { useReactiveVar } from "@apollo/client";
+import { ERROR_PROPS } from "@/types/signup";
 
 interface Props {
   value: string;
@@ -15,6 +16,7 @@ interface Props {
   text: string;
   id: string;
   checkDuplicate: boolean;
+  setMessage?: Dispatch<SetStateAction<ERROR_PROPS>>;
 }
 
 const ModalEmail: FC<Props> = ({
@@ -23,6 +25,7 @@ const ModalEmail: FC<Props> = ({
   text,
   id,
   checkDuplicate,
+  setMessage,
 }) => {
   const loading = useReactiveVar(emailLoadingCheck);
   const checkEmail = useReactiveVar(emailSubmitCheck);
@@ -54,7 +57,23 @@ const ModalEmail: FC<Props> = ({
       if (data.findUserEmail === null) {
         emailSubmitCheck(true);
         emailLoadingCheck(false);
+        if (setMessage) {
+          setMessage((prev) => {
+            return {
+              ...prev,
+              email: "",
+            };
+          });
+        }
       } else {
+        if (setMessage) {
+          setMessage((prev) => {
+            return {
+              ...prev,
+              email: "중복된 이메일이 있습니다.",
+            };
+          });
+        }
         emailSubmitCheck(false);
         emailLoadingCheck(false);
       }

@@ -1,16 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { emailVerify, passwordVerify } from "../refexp";
-
-interface CHECK_PROPS {
-  email: boolean;
-  password: boolean;
-  nickName: boolean;
-}
-interface ERROR_PROPS {
-  email: string;
-  password: string;
-  nickName: string;
-}
+import { CHECK_PROPS, ERROR_PROPS } from "@/types/signup";
 
 const nicknameCheckFunc = (
   cb: Dispatch<SetStateAction<CHECK_PROPS>>,

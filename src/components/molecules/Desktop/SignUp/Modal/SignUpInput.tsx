@@ -17,6 +17,7 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { CREATE_LOCAL_USER } from "apollo/querys/signup";
 import { useRouter } from "next/router";
 import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
+import { signInSetToken } from "@/utils/func/signIn";
 
 const CHECK_INITIAL_STATE = {
   email: false,
@@ -72,7 +73,10 @@ const SignUpInput: FC = () => {
         variables: { email, nickname: nickName, password },
       });
       if (data["createLocalUser"]) {
-        localStorage.setItem("access_token", data["createLocalUser"]["token"]);
+        signInSetToken(
+          data["createLocalUser"]["access_token"],
+          data["createLocalUser"]["refresh_token"]
+        );
         router.reload();
       }
     }
@@ -87,6 +91,7 @@ const SignUpInput: FC = () => {
           text={"이메일"}
           id={"signup_id"}
           checkDuplicate={true}
+          setMessage={setMessage}
         />
         <ErrorContainer>{message["email"]}</ErrorContainer>
         <ModalName

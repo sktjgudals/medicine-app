@@ -6,6 +6,10 @@ import {
   findUserNicknameFunc,
 } from "./resolverFunc/signup";
 import { signinLocalUserFunc } from "./resolverFunc/signin";
+import {
+  oauthKakaoUserLinkFunc,
+  oauthNaverLinkFunc,
+} from "./resolverFunc/oauth";
 
 export const resolvers = {
   JSON: GraphQLJSON,
@@ -18,7 +22,7 @@ export const resolvers = {
       findUserNicknameFunc(nickname),
   },
   Mutation: {
-    createLocalUser: async (
+    createLocalUser: (
       _: any,
       {
         email,
@@ -26,9 +30,11 @@ export const resolvers = {
         password,
       }: { email: string; nickname: string; password: string }
     ) => createLocalUserFunc(email, nickname, password),
-    signinLocalUser: async (
+    signinLocalUser: (
       _: any,
       { email, password }: { email: string; password: string }
     ) => signinLocalUserFunc(email, password),
+    oauthKakaoUserLink: () => oauthKakaoUserLinkFunc(),
+    oauthNaverLink: () => oauthNaverLinkFunc(),
   },
 };

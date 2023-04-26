@@ -3,7 +3,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { ModalWrapper } from "../../atoms/Modal";
-import SignUpModal from "@/components/molecules/Desktop/SignUp/Modal/SignUpModal";
+import SignUpModal from "@/components/molecules/Desktop/SignUp//SelectModal/SignUpModal";
 
 const Desktop: FC = () => {
   return (

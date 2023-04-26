@@ -12,7 +12,11 @@ export const typeDefs = gql`
 
   type UserResponse {
     id: String
-    token: JSON
+    access_token: JSON
+    refresh_token: JSON
+    error: Boolean
+    code: String
+    url: String
   }
 
   type Query {
@@ -29,6 +33,8 @@ export const typeDefs = gql`
       password: String!
     ): UserResponse
     signinLocalUser(email: String!, password: String!): UserResponse
+    oauthKakaoUserLink: UserResponse
+    oauthNaverLink: UserResponse
   }
 `;
 
