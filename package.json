@@ -18,6 +18,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@google-cloud/local-auth": "^2.1.1",
+    "@googleapis/docs": "^2.0.1",
     "@graphql-tools/schema": "^9.0.16",
     "@next/font": "13.1.6",
     "@prisma/client": "^4.10.1",
@@ -25,6 +27,7 @@
     "classnames": "^2.3.2",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "googleapis": "^118.0.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "graphql-type-json": "^0.3.2",
@@ -37,7 +40,8 @@
     "react-dom": "18.2.0",
     "sass": "^1.58.3",
     "sharp": "^0.32.0",
-    "styled-components": "^5.3.8"
+    "styled-components": "^5.3.8",
+    "swr": "^2.1.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

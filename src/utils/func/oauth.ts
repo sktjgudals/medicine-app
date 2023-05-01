@@ -4,6 +4,7 @@ import {
   localTokenVerify,
 } from "../token";
 import prisma from "prisma/prisma";
+import { google } from "googleapis";
 
 const getKakaoAccessToken = async (code: string) => {
   const url = `grant_type=authorization_code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_KAKAO}&code=${code}`;
@@ -142,4 +143,15 @@ const oauthNaverUserCode = async (code: string, state: string) => {
   }
 };
 
-export { getKakaoAccessToken, oauthKakaoUserCode, oauthNaverUserCode };
+const oauth2Client = new google.auth.OAuth2(
+  process.env.NEXT_PUBLIC_GOOGLE_ID,
+  process.env.NEXT_PUBLIC_GOOGLE_SECRET,
+  process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI
+);
+
+export {
+  getKakaoAccessToken,
+  oauthKakaoUserCode,
+  oauthNaverUserCode,
+  oauth2Client,
+};

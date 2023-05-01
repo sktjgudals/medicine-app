@@ -1,6 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { useSession } from "@/hooks/useSession";
+import Link from "next/link";
 
 const Main: FC = () => {
   const { session, loading } = useSession();
@@ -8,17 +9,20 @@ const Main: FC = () => {
 
   return (
     <div>
-      {session ? (
-        <LoginContainer>
+      <LoginContainer>
+        <div>
+          <Link href="/test">테스트로 이동하기</Link>
+        </div>
+        {session ? (
           <MainLogin>
             <p>고유 아이디: {session.id} </p>
             <p>이메일: {session.email}</p>
             <p>닉네임: {session.nickname} </p>
           </MainLogin>
-        </LoginContainer>
-      ) : (
-        <div></div>
-      )}
+        ) : (
+          <div></div>
+        )}
+      </LoginContainer>
     </div>
   );
 };
