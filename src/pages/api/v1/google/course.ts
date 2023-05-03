@@ -8,14 +8,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const token = req.query as any;
       oauth2Client.setCredentials(token);
       const classroom = google.classroom({ version: "v1", auth: oauth2Client });
+
       const course = await classroom.courses.get({
         id: token.id,
       });
-      const cre = await classroom.courses.topics.create({
+      const bb = await classroom.courses.courseWork.list({
         courseId: token.id,
-        requestBody: { name: "네임입니다" },
       });
-      console.info(cre);
+      console.info(bb.data);
+      // const ab = await classroom.courses.courseWork.studentSubmissions.turnIn({
+      //   courseId: token.id,
+      //   requestBody: {},
+      // });
+      // console.info(ab);
+      // 코스 정보 가져오기
+
+      // 토픽 만들기
+      // const cre = await classroom.courses.topics.create({
+      //   courseId: token.id,
+      //   requestBody: { name: "네임입니다" },
+      // });
+      // console.info(cre);
+
       // id: '112043348295620876022',
       // 클래스룸 초대 보낸리스트 조회
       // const a = await classroom.invitations.list({
