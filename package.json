@@ -21,6 +21,8 @@
     "@graphql-tools/schema": "^9.0.16",
     "@next/font": "13.1.6",
     "@prisma/client": "^4.10.1",
+    "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
+    "@toast-ui/react-editor": "^3.2.3",
     "bcrypt": "^5.1.0",
     "classnames": "^2.3.2",
     "eslint": "8.34.0",
