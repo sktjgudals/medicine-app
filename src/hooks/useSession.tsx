@@ -1,16 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { localTokenVerify } from "@/utils/token";
-
-type StateSession = {
-  id: string;
-  email: string;
-  nickname: string;
-  iat: number;
-  exp: number;
-};
+import { SESSIONTYPE } from "@/types/session";
 
 export type Session = {
-  session: StateSession | null;
+  session: SESSIONTYPE | null;
   loading: boolean;
 };
 
@@ -26,13 +19,13 @@ export function useSession() {
 }
 
 export const SessionProvider = ({ children }: { children: JSX.Element }) => {
-  const [session, setSession] = useState<StateSession | null>(null);
+  const [session, setSession] = useState<SESSIONTYPE | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const access_token = localStorage.getItem("access_token");
     const refresh_token = localStorage.getItem("refresh_token");
     if (access_token !== "undefined" && access_token) {
-      const user = localTokenVerify(access_token) as StateSession;
+      const user = localTokenVerify(access_token) as SESSIONTYPE;
       setSession(user);
       setLoading(false);
     } else {
