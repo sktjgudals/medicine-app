@@ -17,5 +17,5 @@ const Label: FC<Props> = ({ text, fontSize }) => {
 export default Label;
 
 const StyledLabel = styled.label<StyledLabelProps>`
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.fontSize}px;
 `;
