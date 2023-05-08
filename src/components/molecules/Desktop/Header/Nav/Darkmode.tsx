@@ -1,10 +1,9 @@
 import dynamic from "next/dynamic";
 import { FC } from "react";
 
-import { useTheme } from "@/context/ThemeProvider";
-
-import styles from "#/styles/molecules/Desktop/Header/Nav/Darkmode.module.scss";
 import MoonIcon from "@/components/atoms/icons/MoonIcon";
+import { useTheme } from "@/context/ThemeProvider";
+import { NavButton, NavContainer, NavText } from "@/components/atoms/Nav";
 
 const ToggleBtn = dynamic(
   () => import("./DarkModeToggle").then((mod) => mod.ToggleBtn),
@@ -19,11 +18,11 @@ const ToggleCircle = dynamic(
 const Darkmode: FC = () => {
   const [themeMode, setToggleTheme] = useTheme();
   return (
-    <div className={styles.darkmode_container} onClick={setToggleTheme}>
-      <div className={styles.darkmode_label}>
+    <NavContainer onClick={setToggleTheme} style={{ marginBottom: "8px" }}>
+      <NavButton>
         <MoonIcon width={19} height={19} />
-        <p className={styles.darkmode_text}>다크모드</p>
-      </div>
+        <NavText>다크모드</NavText>
+      </NavButton>
       <ToggleBtn
         onClick={setToggleTheme}
         toggle={themeMode}
@@ -32,7 +31,7 @@ const Darkmode: FC = () => {
       >
         <ToggleCircle width={19} height={19} toggle={themeMode} />
       </ToggleBtn>
-    </div>
+    </NavContainer>
   );
 };
 

@@ -8,6 +8,7 @@ import SignIn from "./Nav/SignIn";
 import SignUpNav from "./Nav/SignUpNav";
 import { useSession } from "@/hooks/useSession";
 import Logout from "./Nav/Logout";
+import PostNav from "./Nav/PostNav";
 
 interface Props {
   toggleDropDown: () => void;
@@ -22,13 +23,17 @@ const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
     <nav className={isOpen ? styles.dropdown_menu : styles.dropdown_menu_none}>
       <Link href="/" onClick={(): void => toggleDropDown()}></Link>
       <Darkmode />
+
       {!session ? (
         <>
           <SignUpNav toggleDropDown={toggleDropDown} />
           <SignIn toggleDropDown={toggleDropDown} />
         </>
       ) : (
-        <Logout />
+        <>
+          <PostNav />
+          <Logout />
+        </>
       )}
     </nav>
   );
