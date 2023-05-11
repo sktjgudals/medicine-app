@@ -38,6 +38,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-images-uploading": "^3.1.7",
     "sass": "^1.58.3",
     "sharp": "^0.32.0",
     "styled-components": "^5.3.8"
