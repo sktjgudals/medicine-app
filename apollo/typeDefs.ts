@@ -35,6 +35,7 @@ export const typeDefs = gql`
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse
+    medicinePost(data: JSON!): UserResponse
   }
 `;
 

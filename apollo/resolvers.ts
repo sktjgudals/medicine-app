@@ -1,5 +1,6 @@
 import GraphQLJSON from "graphql-type-json";
 
+console.info();
 import {
   createLocalUserFunc,
   findUserEmailFunc,
@@ -10,6 +11,7 @@ import {
   oauthKakaoUserLinkFunc,
   oauthNaverLinkFunc,
 } from "./resolverFunc/oauth";
+import { medicinePostFunc } from "./resolverFunc/post";
 
 export const resolvers = {
   JSON: GraphQLJSON,
@@ -36,5 +38,6 @@ export const resolvers = {
     ) => signinLocalUserFunc(email, password),
     oauthKakaoUserLink: () => oauthKakaoUserLinkFunc(),
     oauthNaverLink: () => oauthNaverLinkFunc(),
+    medicinePost: (_: any, { data }: { data: JSON }) => medicinePostFunc(data),
   },
 };
