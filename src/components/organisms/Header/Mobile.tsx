@@ -6,10 +6,7 @@ import Search from "@/components/molecules/Desktop/Header/Search";
 
 import styles from "#/styles/organisms/Header/Mobile.module.scss";
 
-import { useTheme } from "@/context/ThemeProvider";
-
 const Mobile: FC = () => {
-  const [themeMode, setToggleTheme] = useTheme();
   return (
     <div className={styles.top_nav}>
       <Link href="/" className={styles.logo_container}>

@@ -22,7 +22,7 @@ const NavButton = styled.div<ButtonProps>`
   width: 100%;
   height: 100%;
   padding-right: 25px;
-  gap: 5px;
+  gap: 7px;
   &:hover {
     opacity: 0.8;
   }

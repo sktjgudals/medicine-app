@@ -1,5 +1,4 @@
 import { FC, memo } from "react";
-import Link from "next/link";
 
 import Darkmode from "./Nav/Darkmode";
 
@@ -18,12 +17,9 @@ interface Props {
 const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
   const { loading, session } = useSession();
   if (loading) return <></>;
-
   return (
     <nav className={isOpen ? styles.dropdown_menu : styles.dropdown_menu_none}>
-      <Link href="/" onClick={(): void => toggleDropDown()}></Link>
       <Darkmode />
-
       {!session ? (
         <>
           <SignUpNav toggleDropDown={toggleDropDown} />

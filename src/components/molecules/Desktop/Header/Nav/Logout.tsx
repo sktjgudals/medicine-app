@@ -23,7 +23,7 @@ const Logout: FC = () => {
   };
 
   return (
-    <NavContainer>
+    <NavContainer style={{ paddingTop: "15px" }}>
       <NavButton onClick={logoutHandler}>
         <LogoutIcon width={19} height={19} />
         <NavText>로그아웃</NavText>
