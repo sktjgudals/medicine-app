@@ -19,7 +19,7 @@ const ImageEditor: FC = () => {
       <ImageContainer>
         <ImageContent>
           {image.length > 0 ? (
-            <>{/* <Image/> */}</>
+            <>{<Image src={image} width={200} height={200} alt="image" />}</>
           ) : (
             <IconContainer>
               <ImageIcon color={"#cccccc"} />

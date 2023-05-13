@@ -15,6 +15,8 @@ import ModalCloseButton from "../Modal/ModalCloseButton";
 import { Modal } from "@/components/atoms/Modal";
 import ImageIcon from "@/components/atoms/icons/imageIcon";
 import { ColorButton } from "@/components/atoms/Button";
+import UploadIcon from "@/components/atoms/icons/UploadIcon";
+import Image from "next/image";
 
 interface Props {
   image: any;
@@ -44,22 +46,15 @@ const ImageUpload: FC<Props> = ({ image, setImage }) => {
   };
 
   const onSubmit = async () => {
-    const host = "http://43.201.92.36";
-    // if (images.length === 0) return;
-    // const { data } = await axios
-    //   .post(`${host}/api/v1/user/setting/profileimage`, {
-    //     userId,
-    //     image: images[0].data_url,
-    //   })
-    //   .catch((e) => {
-    //     setImages([]);
-    //   });
-    // if (data) {
-    //   setModalOpen(false);
-    //   setImage(data.url);
-    // } else {
-    //   setImages([]);
-    // }
+    if (images.length === 0) return;
+    const formData = new FormData();
+    formData.append("file", images[0].file);
+    console.info(images[0].file);
+    const res = await fetch("/api/v1/image", {
+      method: "POST",
+      body: formData,
+    });
+    // setImage(images[0].data_url);
   };
 
   const onChange = (imageList: any, addUpdateIndex: any) => {
@@ -68,78 +63,88 @@ const ImageUpload: FC<Props> = ({ image, setImage }) => {
 
   return (
     <StyledLoginModal ref={ref}>
-      <ImageUploading
-        multiple
-        value={images}
-        onChange={onChange}
-        maxNumber={maxNumber}
-        dataURLKey="data_url"
-        acceptType={["jpg", "jpeg", "svg", "png", "webp"]}
-      >
-        {({ imageList, onImageUpdate, dragProps, errors }) => (
-          <UploadImageContainer>
-            <DropzoneContainer>
-              {imageList[0] ? (
-                <ImageDropzone {...dragProps} onClick={() => onImageUpdate(0)}>
-                  <img
-                    src={imageList[0].data_url}
-                    alt="image"
-                    width="100%"
-                    height="100%"
-                  />
-                </ImageDropzone>
-              ) : (
-                <ImageDropzone {...dragProps} onClick={() => onImageUpdate(0)}>
-                  <ImageIcon color={"#cccccc"} />
-                  <TextContainer>
-                    <b>Drag and drop or click here</b>
-                    <p>to upload your image (max 2mb)</p>
-                  </TextContainer>
-                </ImageDropzone>
-              )}
-            </DropzoneContainer>
-            {imageList[0] && (
-              <>
-                <div className="Upload_Image_Remove_Container">
-                  <button
+      <MainContainer>
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={onChange}
+          maxNumber={maxNumber}
+          dataURLKey="data_url"
+          acceptType={["jpg", "jpeg", "svg", "png", "webp"]}
+        >
+          {({ imageList, onImageUpdate, dragProps, errors }) => (
+            <UploadImageContainer>
+              <DropzoneContainer>
+                {imageList[0] ? (
+                  <ImageDropzone
+                    {...dragProps}
+                    onClick={() => onImageUpdate(0)}
+                  >
+                    <Image
+                      src={imageList[0].data_url}
+                      alt="image"
+                      width={200}
+                      height={200}
+                    />
+                  </ImageDropzone>
+                ) : (
+                  <ImageDropzone
+                    {...dragProps}
+                    onClick={() => onImageUpdate(0)}
+                  >
+                    <IconContainer>
+                      <UploadIcon width={100} height={100} />
+                    </IconContainer>
+                    <TextContainer>
+                      <b>이미지 업로드 하기</b>
+                    </TextContainer>
+                  </ImageDropzone>
+                )}
+              </DropzoneContainer>
+              {imageList[0] && (
+                <NoticeContainer>
+                  <ColorButton
+                    backgroundColor="var(--color-green-10)"
+                    color="var(--color-opac-w-15)"
                     onClick={() => {
                       onImageUpdate(0);
                     }}
-                    className="Upload_Image_Remove_Button"
                   >
-                    취소하고 다른 이미지 추가하기
-                  </button>
-                </div>
-              </>
-            )}
-            {errors && (
-              <div className="Upload_Image_Remove_Container">
-                {errors.acceptType && (
-                  <span className="Upload_Image_Error">
-                    Your selected file type is not allow
-                  </span>
-                )}
-                {errors.maxFileSize && (
-                  <span className="Upload_Image_Error">
-                    Selected file size exceed maxFileSize
-                  </span>
-                )}
-                {errors.resolution && (
-                  <span className="Upload_Image_Error">
-                    Selected file is not match your desired resolution
-                  </span>
-                )}
-              </div>
-            )}
-          </UploadImageContainer>
-        )}
-      </ImageUploading>
-      <SubmitContainer>
-        <ColorButton onClick={onSubmit}>이미지 등록하기</ColorButton>
-      </SubmitContainer>
-      <XButtonContainer>
-        <ModalCloseButton cb={imageState} />
-      </XButtonContainer>
+                    이미지 바꾸기
+                  </ColorButton>
+                </NoticeContainer>
+              )}
+              {errors && (
+                <NoticeContainer>
+                  {errors.acceptType && (
+                    <ErrorContent>타입이 올바르지 않습니다.</ErrorContent>
+                  )}
+                  {errors.maxFileSize && (
+                    <ErrorContent>이미지 사이즈가 큽니다.</ErrorContent>
+                  )}
+                  {errors.resolution && (
+                    <ErrorContent>
+                      원하는 해상도와 일치하지 않습니다.
+                    </ErrorContent>
+                  )}
+                </NoticeContainer>
+              )}
+            </UploadImageContainer>
+          )}
+        </ImageUploading>
+        <SubmitContainer>
+          <ColorButton
+            backgroundColor="rgb(29, 78, 216)"
+            onClick={onSubmit}
+            color="var(--color-opac-w-15)"
+          >
+            이미지 등록하기
+          </ColorButton>
+        </SubmitContainer>
+        <XButtonContainer>
+          <ModalCloseButton cb={imageState} />
+        </XButtonContainer>
+      </MainContainer>
     </StyledLoginModal>
   );
 };
@@ -159,9 +164,22 @@ const StyledLoginModal = styled(Modal)`
   }
 `;
 
-const UploadImageContainer = styled.div`
+const MainContainer = styled.div`
   width: 100%;
+  height: 100%;
+`;
+
+const NoticeContainer = styled.div`
+  padding-top: 20px;
+`;
+
+const UploadImageContainer = styled.div`
   padding: 60px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const DropzoneContainer = styled.div`
@@ -191,11 +209,27 @@ const XButtonContainer = styled.div`
 
 const SubmitContainer = styled.div`
   display: flex;
-  width: 100%;
   justify-content: center;
+  position: relative;
+  top: -10px;
 `;
 
 const TextContainer = styled.div`
+  padding-top: 10px;
   text-align: center;
   font-size: var(--font-size-7);
+`;
+
+const ErrorContent = styled.span`
+  text-align: center;
+  font-size: var(--font-size-8);
+  height: 100%;
+  color: red;
+  overflow: hidden;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 `;
