@@ -6,6 +6,7 @@ import Title from "../molecules/Desktop/Editor/Title";
 import Tag from "../molecules/Desktop/Editor/Tag";
 import { lazy, Suspense } from "react";
 import Loading from "../atoms/Loading";
+import ImageEditor from "../molecules/Desktop/Editor/ImageEditor";
 const LazyEditor = lazy(() => import("../molecules/Desktop/Editor/MainEditor"));
 
 interface Props {
@@ -33,6 +34,7 @@ const Post: FC<Props> = ({ session }) => {
       <MainContainer>
         <Title />
         <Tag />
+        <ImageEditor />
         <Suspense fallback={renderLoader()}>
           <LazyEditor />
         </Suspense>
@@ -59,5 +61,3 @@ const MainContainer = styled.div`
 const HeightContainer = styled.div`
   padding-top: 52px;
 `;
-
-// const;

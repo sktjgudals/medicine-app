@@ -4,7 +4,6 @@ import PostComponent from "@/components/pages/Post";
 import { GetServerSideProps } from "next";
 import { useSession } from "@/hooks/useSession";
 import { useRouter } from "next/router";
-import { SESSIONTYPE } from "@/types/session";
 
 const Post: FC = () => {
   const router = useRouter();
@@ -14,7 +13,7 @@ const Post: FC = () => {
   return (
     <>
       <Title title={"작성 - 약정"} content={"약을 찾아주는 요정"} />
-      <PostComponent session={session as SESSIONTYPE} />
+      {session && <PostComponent session={session} />}
     </>
   );
 };
