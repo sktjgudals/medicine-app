@@ -12,8 +12,9 @@ import Image from "next/image";
 import Loading from "@/components/atoms/Loading";
 
 const ImageUpload: FC = () => {
+  const thumbnail = useReactiveVar(postThumbnail);
   const [loading, setLoading] = useState<boolean>(false);
-  const [images, setImages] = useState<any>([]);
+  const [images, setImages] = useState<any>([{ data_url: thumbnail }]);
   const maxNumber = 1;
 
   const ref = useRef<HTMLDivElement>(null);
@@ -89,7 +90,7 @@ const ImageUpload: FC = () => {
           {({ imageList, onImageUpdate, dragProps, errors }) => (
             <UploadImageContainer>
               <DropzoneContainer>
-                {imageList[0] ? (
+                {imageList[0].data_url.length !== 0 ? (
                   <ImageDropzone
                     {...dragProps}
                     onClick={() => onImageUpdate(0)}
@@ -115,7 +116,7 @@ const ImageUpload: FC = () => {
                   </ImageDropzone>
                 )}
               </DropzoneContainer>
-              {imageList[0] && (
+              {imageList[0].data_url.length !== 0 && (
                 <NoticeContainer>
                   <ColorButton
                     backgroundColor="var(--color-green-10)"
@@ -146,7 +147,7 @@ const ImageUpload: FC = () => {
             </UploadImageContainer>
           )}
         </ImageUploading>
-        {images.length !== 0 && (
+        {images[0].data_url.length !== 0 && (
           <SubmitContainer>
             <ColorButton
               width={200}
