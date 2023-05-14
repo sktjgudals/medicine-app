@@ -27,7 +27,7 @@ const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
         </>
       ) : (
         <>
-          <PostNav />
+          <PostNav toggleDropDown={toggleDropDown} />
           <Logout />
         </>
       )}
