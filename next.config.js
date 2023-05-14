@@ -10,6 +10,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ["yakjung.s3.ap-northeast-2.amazonaws.com", "yakjung.site"],
+  },
 };
 
 module.exports = nextConfig;
