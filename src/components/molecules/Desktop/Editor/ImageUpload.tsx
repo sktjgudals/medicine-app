@@ -40,7 +40,7 @@ const ImageUpload: FC = () => {
     if (token) {
       if (images[0].data_url) {
         setLoading(true);
-        const { url } = await fetch("/api/v1/image", {
+        const { url, error } = await fetch("/api/v1/image", {
           method: "POST",
           body: images[0].data_url,
           headers: {
@@ -59,7 +59,7 @@ const ImageUpload: FC = () => {
           postThumbnail(url);
         } else {
           setLoading(false);
-          console.info("error");
+          console.info(error);
         }
       } else {
         setLoading(false);

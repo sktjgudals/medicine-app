@@ -24,8 +24,8 @@ export const imageUploadFunc = async (
       ContentEncoding: "base64",
       ContentType: `image/${type}`,
     };
-    return await s3.upload(params).promise();
+    return { data: (await s3.upload(params).promise()) as any, error: false };
   } catch (e) {
-    return false;
+    return { error: e };
   }
 };
