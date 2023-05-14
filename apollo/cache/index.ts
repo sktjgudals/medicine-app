@@ -12,6 +12,8 @@ const emailSubmitCheck = makeVar<boolean>(false);
 
 const emailLoadingCheck = makeVar<boolean>(false);
 
+const postThumbnail = makeVar<string>("");
+
 export {
   modalState,
   dropdownState,
@@ -19,4 +21,5 @@ export {
   emailSubmitCheck,
   emailLoadingCheck,
   imageState,
+  postThumbnail,
 };
