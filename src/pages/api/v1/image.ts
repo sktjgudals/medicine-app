@@ -1,35 +1,37 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import formidable from "formidable";
-import FormData from "form-data";
-import fs from "fs";
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const fileData = await new Promise((resolve, reject) => {
-    const form = new formidable.IncomingForm({
-      maxFileSize: 5 * 1024 * 1024,
-      keepExtensions: true,
-    });
+import jwtDecode from "jwt-decode";
+import { imageUploadFunc } from "@/utils/api/image";
 
-    form.parse(req, (err, fields, files) => {
-      if (err) return reject(err);
-      return resolve(files);
-    });
-  });
-  console.info(fileData);
-  res.status(200).json({ ad: "test" });
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const token = req.headers.authorization;
+  if (token && req.body) {
+    const decodedToken = jwtDecode(token) as any;
+    if (decodedToken) {
+      const buffer = Buffer.from(
+        req.body.replace(/^data:image\/\w+;base64,/, ""),
+        "base64"
+      );
+      const type = req.body.split(";")[0].split("/")[1];
+      const result = await imageUploadFunc(decodedToken.id, type, buffer);
+      if (result) {
+        const { ETag, Location, Key, Bucket } = result;
+        return res.status(200).json({ url: Location });
+      } else {
+        return res.status(200).json({ url: null });
+      }
+    }
+    return res.status(404).json({ error: true });
+  } else {
+    return res.status(404).json({ url: null });
+  }
 };
 
 export default handler;
 
-const saveFile = async (file: any) => {
-  const data = fs.readFileSync(file.path);
-  console.info(data);
-  //   fs.writeFileSync(`./public/${file.name}`, data);
-  //   await fs.unlinkSync(file.path);
-  return;
-};
-
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: {
+      sizeLimit: "200mb",
+    },
   },
 };

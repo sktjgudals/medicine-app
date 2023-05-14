@@ -1,30 +1,19 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { imageState } from "apollo/cache";
+import { imageState, postThumbnail } from "apollo/cache";
 import { useReactiveVar } from "@apollo/client";
 import ImageUploading from "react-images-uploading";
 
 import ModalCloseButton from "../Modal/ModalCloseButton";
 import { Modal } from "@/components/atoms/Modal";
-import ImageIcon from "@/components/atoms/icons/imageIcon";
 import { ColorButton } from "@/components/atoms/Button";
 import UploadIcon from "@/components/atoms/icons/UploadIcon";
 import Image from "next/image";
+import Loading from "@/components/atoms/Loading";
 
-interface Props {
-  image: any;
-  setImage: Dispatch<SetStateAction<string>>;
-}
-
-const ImageUpload: FC<Props> = ({ image, setImage }) => {
-  const [images, setImages] = useState([]);
+const ImageUpload: FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [images, setImages] = useState<any>([]);
   const maxNumber = 1;
 
   const ref = useRef<HTMLDivElement>(null);
@@ -47,14 +36,39 @@ const ImageUpload: FC<Props> = ({ image, setImage }) => {
 
   const onSubmit = async () => {
     if (images.length === 0) return;
-    const formData = new FormData();
-    formData.append("file", images[0].file);
-    console.info(images[0].file);
-    const res = await fetch("/api/v1/image", {
-      method: "POST",
-      body: formData,
-    });
-    // setImage(images[0].data_url);
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      if (images[0].data_url) {
+        setLoading(true);
+        const { url } = await fetch("/api/v1/image", {
+          method: "POST",
+          body: images[0].data_url,
+          headers: {
+            Authorization: token,
+          },
+        })
+          .then((data) => {
+            return data.json();
+          })
+          .catch((e) => {
+            console.info(e);
+          });
+        if (url) {
+          setLoading(false);
+          imageState(false);
+          postThumbnail(url);
+        } else {
+          setLoading(false);
+          console.info("error");
+        }
+      } else {
+        setLoading(false);
+        console.info("이미지 등록");
+      }
+    } else {
+      setLoading(false);
+      console.info("로그인필요");
+    }
   };
 
   const onChange = (imageList: any, addUpdateIndex: any) => {
@@ -132,15 +146,30 @@ const ImageUpload: FC<Props> = ({ image, setImage }) => {
             </UploadImageContainer>
           )}
         </ImageUploading>
-        <SubmitContainer>
-          <ColorButton
-            backgroundColor="rgb(29, 78, 216)"
-            onClick={onSubmit}
-            color="var(--color-opac-w-15)"
-          >
-            이미지 등록하기
-          </ColorButton>
-        </SubmitContainer>
+        {images.length !== 0 && (
+          <SubmitContainer>
+            <ColorButton
+              width={200}
+              backgroundColor="rgb(29, 78, 216)"
+              onClick={onSubmit}
+              color="var(--color-opac-w-15)"
+            >
+              {loading ? (
+                <Loading
+                  width={25}
+                  height={25}
+                  strokeWidth={10}
+                  top={0}
+                  bottom={0}
+                  right={0}
+                  left={0}
+                />
+              ) : (
+                "이미지 등록하기"
+              )}
+            </ColorButton>
+          </SubmitContainer>
+        )}
         <XButtonContainer>
           <ModalCloseButton cb={imageState} />
         </XButtonContainer>

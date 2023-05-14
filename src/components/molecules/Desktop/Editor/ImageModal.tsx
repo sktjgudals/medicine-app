@@ -1,18 +1,13 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 
 import ImageUpload from "./ImageUpload";
 import { ModalWrapper } from "@/components/atoms/Modal";
 
-interface Props {
-  image: any;
-  setImage: Dispatch<SetStateAction<string>>;
-}
-
-const ImageModal: FC<Props> = ({ image, setImage }) => {
+const ImageModal: FC = () => {
   return (
     <StyledLoginModalWrapper>
-      <ImageUpload image={image} setImage={setImage} />
+      <ImageUpload />
     </StyledLoginModalWrapper>
   );
 };

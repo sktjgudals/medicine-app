@@ -1,14 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import styled from "styled-components";
+import Image from "next/image";
+import { postThumbnail } from "apollo/cache";
 import useImageModal from "@/hooks/useImageModal";
 
 import ImageModal from "./ImageModal";
 import Portal from "@/components/atoms/Portal";
-import Image from "next/image";
 import ImageIcon from "@/components/atoms/icons/imageIcon";
+import { useReactiveVar } from "@apollo/client";
 
 const ImageEditor: FC = () => {
-  const [image, setImage] = useState<string>("");
+  const thumbnail = useReactiveVar(postThumbnail);
   const { clickModal, isOpenModal } = useImageModal();
 
   return (
@@ -18,8 +20,8 @@ const ImageEditor: FC = () => {
       </LabelContainer>
       <ImageContainer>
         <ImageContent>
-          {image.length > 0 ? (
-            <>{<Image src={image} width={200} height={200} alt="image" />}</>
+          {thumbnail.length > 0 ? (
+            <Image src={thumbnail} width={200} height={200} alt="image" />
           ) : (
             <IconContainer>
               <ImageIcon color={"#cccccc"} />
@@ -27,12 +29,7 @@ const ImageEditor: FC = () => {
           )}
           <ImageButton onClick={() => clickModal()}>썸네일 바꾸기</ImageButton>
         </ImageContent>
-        {isOpenModal && (
-          <Portal
-            selector={"modal"}
-            children={<ImageModal image={image} setImage={setImage} />}
-          />
-        )}
+        {isOpenModal && <Portal selector={"modal"} children={<ImageModal />} />}
       </ImageContainer>
     </MainContainer>
   );
