@@ -1,33 +1,32 @@
-import { Input } from "@/components/atoms/Input";
 import { FC } from "react";
+import useEditorForm from "@/hooks/useEditorForm";
 import styled from "styled-components";
+import { Input } from "@/components/atoms/Input";
 
 const Title: FC = () => {
+  const { register, trigger, setValue, watch } = useEditorForm("onChange");
+
+  const onChangeHandler = (value: string) => {
+    setValue("title", value);
+    // onChange 됐는지 react-hook-form에 알려주는 기능
+    trigger("title");
+  };
   return (
     <TitleContainer>
-      <LabelContainer>
-        <Label htmlFor="post_title">제목:</Label>
-      </LabelContainer>
       <InputContainer>
-        <TitleInput type="text" placeholder="입력하세요" id="title" />
+        <TitleInput
+          type="text"
+          placeholder="제목을 입력하세요"
+          id="title"
+          // onChange={(e) => onChangeHandler(e.target.value)}
+          {...register("title")}
+        />
       </InputContainer>
     </TitleContainer>
   );
 };
 
 export default Title;
-
-const LabelContainer = styled.div``;
-
-const Label = styled.label`
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  color: var(--color-text-label);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-5);
-`;
 
 const InputContainer = styled.div`
   display: flex;
@@ -43,13 +42,12 @@ const TitleInput = styled(Input)`
   border-radius: 0.4rem !important;
   padding-left: 10px;
   font-family: inherit;
-  border-style: solid;
-  border-color: var(--color-border-input);
   color: var(--color-text-input);
-  background-color: var(--color-background-input);
+  background-color: var(--color-background-input-focus);
+  border 2px solid;
+  border-color: var(--color-border-input);
   &:hover {
     border-color: var(--color-border-input-focus);
-    background-color: var(--color-background-input-focus);
   }
 `;
 
