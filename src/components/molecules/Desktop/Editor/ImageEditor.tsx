@@ -15,11 +15,8 @@ const ImageEditor: FC = () => {
 
   return (
     <MainContainer>
-      <LabelContainer>
-        <Label htmlFor="post_image">썸네일:</Label>
-      </LabelContainer>
       <ImageContainer>
-        <ImageContent>
+        <ImageContent onClick={() => clickModal()}>
           {thumbnail.length > 0 ? (
             <Image src={thumbnail} width={200} height={200} alt="image" />
           ) : (
@@ -27,7 +24,7 @@ const ImageEditor: FC = () => {
               <ImageIcon color={"#cccccc"} />
             </IconContainer>
           )}
-          <ImageButton onClick={() => clickModal()}>썸네일 바꾸기</ImageButton>
+          <ImageButton>썸네일 업로드</ImageButton>
         </ImageContent>
         {isOpenModal && <Portal selector={"modal"} children={<ImageModal />} />}
       </ImageContainer>
@@ -43,18 +40,6 @@ const MainContainer = styled.div`
   align-items: center;
   gap: 10px;
   padding-top: 20px;
-`;
-
-const LabelContainer = styled.div``;
-
-const Label = styled.label`
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  color: var(--color-text-label);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-5);
 `;
 
 const ImageContainer = styled.div`

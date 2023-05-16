@@ -365,11 +365,7 @@
 :root[color-theme="light"] {
   --color-modal-default-background: var(--color-opac-gl-2);
   --color-modal-default-text: var(--color-hinted-grey-2);
-  --color-background-button: var(--color-twitch-purple-7);
-  --color-background-button-hover: var(--color-twitch-purple-8);
-  --color-background-button-focus: var(--color-twitch-purple-8);
-  --color-background-button-active: var(--color-twitch-purple-7);
-  --color-background-button-purchase: var(--color-opac-b-5);
+  --color-background-button: var(--color-opac-w-14);
   --color-background-button-status: var(--color-background-button-success);
   --color-background-button-status-hover: var(
     --color-background-button-error-hover
@@ -942,6 +938,7 @@
 :root[color-theme="dark"] {
   --color-modal-default-background: var(--color-opac-gd-2);
   --color-modal-default-text: var(--color-hinted-grey-15);
+  --color-background-button: var(--color-black);
   --color-background-button-primary-default: var(
     --color-background-button-brand
   );
