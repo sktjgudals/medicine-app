@@ -10,6 +10,7 @@ const s3 = new S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   }),
 });
+
 export const imageUploadFunc = async (
   id: string,
   type: string,
@@ -28,4 +29,19 @@ export const imageUploadFunc = async (
   } catch (e) {
     return { error: e };
   }
+};
+
+export const imageBase64Func = async (file: any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        console.info(reader.result);
+      };
+      return resolve(true);
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
