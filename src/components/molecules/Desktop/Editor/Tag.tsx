@@ -2,6 +2,7 @@ import { Input } from "@/components/atoms/Input";
 import XIcon from "@/components/atoms/icons/XIcon";
 import { FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 const Tag: FC = () => {
@@ -26,8 +27,13 @@ const Tag: FC = () => {
     e.preventDefault();
     if (e.key === "Enter") {
       if (tag.length !== 0) {
-        append({ name: tag });
-        return setTag("");
+        let res = fields.some((it) => it.name.includes(tag));
+        if (res) {
+          return setTag("");
+        } else {
+          append({ name: tag });
+          return setTag("");
+        }
       }
     } else if (e.key === "Backspace") {
       if (tag.length === 0) {
@@ -40,7 +46,7 @@ const Tag: FC = () => {
     e.preventDefault();
     if (tag.length !== 0) {
       append({ name: tag });
-      setTag("");
+      return setTag("");
     }
   };
   return (
@@ -50,10 +56,8 @@ const Tag: FC = () => {
           {fields.map((field, idx) => (
             <div key={idx}>
               {idx > 0 && (
-                <TagButtonContainer>
-                  <TagButton onClick={subColorQuanaity(idx)}>
-                    {field.name}
-                  </TagButton>
+                <TagButtonContainer onClick={subColorQuanaity(idx)}>
+                  <TagButton>{field.name}</TagButton>
                   <Xbutton>
                     <XIcon width={10} height={10} />
                   </Xbutton>
@@ -83,6 +87,10 @@ const MainContainer = styled.div`
   align-items: center;
   gap: 10px;
   padding-top: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const InputContainer = styled.div`

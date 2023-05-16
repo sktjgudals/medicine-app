@@ -64,6 +64,10 @@ const ImageButton = styled.div`
   padding: 8px 0;
   cursor: pointer;
   color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const IconContainer = styled.div`
