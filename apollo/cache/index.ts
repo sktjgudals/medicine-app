@@ -1,5 +1,10 @@
 import { makeVar } from "@apollo/client";
 
+interface EditorTag {
+  name: string;
+  id: string;
+}
+
 const modalState = makeVar<boolean>(false);
 
 const signUpModalState = makeVar<boolean>(false);
@@ -12,7 +17,11 @@ const emailSubmitCheck = makeVar<boolean>(false);
 
 const emailLoadingCheck = makeVar<boolean>(false);
 
-const postThumbnail = makeVar<string>("");
+const editorTitleState = makeVar<string>("");
+
+const editorTagState = makeVar<EditorTag[]>([]);
+
+const editorThumbnail = makeVar<string>("");
 
 export {
   modalState,
@@ -21,5 +30,7 @@ export {
   emailSubmitCheck,
   emailLoadingCheck,
   imageState,
-  postThumbnail,
+  editorTitleState,
+  editorTagState,
+  editorThumbnail,
 };

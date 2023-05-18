@@ -1,6 +1,6 @@
 import GraphQLJSON from "graphql-type-json";
+import { GraphQLScalarType, Kind } from "graphql";
 
-console.info();
 import {
   createLocalUserFunc,
   findUserEmailFunc,
@@ -11,12 +11,29 @@ import {
   oauthKakaoUserLinkFunc,
   oauthNaverLinkFunc,
 } from "./resolverFunc/oauth";
-import { medicinePostFunc } from "./resolverFunc/post";
+import { postDataCreateFunc } from "./resolverFunc/post";
+
+const dateScalar = new GraphQLScalarType({
+  name: "Date",
+  description: "Date custom scalar type",
+  serialize(value: any) {
+    return value.getTime();
+  },
+  parseValue(value: any) {
+    return new Date(value);
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10));
+    }
+    return null;
+  },
+});
 
 export const resolvers = {
   JSON: GraphQLJSON,
+  Date: dateScalar,
   Query: {
-    a: () => "aaaa",
     findUserEmail: async (_: any, { email }: { email: string }) =>
       findUserEmailFunc(email),
 
@@ -38,6 +55,7 @@ export const resolvers = {
     ) => signinLocalUserFunc(email, password),
     oauthKakaoUserLink: () => oauthKakaoUserLinkFunc(),
     oauthNaverLink: () => oauthNaverLinkFunc(),
-    medicinePost: (_: any, { data }: { data: JSON }) => medicinePostFunc(data),
+    postDataCreate: (_: any, { data }: { data: JSON }) =>
+      postDataCreateFunc(data),
   },
 };

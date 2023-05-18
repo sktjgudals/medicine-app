@@ -1,5 +1,5 @@
-const medicinePostFunc = async (data: JSON) => {
-  return { error: false };
+const postDataCreateFunc = (data: JSON) => {
+  return "asd";
 };
 
-export { medicinePostFunc };
+export { postDataCreateFunc };
