@@ -1,16 +1,33 @@
-import { FC } from "react";
-import useEditorForm from "@/hooks/useEditorForm";
+import { ChangeEvent, FC, useEffect } from "react";
+import { editorTitleState, editorErrorMessage } from "apollo/cache";
+
 import styled from "styled-components";
 import { Input } from "@/components/atoms/Input";
+import { useReactiveVar } from "@apollo/client";
 
 const Title: FC = () => {
-  const { register, trigger, setValue, watch } = useEditorForm("onChange");
+  const error = useReactiveVar(editorErrorMessage);
+  const title = useReactiveVar(editorTitleState);
 
-  const onChangeHandler = (value: string) => {
-    setValue("title", value);
-    // onChange 됐는지 react-hook-form에 알려주는 기능
-    trigger("title");
+  useEffect(() => {
+    if (title.length === 0) {
+      editorErrorMessage({
+        title: "제목이 비어있습니다",
+        content: error.content,
+      });
+    } else {
+      editorErrorMessage({
+        title: "",
+        content: error.content,
+      });
+    }
+  }, [title]);
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    editorTitleState(e.target.value);
   };
+
   return (
     <TitleContainer>
       <InputContainer>
@@ -18,10 +35,10 @@ const Title: FC = () => {
           type="text"
           placeholder="제목을 입력하세요"
           id="title"
-          // onChange={(e) => onChangeHandler(e.target.value)}
-          {...register("title")}
+          onChange={onChangeHandler}
         />
       </InputContainer>
+      <ErrorContainer>{error.title}</ErrorContainer>
     </TitleContainer>
   );
 };
@@ -40,6 +57,8 @@ const TitleInput = styled(Input)`
   height: var(--input-size-small);
   font-size: var(--input-text-default);
   border-radius: 0.4rem !important;
+  font-size: 1.125rem;
+  line-height: 2rem;
   padding-left: 10px;
   font-family: inherit;
   color: var(--color-text-input);
@@ -53,10 +72,19 @@ const TitleInput = styled(Input)`
 
 const TitleContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0.5rem 0rem 0rem 0.5rem;
+  color: red;
+  font-size: var(--font-size-8);
 `;

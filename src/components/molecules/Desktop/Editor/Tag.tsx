@@ -1,5 +1,6 @@
 import { Input } from "@/components/atoms/Input";
 import XIcon from "@/components/atoms/icons/XIcon";
+import { editorTagState } from "apollo/cache";
 import { FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -7,13 +8,13 @@ import styled from "styled-components";
 
 const Tag: FC = () => {
   const [tag, setTag] = useState<string>("");
-  const { control, register } = useForm({
+  const { control } = useForm({
     defaultValues: {
       tag: [{ name: "" }],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, insert } = useFieldArray({
     control,
     name: `tag`,
   });
@@ -27,13 +28,12 @@ const Tag: FC = () => {
     e.preventDefault();
     if (e.key === "Enter") {
       if (tag.length !== 0) {
-        let res = fields.some((it) => it.name.includes(tag));
-        if (res) {
-          return setTag("");
-        } else {
-          append({ name: tag });
-          return setTag("");
+        for (let i = 0; i < fields.length; i++) {
+          if (fields[i].name === tag) return;
         }
+        append({ name: tag });
+        editorTagState([...fields, { name: tag, id: "1" }]);
+        return setTag("");
       }
     } else if (e.key === "Backspace") {
       if (tag.length === 0) {
@@ -46,9 +46,11 @@ const Tag: FC = () => {
     e.preventDefault();
     if (tag.length !== 0) {
       append({ name: tag });
+      editorTagState(fields);
       return setTag("");
     }
   };
+
   return (
     <MainContainer>
       <InputContainer>
@@ -85,8 +87,7 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  padding-top: 20px;
+  padding-top: 15px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -105,19 +106,17 @@ const InputContainer = styled.div`
 const TagInput = styled(Input)`
   display: inline-flex;
   border-radius: 1rem;
-  padding-left: 12px;
-  outline: none;
+  padding-left: 10px;
   cursor: text;
   font-size: 1.125rem;
-  line-height: 2rem;
+  line-height: 1.75rem;
   margin-bottom: 0.75rem;
-  border: none;
-  background-color: var(--color-background-input-focus);
   color: var(--color-text-input);
-    border 2px solid;
+  border 2px solid;
+  background-color: var(--color-background-input-focus);
   border-color: var(--color-border-input);
   &:hover {
-    border-color: var(--color-magenta-12);
+    border-color: var(--color-border-input-focus);
   }
 `;
 
@@ -135,7 +134,7 @@ const TagButtonContainer = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: var(--color-background-button);
-  color: var(--color-magenta-12);
+  color: var(--color-green-9);
   margin-right: 0.75rem;
   margin-bottom: 0.75rem;
   border: none;
@@ -147,7 +146,7 @@ const TagButton = styled.button`
   background-color: var(--color-background-button);
   border: none;
   cursor: pointer;
-  color: var(--color-magenta-12);
+  color: var(--color-green-9);
 `;
 
 const Xbutton = styled.div`

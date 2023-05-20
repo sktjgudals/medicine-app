@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { postThumbnail } from "apollo/cache";
+import { editorThumbnail } from "apollo/cache";
 import useImageModal from "@/hooks/useImageModal";
 
 import ImageModal from "./ImageModal";
@@ -10,7 +10,7 @@ import ImageIcon from "@/components/atoms/icons/imageIcon";
 import { useReactiveVar } from "@apollo/client";
 
 const ImageEditor: FC = () => {
-  const thumbnail = useReactiveVar(postThumbnail);
+  const thumbnail = useReactiveVar(editorThumbnail);
   const { clickModal, isOpenModal } = useImageModal();
 
   return (

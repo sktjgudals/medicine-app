@@ -1,0 +1,30 @@
+.editor {
+  width: 100%;
+  min-height: 700px;
+  color: var(--color-text-input);
+  padding-bottom: 50px;
+
+  iframe {
+    margin-bottom: 50px;
+    width: 854px;
+    height: 480px;
+  }
+  p {
+    font-size: var(--font-size-8);
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  u {
+    text-decoration: underline;
+  }
+  s {
+    text-decoration: line-through;
+  }
+}
