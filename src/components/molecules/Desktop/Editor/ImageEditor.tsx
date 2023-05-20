@@ -58,7 +58,6 @@ const ImageButton = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: hsl(210, 8%, 35%);
   border-radius: 0 0 10px 10px;
   text-align: center;
   padding: 8px 0;
@@ -68,6 +67,10 @@ const ImageButton = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background: var(--color-green-10);
+  &:hover {
+    background: var(--color-green-11);
+  }
 `;
 
 const IconContainer = styled.div`

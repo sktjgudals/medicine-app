@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { imageState, postThumbnail } from "apollo/cache";
+import { imageState, editorThumbnail } from "apollo/cache";
 import { useReactiveVar } from "@apollo/client";
 import ImageUploading from "react-images-uploading";
 
@@ -12,7 +12,7 @@ import Image from "next/image";
 import Loading from "@/components/atoms/Loading";
 
 const ImageUpload: FC = () => {
-  const thumbnail = useReactiveVar(postThumbnail);
+  const thumbnail = useReactiveVar(editorThumbnail);
   const [loading, setLoading] = useState<boolean>(false);
   const [images, setImages] = useState<any>([{ data_url: thumbnail }]);
   const maxNumber = 1;
@@ -57,7 +57,7 @@ const ImageUpload: FC = () => {
         if (url) {
           setLoading(false);
           imageState(false);
-          postThumbnail(url);
+          editorThumbnail(url);
         } else {
           setLoading(false);
           console.info(error);

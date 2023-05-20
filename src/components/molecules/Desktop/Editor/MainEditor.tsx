@@ -16,6 +16,7 @@ import {
 } from "apollo/cache";
 import { PostDataMutation } from "apollo/querys/post";
 import ModalSubmitButton from "../Modal/ModalSubmitButton";
+import { toast } from "react-toastify";
 
 let quillObj: any;
 
@@ -91,14 +92,18 @@ const MainEditor: FC = () => {
       thumbnail,
       body: editor,
     };
-
-    mutatieFunc({ variables: { postData: JSON.stringify(res) } })
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      mutatieFunc({ variables: { postData: JSON.stringify(res), token } })
+        .then(() => {
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      toast.error("로그인 에러");
+    }
   };
 
   const modules = useMemo(

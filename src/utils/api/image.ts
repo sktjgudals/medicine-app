@@ -37,9 +37,8 @@ export const imageBase64Func = async (file: any) => {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function () {
-        console.info(reader.result);
+        return resolve(reader.result);
       };
-      return resolve(true);
     } catch (e) {
       reject(e);
     }
