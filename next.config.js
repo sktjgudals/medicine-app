@@ -11,7 +11,11 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ["yakjung.s3.ap-northeast-2.amazonaws.com", "yakjung.site"],
+    domains: [
+      "yakjung.s3.ap-northeast-2.amazonaws.com",
+      "yakjung.site",
+      "www.youtube.com",
+    ],
   },
 };
 
