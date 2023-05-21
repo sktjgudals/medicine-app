@@ -85,14 +85,18 @@ const MainEditor: FC = () => {
 
   const submitHandler = async (e: any) => {
     setLoading(true);
-    let filterdTag = tag.filter((it) => {
-      delete it.id;
-      return it.name.length !== 0;
-    }) as any;
+    let newTag = [];
+    for (let i = 0; i < tag.length; i++) {
+      if (tag[i].name.length === 0) {
+      } else {
+        const tagContent = { name: tag[i].name };
+        newTag.push(tagContent);
+      }
+    }
 
     const res = {
       title,
-      tag: filterdTag,
+      tag: newTag,
       thumbnail,
       body: editor,
     };
