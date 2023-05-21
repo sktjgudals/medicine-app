@@ -8,6 +8,7 @@ export const typeDefs = gql`
   type User {
     id: String
     email: String
+    name: String
     nickname: String
     image: String
   }
@@ -24,26 +25,23 @@ export const typeDefs = gql`
   type Post {
     _id: String
     id: String
-    title: String
     number: Int
-    views: Int
-    netabare: Boolean
-    notice: Boolean
-    private: Boolean
-    userId: String
+    title: String
     body: String
-    update: Boolean
-    category: String
-    isLike: Boolean
-    isSave: Boolean
+    views: Int
     likeCount: Int
+    userId: String
+    isLike: Boolean
     like: [PostLike]
     user: User
+    thumbnail: String
+    tag: [String]
     comments: [Comment]
     updatedAt: Date
     createdAt: Date
     deletedAt: Date
   }
+
   type PostLike {
     id: String
     user: User
@@ -109,11 +107,18 @@ export const typeDefs = gql`
 
   type PostCreateResoponse {
     post: Post
+    token: String
+  }
+
+  type PostResoponse {
+    post: Post
+    error: String
   }
 
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
+    postGetData(userId: String, num: Int!): PostResoponse
   }
 
   type Mutation {
@@ -125,7 +130,7 @@ export const typeDefs = gql`
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse
-    postDataCreate(data: JSON!): PostCreateResoponse
+    postDataCreate(postData: JSON!, token: String!): PostCreateResoponse
   }
 `;
 

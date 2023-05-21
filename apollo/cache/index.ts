@@ -5,6 +5,11 @@ interface EditorTag {
   id: string;
 }
 
+interface EditorError {
+  title: string;
+  content: string;
+}
+
 const modalState = makeVar<boolean>(false);
 
 const signUpModalState = makeVar<boolean>(false);
@@ -23,6 +28,8 @@ const editorTagState = makeVar<EditorTag[]>([]);
 
 const editorThumbnail = makeVar<string>("");
 
+const editorErrorMessage = makeVar<EditorError>({ title: "", content: "" });
+
 export {
   modalState,
   dropdownState,
@@ -33,4 +40,5 @@ export {
   editorTitleState,
   editorTagState,
   editorThumbnail,
+  editorErrorMessage,
 };

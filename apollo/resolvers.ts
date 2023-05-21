@@ -11,7 +11,7 @@ import {
   oauthKakaoUserLinkFunc,
   oauthNaverLinkFunc,
 } from "./resolverFunc/oauth";
-import { postDataCreateFunc } from "./resolverFunc/post";
+import { postDataCreateFunc, postGetDataFunc } from "./resolverFunc/post";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -39,6 +39,10 @@ export const resolvers = {
 
     findUserNickname: async (_: any, { nickname }: { nickname: string }) =>
       findUserNicknameFunc(nickname),
+    postGetData: async (
+      _: any,
+      { userId, num }: { userId: string; num: number }
+    ) => postGetDataFunc(userId, num),
   },
   Mutation: {
     createLocalUser: (
@@ -55,7 +59,9 @@ export const resolvers = {
     ) => signinLocalUserFunc(email, password),
     oauthKakaoUserLink: () => oauthKakaoUserLinkFunc(),
     oauthNaverLink: () => oauthNaverLinkFunc(),
-    postDataCreate: (_: any, { data }: { data: JSON }) =>
-      postDataCreateFunc(data),
+    postDataCreate: (
+      _: any,
+      { postData, token }: { postData: JSON; token: string }
+    ) => postDataCreateFunc(postData, token),
   },
 };

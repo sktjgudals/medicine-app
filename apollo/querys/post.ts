@@ -1,30 +1,34 @@
 import { gql } from "@apollo/client";
 
-const MedicinePostMutation = gql`
-  mutation MedicinePost($data: JSON) {
-    medicinePost(data: $data) {
-      error
-    }
-  }
-`;
-
-const PostDataSend = gql`
-  mutation postDataCreate($data: JSON) {
-    postDataCreate(data: $data) {
+const PostDataMutation = gql`
+  mutation data($postData: JSON!, $token: String!) {
+    postDataCreate(postData: $postData, token: $token) {
       post {
         id
         title
         number
         views
         createdAt
-        user {
-          id
-          name
-          nickname
-        }
       }
+      token
     }
   }
 `;
 
-export { MedicinePostMutation, PostDataSend };
+const PostGetData = gql`
+  query data($userId: String, $num: Int!) {
+    postGetData(userId: $userId, num: $num) {
+      post {
+        id
+        title
+        number
+        body
+        views
+        createdAt
+      }
+      error
+    }
+  }
+`;
+
+export { PostDataMutation, PostGetData };
