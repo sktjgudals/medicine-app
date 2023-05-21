@@ -1,63 +1,34 @@
-import { SESSIONTYPE } from "@/types/session";
 import { FC } from "react";
-import styled from "styled-components";
+import { useQuery } from "@apollo/client";
+import { PostGetData } from "apollo/querys/post";
 
-import Title from "../molecules/Desktop/Editor/Title";
-import Tag from "../molecules/Desktop/Editor/Tag";
-import { lazy, Suspense } from "react";
-import Loading from "../atoms/Loading";
-import ImageEditor from "../molecules/Desktop/Editor/ImageEditor";
-const LazyEditor = lazy(() => import("../molecules/Desktop/Editor/MainEditor"));
+import { SESSIONTYPE } from "@/types/session";
+
+import PostBody from "../molecules/Desktop/Post/PostBody";
+import styled from "styled-components";
+import Title from "../atoms/Title";
 
 interface Props {
-  session: SESSIONTYPE;
+  session: SESSIONTYPE | null;
+  num: number;
 }
 
-const Post: FC<Props> = ({ session }) => {
-  //   console.info(session);
-  const renderLoader = () => (
-    <LoadingContainer>
-      <Loading
-        width={80}
-        height={80}
-        strokeWidth={10}
-        top={0}
-        bottom={0}
-        right={0}
-        left={0}
-      />
-    </LoadingContainer>
-  );
+const Post: FC<Props> = ({ session, num }) => {
+  const { loading, data, error } = useQuery(PostGetData, {
+    variables: { userId: session ? session.id : null, num: Number(num) },
+  });
 
+  if (loading) return <></>;
+  if (error) return <>error</>;
+  console.info(data);
   return (
-    <HeightContainer>
-      <MainContainer>
-        <Title />
-        <Tag />
-        <ImageEditor />
-        <Suspense fallback={renderLoader()}>
-          <LazyEditor />
-        </Suspense>
-      </MainContainer>
-    </HeightContainer>
+    <MainContainer>
+      <Title title={`약정`} content={"약을 찾아주는 요정"} />
+      <PostBody />
+    </MainContainer>
   );
 };
 
 export default Post;
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 100px;
-`;
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px 0px 20px;
-`;
-
-const HeightContainer = styled.div`
-  padding-top: 52px;
-`;
+const MainContainer = styled.div``;
