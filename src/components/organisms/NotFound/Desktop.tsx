@@ -12,6 +12,9 @@ const Desktop: FC = () => {
       </Link>
       <div className={styles.main_text_container}>
         <p className={styles.main_text}>찾을 수 없는 페이지입니다.</p>
+        <p className={styles.main_text}>
+          입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.
+        </p>
         <Link className={styles.main_link} href={"/"}>
           돌아가기
         </Link>
