@@ -33,10 +33,26 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
 };
 
 const postGetDataFunc = async (userId: string, num: number) => {
-  const post = await prisma.post.findFirst({ where: { number: num } });
-  console.info(post);
+  const post = await prisma.post.findFirst({
+    where: { number: num },
+    include: { like: true },
+  });
+
   if (post) {
-    return { post };
+    const tag = await prisma.tag.findMany({
+      where: { postId: { hasEvery: post.id } },
+      select: { name: true, id: true },
+    });
+    const newPost = {
+      ...post,
+      isLike: false,
+      tag,
+    };
+
+    if (userId) {
+    }
+
+    return { post: newPost };
   }
   return { error: "post Not Found" };
 };

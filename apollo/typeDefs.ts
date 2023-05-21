@@ -22,6 +22,11 @@ export const typeDefs = gql`
     url: String
   }
 
+  type PostTag {
+    id: String
+    name: String
+  }
+
   type Post {
     _id: String
     id: String
@@ -35,8 +40,8 @@ export const typeDefs = gql`
     like: [PostLike]
     user: User
     thumbnail: String
-    tag: [String]
     comments: [Comment]
+    postTag: [PostTag]
     updatedAt: Date
     createdAt: Date
     deletedAt: Date

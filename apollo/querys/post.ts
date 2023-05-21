@@ -22,9 +22,16 @@ const PostGetData = gql`
         id
         title
         number
+        thumbnail
         body
         views
         createdAt
+        updatedAt
+        isLike
+        postTag {
+          id
+          name
+        }
       }
       error
     }
