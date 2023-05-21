@@ -17,6 +17,7 @@ import {
 import { PostDataMutation } from "apollo/querys/post";
 import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 let quillObj: any;
 
@@ -67,7 +68,7 @@ const MainEditor: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const submitOk = error.title.length === 0 && error.content.length === 0;
   const [mutatieFunc, post] = useMutation(PostDataMutation);
-
+  const router = useRouter();
   useEffect(() => {
     if (editor.length === 0) {
       editorErrorMessage({
@@ -84,7 +85,10 @@ const MainEditor: FC = () => {
 
   const submitHandler = async (e: any) => {
     setLoading(true);
-    let filterdTag = tag.filter((it) => it.name.length !== 0);
+    let filterdTag = tag.filter((it) => {
+      delete it.id;
+      return it.name.length !== 0;
+    }) as any;
 
     const res = {
       title,
@@ -95,10 +99,16 @@ const MainEditor: FC = () => {
     const token = localStorage.getItem("access_token");
     if (token) {
       mutatieFunc({ variables: { postData: JSON.stringify(res), token } })
-        .then(() => {
+        .then(({ data }) => {
+          const { post, token } = data.postDataCreate;
           setLoading(false);
+          if (!token) {
+            console.info("토큰 만료");
+          } else {
+            router.push(`/post/${post["number"]}`);
+          }
         })
-        .catch(() => {
+        .catch((e) => {
           setLoading(false);
         });
     } else {
