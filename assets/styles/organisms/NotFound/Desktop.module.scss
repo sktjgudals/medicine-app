@@ -3,6 +3,7 @@
 .main_container {
   @extend .d_flex, .w_100;
   height: 100vh;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   -webkit-user-select: none;
@@ -13,16 +14,19 @@
 
 .main_text_container {
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 10px;
   font-size: var(--font-size-4);
 }
 
 .main_text {
+  display: flex;
+  align-items: center;
   padding-bottom: 10px;
+  font-size: var(--font-size-7);
 }
 
 .main_link {
   color: var(--color-green-9);
-  //   text-decoration: none;
 }
