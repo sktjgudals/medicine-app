@@ -55,43 +55,54 @@ const getNaverAccessToken = async (code: string, state: string) => {
 const oauthKakaoUserCode = async (code: string) => {
   const token = await getKakaoAccessToken(code);
   if (token) {
-    const decodeToken = localTokenVerify(token["id_token"]) as any;
-    if (decodeToken) {
-      const res = await prisma.account.findFirst({
-        where: { providerAccountId: decodeToken["aud"] },
-      });
-      if (res) {
-        const user = (await prisma.user.findFirst({
-          where: { id: res["userId"] },
-        })) as any;
-        const access_token = (await generateAccessOauthToken(
-          user["id"],
-          user["nickname"],
-          user["email"]
-        )) as string;
-        const refresh_token = await generateRefreshToken(access_token, "kakao");
-        return { access_token, refresh_token };
-      } else {
-        const user = await prisma.user.create({
-          data: {
-            nickname: `kakao`,
-            Account: {
-              create: {
-                type: token["token_type"],
-                provider: "kakao",
-                providerAccountId: decodeToken["aud"],
+    try {
+      const decodeToken = localTokenVerify(token["id_token"]) as any;
+      if (decodeToken) {
+        const res = await prisma.account.findFirst({
+          where: { providerAccountId: decodeToken["aud"] },
+        });
+        if (res) {
+          const user = (await prisma.user.findFirst({
+            where: { id: res["userId"] },
+          })) as any;
+          const access_token = (await generateAccessOauthToken(
+            user["id"],
+            user["nickname"],
+            user["email"]
+          )) as string;
+          const refresh_token = await generateRefreshToken(
+            access_token,
+            "kakao"
+          );
+          return { access_token, refresh_token };
+        } else {
+          const user = await prisma.user.create({
+            data: {
+              nickname: `kakao`,
+              account: {
+                create: {
+                  type: token["token_type"],
+                  provider: "kakao",
+                  providerAccountId: decodeToken["aud"],
+                },
               },
             },
-          },
-        });
-        const access_token = (await generateAccessOauthToken(
-          user["id"],
-          user["nickname"]
-        )) as string;
-        const refresh_token = await generateRefreshToken(access_token, "kakao");
-        return { access_token, refresh_token };
+          });
+          const access_token = (await generateAccessOauthToken(
+            user["id"],
+            user["nickname"]
+          )) as string;
+          const refresh_token = await generateRefreshToken(
+            access_token,
+            "kakao"
+          );
+          return { access_token, refresh_token };
+        }
+      } else {
+        return null;
       }
-    } else {
+    } catch (e) {
+      console.info(e);
       return null;
     }
   }
@@ -121,7 +132,7 @@ const oauthNaverUserCode = async (code: string, state: string) => {
       const userCreated = await prisma.user.create({
         data: {
           nickname: "naver",
-          Account: {
+          account: {
             create: {
               type: "bearer",
               provider: "naver",
