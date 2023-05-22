@@ -1,10 +1,13 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-interface Props {}
-
-const PostBody: FC<Props> = () => {
-  return <div></div>;
+const PostBody: FC = () => {
+  return <MainContainer></MainContainer>;
 };
 
 export default PostBody;
+
+const MainContainer = styled.div`
+  background-color: red;
+  padding: 200px;
+`;

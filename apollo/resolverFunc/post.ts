@@ -35,7 +35,10 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
 const postGetDataFunc = async (userId: string, num: number) => {
   const post = await prisma.post.findFirst({
     where: { number: num },
-    include: { like: true },
+    include: {
+      like: true,
+      user: { select: { nickname: true, id: true, image: true } },
+    },
   });
 
   if (post) {
@@ -43,10 +46,12 @@ const postGetDataFunc = async (userId: string, num: number) => {
       where: { postId: { hasEvery: post.id } },
       select: { name: true, id: true },
     });
+
     const newPost = {
       ...post,
       isLike: false,
-      tag,
+      postTag: tag,
+      likeCount: 0,
     };
 
     if (userId) {

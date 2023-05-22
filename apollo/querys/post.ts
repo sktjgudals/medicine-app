@@ -32,6 +32,11 @@ const PostGetData = gql`
           id
           name
         }
+        user {
+          id
+          nickname
+          image
+        }
       }
       error
     }
