@@ -10,12 +10,16 @@ interface Props {
 }
 
 const CircleImage: FC<Props> = ({ image, width, height }) => {
-  console.info("hi");
   return (
     <ProfileImageLink>
       <ProfileImage width={width} height={height}>
         {image ? (
-          <Image src={image} alt="post_profile_image" />
+          <Image
+            src={image}
+            alt="post_profile_image"
+            width={width}
+            height={height}
+          />
         ) : (
           <UserIcon width={"100%"} height={"100%"} color={"grey"} />
         )}

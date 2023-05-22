@@ -5,28 +5,35 @@ import Darkmode from "./Nav/Darkmode";
 import styles from "#/styles/molecules/Desktop/Header/DropDown.module.scss";
 import SignIn from "./Nav/SignIn";
 import SignUpNav from "./Nav/SignUpNav";
-import { useSession } from "@/hooks/useSession";
 import Logout from "./Nav/Logout";
 import PostNav from "./Nav/PostNav";
+import Profile from "./Nav/Profile";
+
+import { SESSIONTYPE } from "@/types/session";
 
 interface Props {
   toggleDropDown: () => void;
   isOpen: boolean;
+  session: SESSIONTYPE | null;
 }
 
-const DropDown: FC<Props> = ({ toggleDropDown, isOpen }): JSX.Element => {
-  const { loading, session } = useSession();
-  if (loading) return <></>;
+const DropDown: FC<Props> = ({
+  toggleDropDown,
+  isOpen,
+  session,
+}): JSX.Element => {
   return (
     <nav className={isOpen ? styles.dropdown_menu : styles.dropdown_menu_none}>
-      <Darkmode />
       {!session ? (
         <>
+          <Darkmode />
           <SignUpNav toggleDropDown={toggleDropDown} />
           <SignIn toggleDropDown={toggleDropDown} />
         </>
       ) : (
         <>
+          <Profile session={session} />
+          <Darkmode />
           <PostNav toggleDropDown={toggleDropDown} />
           <Logout />
         </>

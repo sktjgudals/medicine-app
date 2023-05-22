@@ -2,10 +2,9 @@ import { User_TYPE } from "@/types/user";
 
 import { FC } from "react";
 import styled from "styled-components";
-import CircleImage from "@/components/atoms/CIrcleImage";
+import CircleImage from "@/components/atoms/CircleImage";
 
 const PostHeaderUser: FC<User_TYPE> = ({ id, nickname, image }) => {
-  console.info(image);
   return (
     <MainContainer>
       <CircleImage image={image} width={50} height={50} />
