@@ -4,7 +4,8 @@ import jwt_decode from "jwt-decode";
 const generateAccessToken = async (
   id: string,
   email: string,
-  nickname: string
+  nickname: string,
+  image: string | null
 ) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
@@ -12,6 +13,7 @@ const generateAccessToken = async (
         id,
         email,
         nickname,
+        image,
         type: "local",
         role: "USER",
       },
@@ -59,6 +61,7 @@ const generateRefreshToken = async (token: string, type: string) => {
 const generateAccessOauthToken = (
   id: string,
   nickname: string,
+  image: string | null,
   email?: string | null
 ) => {
   return new Promise((resolve, reject) => {
@@ -67,6 +70,7 @@ const generateAccessOauthToken = (
         id,
         nickname,
         email,
+        image,
         type: "oauth",
         role: "USER",
       },

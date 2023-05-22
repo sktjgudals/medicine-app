@@ -1,8 +1,9 @@
 export type SESSIONTYPE = {
   id: string;
   email: string | null;
-  iss: string;
+  image: string | null;
   nickname: string;
+  iss: string;
   role: string;
   type: string;
   iat: number;

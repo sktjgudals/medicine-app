@@ -68,6 +68,7 @@ const oauthKakaoUserCode = async (code: string) => {
           const access_token = (await generateAccessOauthToken(
             user["id"],
             user["nickname"],
+            user["image"],
             user["email"]
           )) as string;
           const refresh_token = await generateRefreshToken(
@@ -90,7 +91,9 @@ const oauthKakaoUserCode = async (code: string) => {
           });
           const access_token = (await generateAccessOauthToken(
             user["id"],
-            user["nickname"]
+            user["nickname"],
+            user["image"],
+            user["email"]
           )) as string;
           const refresh_token = await generateRefreshToken(
             access_token,
@@ -123,6 +126,7 @@ const oauthNaverUserCode = async (code: string, state: string) => {
         const access_token = (await generateAccessOauthToken(
           findedUser["id"],
           findedUser["nickname"],
+          findedUser["image"],
           findedUser["email"] ? findedUser["email"] : null
         )) as string;
         const refresh_token = await generateRefreshToken(access_token, "naver");
@@ -143,7 +147,9 @@ const oauthNaverUserCode = async (code: string, state: string) => {
       });
       const access_token = (await generateAccessOauthToken(
         userCreated["id"],
-        userCreated["nickname"]
+        userCreated["nickname"],
+        userCreated["image"],
+        userCreated["email"]
       )) as string;
       const refresh_token = await generateRefreshToken(access_token, "naver");
       return { access_token, refresh_token };

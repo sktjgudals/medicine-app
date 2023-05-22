@@ -9,7 +9,8 @@ const nicknameCheckFunc = (
   setMessage: Dispatch<SetStateAction<ERROR_PROPS>>
 ) => {
   if (nickName) {
-    if (nickName.length > 2) {
+    console.info(nickName.length < 10);
+    if (nickName.length > 2 && nickName.length < 10) {
       cb({ ...check, nickName: true });
       return setMessage((prev) => {
         return {
@@ -22,7 +23,7 @@ const nicknameCheckFunc = (
       return setMessage((prev) => {
         return {
           ...prev,
-          nickName: "세 글자 이상으로 정해주세요.",
+          nickName: "닉네임은 3글자 이상, 10글자 이하여야 합니다",
         };
       });
     }

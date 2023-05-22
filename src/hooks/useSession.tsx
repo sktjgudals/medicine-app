@@ -14,9 +14,9 @@ const INITIAL = {
 
 export const SessionContext = createContext(INITIAL as Session);
 
-export function useSession() {
+export const useSession = () => {
   return useContext(SessionContext);
-}
+};
 
 export const SessionProvider = ({ children }: { children: JSX.Element }) => {
   const [session, setSession] = useState<SESSIONTYPE | null>(null);
