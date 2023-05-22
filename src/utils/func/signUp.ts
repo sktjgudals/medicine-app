@@ -9,7 +9,6 @@ const nicknameCheckFunc = (
   setMessage: Dispatch<SetStateAction<ERROR_PROPS>>
 ) => {
   if (nickName) {
-    console.info(nickName.length < 10);
     if (nickName.length > 2 && nickName.length < 10) {
       cb({ ...check, nickName: true });
       return setMessage((prev) => {

@@ -90,7 +90,6 @@ const SignUpInput: FC = () => {
           onChangeValue={onChangeEmail}
           text={"이메일"}
           id={"signup_id"}
-          checkDuplicate={true}
           setMessage={setMessage}
         />
         <ErrorContainer>{message["email"]}</ErrorContainer>
@@ -100,6 +99,7 @@ const SignUpInput: FC = () => {
           text={"닉네임"}
           id={"nickName_id"}
           nicknameCheck={check["nickName"]}
+          setMessage={setMessage}
         />
         <ErrorContainer>{message["nickName"]}</ErrorContainer>
         <ModalPassword

@@ -9,14 +9,14 @@ import { emailVerify } from "@/utils/refexp";
 import DuplicatedValue from "./DuplicatedValue";
 import { useReactiveVar } from "@apollo/client";
 import { ERROR_PROPS } from "@/types/signup";
+import { debounceFunc } from "@/utils/func/common";
 
 interface Props {
   value: string;
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   text: string;
   id: string;
-  checkDuplicate: boolean;
-  setMessage?: Dispatch<SetStateAction<ERROR_PROPS>>;
+  setMessage: Dispatch<SetStateAction<ERROR_PROPS>>;
 }
 
 const ModalEmail: FC<Props> = ({
@@ -24,29 +24,13 @@ const ModalEmail: FC<Props> = ({
   onChangeValue,
   text,
   id,
-  checkDuplicate,
   setMessage,
 }) => {
   const loading = useReactiveVar(emailLoadingCheck);
   const checkEmail = useReactiveVar(emailSubmitCheck);
-  // 이거 훅으로 만들수있을거같음
-  const debounceFunction = (callback: any, delay: any) => {
-    let timer: NodeJS.Timeout;
-    return (...args: any) => {
-      if (args[0].length > 0) {
-        emailLoadingCheck(true);
-        // 실행한 함수(setTimeout())를 취소
-        clearTimeout(timer);
-        // delay가 지나면 callback 함수를 실행
-        timer = setTimeout(() => callback(...args), delay);
-      } else {
-        emailLoadingCheck(false);
-      }
-    };
-  };
 
   const checkDuplicateValue = useCallback(
-    debounceFunction((value: any) => apiCall(value), 500),
+    debounceFunc((value: any) => apiCall(value), 200),
     []
   );
 
@@ -85,9 +69,8 @@ const ModalEmail: FC<Props> = ({
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeValue(e);
-    if (checkDuplicate) {
-      checkDuplicateValue(e.target.value);
-    }
+    emailLoadingCheck(true);
+    checkDuplicateValue(e.target.value);
   };
 
   return (
@@ -95,11 +78,7 @@ const ModalEmail: FC<Props> = ({
       <EmailLabelContainer>
         <EmailLabel htmlFor={`${text}_input`}>{text}</EmailLabel>
         {value.length > 0 && (
-          <>
-            {checkDuplicate && (
-              <DuplicatedValue loading={loading} check={checkEmail} />
-            )}
-          </>
+          <DuplicatedValue loading={loading} check={checkEmail} />
         )}
       </EmailLabelContainer>
       <EmailInputContainer>

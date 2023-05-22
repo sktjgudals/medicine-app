@@ -1,15 +1,21 @@
-import { FC } from "react";
+import { ChangeEvent, Dispatch, FC, SetStateAction, useCallback } from "react";
 import styled from "styled-components";
+import { nickNameLoadingCheck, nickNameSubmitCheck } from "apollo/cache";
 
 import { Input } from "@/components/atoms/Input";
 import DuplicatedValue from "./DuplicatedValue";
+import { debounceFunc } from "@/utils/func/common";
+import { useReactiveVar } from "@apollo/client";
+import { ERROR_PROPS } from "@/types/signup";
+import { findUserNickname } from "apollo/querys/signup";
 
 interface Props {
   value: string;
-  onChangeValue: () => void;
+  onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   text: string;
   id: string;
   nicknameCheck: boolean;
+  setMessage: Dispatch<SetStateAction<ERROR_PROPS>>;
 }
 
 const ModalName: FC<Props> = ({
@@ -18,19 +24,63 @@ const ModalName: FC<Props> = ({
   text,
   id,
   nicknameCheck,
+  setMessage,
 }) => {
+  const nickNameSubmit = useReactiveVar(nickNameSubmitCheck);
+  const nickNameLoading = useReactiveVar(nickNameLoadingCheck);
+
+  const checkDuplicateValue = useCallback(
+    debounceFunc((value: any) => apiCall(value), 300),
+    []
+  );
+
+  const apiCall = async (value: string) => {
+    const { data } = await findUserNickname(value);
+    if (data.findUserNickname === null) {
+      nickNameSubmitCheck(true);
+      nickNameLoadingCheck(false);
+      if (setMessage) {
+        setMessage((prev) => {
+          return {
+            ...prev,
+            nickName: "",
+          };
+        });
+      }
+    } else {
+      if (setMessage) {
+        setMessage((prev) => {
+          return {
+            ...prev,
+            nickName: "중복된 닉네임이 있습니다.",
+          };
+        });
+      }
+      nickNameSubmitCheck(false);
+      nickNameLoadingCheck(false);
+    }
+  };
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    checkDuplicateValue(e.target.value);
+    onChangeValue(e);
+    nickNameLoadingCheck(true);
+  };
   return (
     <NameContainer>
       <NameLabelContainer>
         <NameLabel htmlFor={`${text}_input`}>{text}</NameLabel>
         {value.length > 0 && (
-          <DuplicatedValue loading={false} check={nicknameCheck} />
+          <DuplicatedValue
+            loading={nickNameLoading}
+            check={nickNameSubmit && nicknameCheck}
+          />
         )}
       </NameLabelContainer>
       <NameInputContainer>
         <NameInput
           value={value}
-          onChange={onChangeValue}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => changeHandler(e)}
           id={`${id}_input`}
           autoComplete="username"
           autoCapitalize="off"
