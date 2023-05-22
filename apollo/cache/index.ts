@@ -22,6 +22,10 @@ const emailSubmitCheck = makeVar<boolean>(false);
 
 const emailLoadingCheck = makeVar<boolean>(false);
 
+const nickNameSubmitCheck = makeVar<boolean>(false);
+
+const nickNameLoadingCheck = makeVar<boolean>(false);
+
 const editorTitleState = makeVar<string>("");
 
 const editorTagState = makeVar<EditorTag[]>([]);
@@ -41,4 +45,6 @@ export {
   editorTagState,
   editorThumbnail,
   editorErrorMessage,
+  nickNameLoadingCheck,
+  nickNameSubmitCheck,
 };

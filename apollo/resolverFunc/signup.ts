@@ -12,7 +12,7 @@ const findUserEmailFunc = async (email: string) => {
     }
     return res;
   } catch (e) {
-    return null;
+    throw new Error("이메일 조회에 실패했습니다.");
   }
 };
 
@@ -26,7 +26,7 @@ const findUserNicknameFunc = async (nickname: string) => {
     }
     return res;
   } catch (e) {
-    return null;
+    throw new Error("닉네임 조회에 실패했습니다.");
   }
 };
 
@@ -59,8 +59,9 @@ const createLocalUserFunc = async (
       if (createdUser) {
         const access_token = (await generateAccessToken(
           createdUser.id,
+          nickname,
           email,
-          nickname
+          createdUser.image
         )) as string;
         const refresh_token = await generateRefreshToken(access_token, "local");
         res["access_token"] = access_token;
