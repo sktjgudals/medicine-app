@@ -32,7 +32,7 @@ const DropDown: FC<Props> = ({
         </>
       ) : (
         <>
-          <Profile session={session} />
+          <Profile session={session} toggleDropDown={toggleDropDown} />
           <Darkmode />
           <PostNav toggleDropDown={toggleDropDown} />
           <Logout />

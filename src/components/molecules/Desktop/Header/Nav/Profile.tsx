@@ -1,15 +1,20 @@
 import CircleImage from "@/components/atoms/CircleImage";
 import { NavButton, NavContainer, NavText } from "@/components/atoms/Nav";
 import { SESSIONTYPE } from "@/types/session";
+import { useRouter } from "next/router";
 import { FC } from "react";
 import styled from "styled-components";
 
 interface Props {
   session: SESSIONTYPE;
+  toggleDropDown: () => void;
 }
 
-const Profile: FC<Props> = ({ session }) => {
-  const handler = () => {};
+const Profile: FC<Props> = ({ session, toggleDropDown }) => {
+  const router = useRouter();
+  const handler = () => {
+    router.push("/setting/profile").then(() => toggleDropDown());
+  };
   return (
     <>
       <NavContainer>

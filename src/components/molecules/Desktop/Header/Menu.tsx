@@ -12,12 +12,7 @@ import SKCircleImage from "@/components/atoms/Skeleton/SKCircleImage";
 const Menu: FC = (): JSX.Element => {
   const { isOpen, dropdownRef, toggleDropdown } = useDropdown();
   const { loading, session } = useSession();
-  if (loading)
-    return (
-      <>
-        <SKCircleImage width={35} height={35} />
-      </>
-    );
+  if (loading) return <SKCircleImage width={35} height={35} />;
 
   return (
     <div className={styles.menu_container} ref={dropdownRef}>
