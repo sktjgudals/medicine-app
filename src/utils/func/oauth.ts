@@ -77,9 +77,17 @@ const oauthKakaoUserCode = async (code: string) => {
           );
           return { access_token, refresh_token };
         } else {
+          let date = String(Date.now()).slice(4, 13);
+          const nickNameFind = await prisma.user.findFirst({
+            where: { nickname: `k${date}` },
+            select: { id: true },
+          });
+          if (nickNameFind) {
+            date + 1;
+          }
           const user = await prisma.user.create({
             data: {
-              nickname: `kakao`,
+              nickname: `k${date}`,
               account: {
                 create: {
                   type: token["token_type"],
@@ -133,9 +141,17 @@ const oauthNaverUserCode = async (code: string, state: string) => {
         return { access_token, refresh_token };
       }
     } else {
+      let date = String(Date.now()).slice(4, 13);
+      const nickNameFind = await prisma.user.findFirst({
+        where: { nickname: `n${date}` },
+        select: { id: true },
+      });
+      if (nickNameFind) {
+        date + 1;
+      }
       const userCreated = await prisma.user.create({
         data: {
-          nickname: "naver",
+          nickname: `n${date}`,
           account: {
             create: {
               type: "bearer",

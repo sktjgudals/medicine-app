@@ -51,6 +51,7 @@ class MyDocument extends Document {
     const { redirectIEToEdge } = this;
     return (
       <Html lang="ko">
+        <title>약정</title>
         <Head>
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <meta name="theme-color" content="#ffffff" />
@@ -63,7 +64,6 @@ class MyDocument extends Document {
           <meta name="twitter:site" content="@yakjung" />
           <meta name="twitter:site:id" content="@yakjung" />
           <meta name="twitter:creator" content="@yakjung" />
-          <title>약정</title>
           <meta name="twitter:creator:id" content="@yakjung" />
         </Head>
         <body>
