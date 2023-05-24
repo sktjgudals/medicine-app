@@ -47,5 +47,6 @@ const ProfileImage = styled.div<ImageProps>`
   height: ${(props) => props.height}px;
   border-radius: 50%;
   overflow: hidden;
+  border: 1px solid var(--color-opac-gl-1);
   background-color: var(--color-modal-default-background);
 `;
