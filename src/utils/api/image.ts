@@ -11,6 +11,23 @@ const s3 = new S3({
   }),
 });
 
+export const imageUploadFetch = async (base64: string, token: string) => {
+  return fetch("/api/v1/image", {
+    method: "POST",
+    body: base64,
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .catch((e) => {
+      console.info(e);
+      return null;
+    });
+};
+
 export const imageUploadFunc = async (
   id: string,
   type: string,
