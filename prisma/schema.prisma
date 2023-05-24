@@ -36,6 +36,7 @@ model User {
   updatedAt    DateTime  @updatedAt
   createdAt    DateTime  @default(now())
   delete       Boolean?
+  type         String
   account      Account[]
   posts         Post[]
   postLike      PostLikes[]
@@ -92,7 +93,7 @@ model PostLikes{
 
 model Tag{
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  name        String    @unique
   post        Post[]  @relation(fields: [postId], references: [id])
   postId      String[] @db.ObjectId
 }

@@ -88,6 +88,7 @@ const oauthKakaoUserCode = async (code: string) => {
           const user = await prisma.user.create({
             data: {
               nickname: `k${date}`,
+              type: "kakao",
               account: {
                 create: {
                   type: token["token_type"],
@@ -152,6 +153,7 @@ const oauthNaverUserCode = async (code: string, state: string) => {
       const userCreated = await prisma.user.create({
         data: {
           nickname: `n${date}`,
+          type: "naver",
           account: {
             create: {
               type: "bearer",

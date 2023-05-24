@@ -51,6 +51,7 @@ const createLocalUserFunc = async (
       const hashedPassword = await bcryptHash(password, salt);
       const createdUser = await prisma.user.create({
         data: {
+          type: "local",
           email: email.toLowerCase(),
           nickname,
           password: hashedPassword,
