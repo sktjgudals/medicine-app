@@ -16,7 +16,7 @@ interface Props {
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   text: string;
   id: string;
-  setMessage: Dispatch<SetStateAction<ERROR_PROPS>>;
+  setMessage?: Dispatch<SetStateAction<ERROR_PROPS>>;
 }
 
 const ModalEmail: FC<Props> = ({

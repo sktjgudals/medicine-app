@@ -62,4 +62,17 @@ const postGetDataFunc = async (userId: string, num: number) => {
   return { error: "post Not Found" };
 };
 
-export { postDataCreateFunc, postGetDataFunc };
+const postTagCreateFunc = async (postTag: string) => {
+  try {
+    const findTag = await prisma.tag.findFirst({ where: { name: postTag } });
+    if (findTag) {
+      return findTag;
+    } else {
+      return await prisma.tag.create({ data: { name: postTag } });
+    }
+  } catch (e) {
+    return null;
+  }
+};
+
+export { postDataCreateFunc, postGetDataFunc, postTagCreateFunc };

@@ -21,14 +21,11 @@ const Post: FC<Props> = ({ session, num }) => {
   const { loading, data, error, refetch } = useQuery(PostGetData, {
     variables: { userId: session ? session.id : null, num: Number(num) },
   });
-  const refetchHandler = () => {
-    refetch();
-  };
 
   if (loading) return <></>;
   if (error)
     return (
-      <div onClick={refetchHandler}>
+      <div onClick={() => refetch()}>
         <Title title={`오류 - 약정`} content={"약을 찾아주는 요정"} />
         <ApolloError
           title={"글을 불러오는 도중 오류가 발생하였습니다."}
@@ -47,6 +44,7 @@ const Post: FC<Props> = ({ session, num }) => {
       </>
     );
   }
+  console.info(res.post.postTag);
   return (
     <MainContainer>
       <Title

@@ -11,6 +11,8 @@ export const typeDefs = gql`
     name: String
     nickname: String
     image: String
+    createdAt: Date
+    introduction: String
   }
 
   type UserResponse {
@@ -123,6 +125,7 @@ export const typeDefs = gql`
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
+    getUserData(userId: String!): User
     postGetData(userId: String, num: Int!): PostResoponse
   }
 
@@ -132,9 +135,11 @@ export const typeDefs = gql`
       nickname: String!
       password: String!
     ): UserResponse
+    changeProfileImage(image: String!, userId: String!): UserResponse
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse
+    postTagCreate(postTag: String!): PostTag
     postDataCreate(postData: JSON!, token: String!): PostCreateResoponse
   }
 `;

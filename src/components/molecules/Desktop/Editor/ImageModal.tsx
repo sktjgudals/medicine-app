@@ -1,13 +1,20 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 
 import ImageUpload from "./ImageUpload";
 import { ModalWrapper } from "@/components/atoms/Modal";
+import { ReactiveVar } from "@apollo/client";
 
-const ImageModal: FC = () => {
+interface Props {
+  image: string;
+  cb: (e: string, setLoading: Dispatch<SetStateAction<boolean>>) => void;
+  reactiveVar: ReactiveVar<string>;
+}
+
+const ImageModal: FC<Props> = ({ image, cb, reactiveVar }) => {
   return (
     <StyledLoginModalWrapper>
-      <ImageUpload />
+      <ImageUpload image={image} cb={cb} reactiveVar={reactiveVar} />
     </StyledLoginModalWrapper>
   );
 };

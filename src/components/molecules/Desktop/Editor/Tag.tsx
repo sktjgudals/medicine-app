@@ -1,12 +1,18 @@
-import { Input } from "@/components/atoms/Input";
-import XIcon from "@/components/atoms/icons/XIcon";
-import { editorTagState } from "apollo/cache";
 import { FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
+import { Input } from "@/components/atoms/Input";
+import XIcon from "@/components/atoms/icons/XIcon";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { editorTagState } from "apollo/cache";
+import { PostTagMutation } from "apollo/querys/post";
+import Loading from "@/components/atoms/Loading";
+
 const Tag: FC = () => {
+  const reactiveTag = useReactiveVar(editorTagState);
+  const [mutateFunc, { loading, error }] = useMutation(PostTagMutation);
   const [tag, setTag] = useState<string>("");
   const { control } = useForm({
     defaultValues: {
@@ -14,9 +20,9 @@ const Tag: FC = () => {
     },
   });
 
-  const { fields, append, remove, insert } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: `tag`,
+    name: "tag",
   });
 
   const subColorQuanaity = (idx: number) => (e: any) => {
@@ -24,30 +30,35 @@ const Tag: FC = () => {
     remove(idx);
   };
 
-  const inputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const inputKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.key === "Enter") {
       if (tag.length !== 0) {
         for (let i = 0; i < fields.length; i++) {
           if (fields[i].name === tag) return;
         }
-        append({ name: tag });
-        editorTagState([...fields, { name: tag, id: "1" }]);
-        return setTag("");
-      }
-    } else if (e.key === "Backspace") {
-      if (tag.length === 0) {
-        return remove(fields.length - 1);
+        const { data } = await mutateFunc({ variables: { postTag: tag } });
+        if (data.postTagCreate) {
+          reactiveTag.push(data.postTagCreate);
+          append(data.postTagCreate);
+          return setTag("");
+        }
       }
     }
   };
 
-  const inputOnclick = (e: MouseEvent<HTMLInputElement>) => {
+  const inputOnclick = async (e: MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (tag.length !== 0) {
-      append({ name: tag });
-      editorTagState(fields);
-      return setTag("");
+      for (let i = 0; i < fields.length; i++) {
+        if (fields[i].name === tag) return;
+      }
+      const { data } = await mutateFunc({ variables: { postTag: tag } });
+      if (data.postTagCreate) {
+        reactiveTag.push(data.postTagCreate);
+        append(data.postTagCreate);
+        return setTag("");
+      }
     }
   };
 
@@ -75,6 +86,19 @@ const Tag: FC = () => {
             placeholder="태그를 입력하세요"
             onKeyUp={inputKeyDown}
           />
+          {loading && (
+            <LoadingContainer>
+              <Loading
+                width={20}
+                height={20}
+                strokeWidth={10}
+                top={0}
+                bottom={10}
+                right={0}
+                left={0}
+              />
+            </LoadingContainer>
+          )}
         </TagContainer>
       </InputContainer>
     </MainContainer>
@@ -152,4 +176,10 @@ const TagButton = styled.button`
 const Xbutton = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const LoadingContainer = styled.div`
+  position: relative;
+  top: -5px;
+  left: 5px;
 `;

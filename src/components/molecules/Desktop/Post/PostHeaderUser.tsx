@@ -9,7 +9,7 @@ const PostHeaderUser: FC<User_TYPE> = ({ id, nickname, image }) => {
   return (
     <MainContainer>
       <CircleImage image={image} width={30} height={30} />
-      <Link href={`/profile/${id}`}>
+      <Link href={`/profile/${nickname}`}>
         <NickNameContainer>{nickname}</NickNameContainer>
       </Link>
     </MainContainer>

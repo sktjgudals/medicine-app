@@ -42,4 +42,5 @@ const ProfileContainer = styled.div`
 
 const LineContainer = styled.div`
   border-top: 2px solid var(--color-border-base);
+  padding-bottom: 5px;
 `;

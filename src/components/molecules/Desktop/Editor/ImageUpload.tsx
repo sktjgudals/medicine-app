@@ -1,7 +1,14 @@
-import { FC, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
-import { imageState, editorThumbnail } from "apollo/cache";
-import { useReactiveVar } from "@apollo/client";
+import { imageState } from "apollo/cache";
+import { ReactiveVar, useReactiveVar } from "@apollo/client";
 import ImageUploading from "react-images-uploading";
 
 import ModalCloseButton from "../Modal/ModalCloseButton";
@@ -11,10 +18,15 @@ import UploadIcon from "@/components/atoms/icons/UploadIcon";
 import Image from "next/image";
 import Loading from "@/components/atoms/Loading";
 
-const ImageUpload: FC = () => {
-  const thumbnail = useReactiveVar(editorThumbnail);
+interface Props {
+  image: string;
+  cb: (e: string, setLoading: Dispatch<SetStateAction<boolean>>) => void;
+  reactiveVar: ReactiveVar<string>;
+}
+
+const ImageUpload: FC<Props> = ({ image, reactiveVar, cb }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [images, setImages] = useState<any>([{ data_url: thumbnail }]);
+  const [images, setImages] = useState<any>([{ data_url: image }]);
   const maxNumber = 1;
 
   const ref = useRef<HTMLDivElement>(null);
@@ -40,28 +52,7 @@ const ImageUpload: FC = () => {
     const token = localStorage.getItem("access_token");
     if (token) {
       if (images[0].data_url) {
-        setLoading(true);
-        const { url, error } = await fetch("/api/v1/image", {
-          method: "POST",
-          body: images[0].data_url,
-          headers: {
-            Authorization: token,
-          },
-        })
-          .then((data) => {
-            return data.json();
-          })
-          .catch((e) => {
-            console.info(e);
-          });
-        if (url) {
-          setLoading(false);
-          imageState(false);
-          editorThumbnail(url);
-        } else {
-          setLoading(false);
-          console.info(error);
-        }
+        cb(images[0].data_url, setLoading);
       } else {
         setLoading(false);
         console.info("이미지 등록");

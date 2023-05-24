@@ -32,6 +32,8 @@ const editorTagState = makeVar<EditorTag[]>([]);
 
 const editorThumbnail = makeVar<string>("");
 
+const profileImageState = makeVar<string>("");
+
 const editorErrorMessage = makeVar<EditorError>({ title: "", content: "" });
 
 export {
@@ -47,4 +49,5 @@ export {
   editorErrorMessage,
   nickNameLoadingCheck,
   nickNameSubmitCheck,
+  profileImageState,
 };

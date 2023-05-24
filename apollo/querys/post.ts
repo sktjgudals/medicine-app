@@ -15,6 +15,15 @@ const PostDataMutation = gql`
   }
 `;
 
+const PostTagMutation = gql`
+  mutation data($postTag: String!) {
+    postTagCreate(postTag: $postTag) {
+      id
+      name
+    }
+  }
+`;
+
 const PostGetData = gql`
   query data($userId: String, $num: Int!) {
     postGetData(userId: $userId, num: $num) {
@@ -43,4 +52,4 @@ const PostGetData = gql`
   }
 `;
 
-export { PostDataMutation, PostGetData };
+export { PostDataMutation, PostGetData, PostTagMutation };

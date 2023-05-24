@@ -18,6 +18,7 @@ import { PostDataMutation } from "apollo/querys/post";
 import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { tokenCall } from "@/utils/varible";
 
 let quillObj: any;
 
@@ -67,7 +68,7 @@ const MainEditor: FC = () => {
   const [editor, setEditor] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const submitOk = error.title.length === 0 && error.content.length === 0;
-  const [mutatieFunc, post] = useMutation(PostDataMutation);
+  const [mutateFunc, post] = useMutation(PostDataMutation);
   const router = useRouter();
   useEffect(() => {
     if (editor.length === 0) {
@@ -89,7 +90,7 @@ const MainEditor: FC = () => {
     for (let i = 0; i < tag.length; i++) {
       if (tag[i].name.length === 0) {
       } else {
-        const tagContent = { name: tag[i].name };
+        const tagContent = { id: tag[i].id, name: tag[i].name };
         newTag.push(tagContent);
       }
     }
@@ -100,9 +101,12 @@ const MainEditor: FC = () => {
       thumbnail,
       body: editor,
     };
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      mutatieFunc({ variables: { postData: JSON.stringify(res), token } })
+
+    const { access } = tokenCall();
+    if (access) {
+      mutateFunc({
+        variables: { postData: JSON.stringify(res), token: access },
+      })
         .then(({ data }) => {
           const { post, token } = data.postDataCreate;
           setLoading(false);
@@ -210,9 +214,9 @@ const MainEditor: FC = () => {
 export default MainEditor;
 
 const MainContainer = styled.div`
-margin 0 auto;
-width:100%;
-padding:20px 0px 0px 0px;
+  margin 0 auto;
+  width: 100%;
+  padding: 20px 0px 0px 0px;
 `;
 
 const EditorContainer = styled.div`
@@ -221,9 +225,9 @@ const EditorContainer = styled.div`
 `;
 
 const SubmitContainer = styled.div`
-  // padding-top: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+  padding-top: 20px;
 `;
 
 const ErrorContainer = styled.div`
