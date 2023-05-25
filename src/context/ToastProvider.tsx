@@ -6,7 +6,7 @@ const ToastProvider = ({ children }: { children: JSX.Element }) => {
   return (
     <>
       <ToastContainer
-        autoClose={1000}
+        autoClose={2000}
         hideProgressBar={false}
         position="bottom-right"
         pauseOnFocusLoss={true}

@@ -8,9 +8,16 @@ interface Props {
   text: string;
   submitOk: boolean;
   loading: boolean;
+  color?: string;
 }
 
-const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk, loading }) => {
+const ModalSubmitButton: FC<Props> = ({
+  cb,
+  text,
+  submitOk,
+  loading,
+  color,
+}) => {
   return (
     <SubmitButtonContainer>
       <ButtonNotAllow
@@ -24,7 +31,7 @@ const ModalSubmitButton: FC<Props> = ({ cb, text, submitOk, loading }) => {
         type={"button"}
         onClick={cb}
         onSubmit={cb}
-        style={{ display: submitOk ? "block" : "none" }}
+        style={{ display: submitOk ? "block" : "none", background: color }}
       >
         {loading ? (
           <Loading

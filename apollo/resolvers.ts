@@ -18,6 +18,7 @@ import {
 } from "./resolverFunc/post";
 import {
   changeProfileImageFunc,
+  changeProfileNicknameFunc,
   getUserDataFunc,
 } from "./resolverFunc/setting";
 
@@ -78,5 +79,9 @@ export const resolvers = {
       _: any,
       { image, userId }: { image: string; userId: string }
     ) => changeProfileImageFunc(image, userId),
+    changeProfileNickname: (
+      _: any,
+      { nickname, userId }: { nickname: string; userId: string }
+    ) => changeProfileNicknameFunc(nickname, userId),
   },
 };

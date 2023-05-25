@@ -136,6 +136,7 @@ export const typeDefs = gql`
       password: String!
     ): UserResponse
     changeProfileImage(image: String!, userId: String!): UserResponse
+    changeProfileNickname(nickname: String!, userId: String!): UserResponse
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse

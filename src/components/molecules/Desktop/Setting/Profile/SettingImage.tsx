@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { imageUploadFetch } from "@/utils/api/image";
 import { ChangeProfileImage } from "apollo/querys/setting";
 import { useSession } from "@/hooks/useSession";
-import { tokenSet } from "@/utils/varible";
+import { tokenCall, tokenSet } from "@/utils/varible";
 
 interface Props {
   userId: string;
@@ -22,10 +22,10 @@ const SettingImage: FC<Props> = ({ userId }) => {
     base64: string,
     setLoading: Dispatch<SetStateAction<boolean>>
   ) => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
+    const { access } = tokenCall();
+    if (access) {
       setLoading(true);
-      const res = await imageUploadFetch(base64, token);
+      const res = await imageUploadFetch(base64, access);
       if (res["url"]) {
         const { data } = await mutateFunc({
           variables: { userId: userId, image: res["url"] },
@@ -81,5 +81,5 @@ const TextContainer = styled.div`
 
 const TextContent = styled.p`
   font-size: var(--font-size-7);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
 `;

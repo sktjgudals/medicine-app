@@ -22,4 +22,24 @@ const ChangeProfileImage = gql`
   }
 `;
 
-export { GetUserData, ChangeProfileImage };
+const ChangeProfileNickname = gql`
+  mutation data($nickname: String!, $userId: String!) {
+    changeProfileNickname(nickname: $nickname, userId: $userId) {
+      access_token
+      refresh_token
+      error
+    }
+  }
+`;
+
+const ChangeProfileInfo = gql`
+  mutation data($info: String!, $userId: String!) {
+    changeProfileInfo(info: $info, userId: $userId) {
+      access_token
+      refresh_token
+      error
+    }
+  }
+`;
+
+export { GetUserData, ChangeProfileImage, ChangeProfileNickname };

@@ -135,7 +135,6 @@ const EmailInput = styled(Input)`
   border-color: var(--color-border-input);
   color: var(--color-text-input);
   background-color: var(--color-background-input);
-  //   border-color: red;
   &:hover {
     border-color: var(--color-border-input-focus);
     background-color: var(--color-background-input-focus);
