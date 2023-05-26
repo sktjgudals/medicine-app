@@ -3,24 +3,39 @@ import { ChangeEvent, FC, useState } from "react";
 
 import { Input } from "@/components/atoms/Input";
 import ModalSubmitButton from "../../Modal/ModalSubmitButton";
+import { useMutation } from "@apollo/client";
+import { ChangeProfileInfo } from "apollo/querys/setting";
+import { toast } from "react-toastify";
 interface Props {
   userId: string;
   introduction?: string | null;
 }
 
 const SettingIntroduction: FC<Props> = ({ introduction, userId }) => {
-  const [value, onChangeValue] = useState(introduction ? introduction : "입력");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [mutateFunc, { loading, error }] = useMutation(ChangeProfileInfo);
+  const [value, onChangeValue] = useState(introduction ? introduction : "");
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeValue(e.target.value);
   };
 
   let submitOk = !loading;
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (value.length === 0) {
+      await mutateFunc({ variables: { info: value, userId, type: "DELETE" } });
+      return toast.success("소개글 삭제에 성공하였습니다.");
+    } else if (value.length > 0) {
+      const { data } = await mutateFunc({
+        variables: { info: value, userId, type: "UPDATE" },
+      });
+      if (data.changeProfileInfo) {
+        return toast.success("소개글 변경에 성공하였습니다.");
+      } else {
+        toast.error("소개글 변경에 실패하였습니다");
+      }
+    } else {
+      toast.error("소개글 등록에 실패하였습니다");
     }
-    console.info(value);
   };
 
   return (

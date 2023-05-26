@@ -7,6 +7,7 @@ import { imageUploadFetch } from "@/utils/api/image";
 import { ChangeProfileImage } from "apollo/querys/setting";
 import { useSession } from "@/hooks/useSession";
 import { tokenCall, tokenSet } from "@/utils/varible";
+import { toast } from "react-toastify";
 
 interface Props {
   userId: string;
@@ -39,12 +40,13 @@ const SettingImage: FC<Props> = ({ userId }) => {
           setLoading(false);
           imageState(false);
           setReset(true);
+          toast.success("프로필 이미지 변경을 완료하였습니다.");
         } else {
-          console.error("error 프로필 등록 실패");
+          toast.error("프로필 이미지 변경을 실패하였습니다.");
           setLoading(false);
         }
       } else {
-        console.error("error 프로필 등록 실패");
+        toast.error("로그인이 필요합니다.");
         setLoading(false);
       }
     }
@@ -80,6 +82,7 @@ const TextContainer = styled.div`
 `;
 
 const TextContent = styled.p`
+  user-select: none;
   font-size: var(--font-size-7);
   font-weight: var(--font-weight-bold);
 `;

@@ -1,3 +1,4 @@
+import { settingTokenGenerateFunc } from "@/utils/func/setting";
 import {
   generateAccessOauthToken,
   generateAccessToken,
@@ -27,33 +28,7 @@ const changeProfileNicknameFunc = async (nickname: string, userId: string) => {
       },
     });
     if (res) {
-      if (res["type"] === "local") {
-        if (res["email"]) {
-          const access_token = (await generateAccessToken(
-            res["id"],
-            res["email"],
-            res["nickname"],
-            res["image"]
-          )) as any;
-          const refresh_token = await generateRefreshToken(
-            access_token,
-            "local"
-          );
-          return { access_token, refresh_token };
-        }
-      } else {
-        const access_token = (await generateAccessOauthToken(
-          res["id"],
-          res["nickname"],
-          res["image"],
-          res["email"]
-        )) as any;
-        const refresh_token = await generateRefreshToken(
-          access_token,
-          res["type"]
-        );
-        return { access_token, refresh_token };
-      }
+      return settingTokenGenerateFunc(res);
     } else {
       return null;
     }
@@ -76,33 +51,7 @@ const changeProfileImageFunc = async (image: string, userId: string) => {
       },
     });
     if (res) {
-      if (res["type"] === "local") {
-        if (res["email"]) {
-          const access_token = (await generateAccessToken(
-            res["id"],
-            res["email"],
-            res["nickname"],
-            res["image"]
-          )) as any;
-          const refresh_token = await generateRefreshToken(
-            access_token,
-            "local"
-          );
-          return { access_token, refresh_token };
-        }
-      } else {
-        const access_token = (await generateAccessOauthToken(
-          res["id"],
-          res["nickname"],
-          res["image"],
-          res["email"]
-        )) as any;
-        const refresh_token = await generateRefreshToken(
-          access_token,
-          res["type"]
-        );
-        return { access_token, refresh_token };
-      }
+      return settingTokenGenerateFunc(res);
     } else {
       return null;
     }
@@ -111,4 +60,54 @@ const changeProfileImageFunc = async (image: string, userId: string) => {
   }
 };
 
-export { getUserDataFunc, changeProfileImageFunc, changeProfileNicknameFunc };
+const changeProfileInfoFunc = async (
+  info: string,
+  userId: string,
+  type: string
+) => {
+  if (type === "DELETE") {
+    const res = await prisma.user.update({
+      where: { id: userId },
+      data: { introduction: null },
+      select: {
+        image: true,
+        id: true,
+        nickname: true,
+        email: true,
+        type: true,
+      },
+    });
+    if (res) {
+      return res;
+    } else {
+      return null;
+    }
+  } else if (type === "UPDATE") {
+    const res = await prisma.user.update({
+      where: { id: userId },
+      data: { introduction: info },
+      select: {
+        image: true,
+        id: true,
+        nickname: true,
+        email: true,
+        type: true,
+      },
+    });
+    if (res) {
+      return res;
+    } else {
+      return null;
+    }
+  } else {
+    console.info("type error");
+    return null;
+  }
+};
+
+export {
+  getUserDataFunc,
+  changeProfileImageFunc,
+  changeProfileNicknameFunc,
+  changeProfileInfoFunc,
+};

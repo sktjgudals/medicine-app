@@ -33,13 +33,16 @@ const ChangeProfileNickname = gql`
 `;
 
 const ChangeProfileInfo = gql`
-  mutation data($info: String!, $userId: String!) {
-    changeProfileInfo(info: $info, userId: $userId) {
-      access_token
-      refresh_token
-      error
+  mutation data($info: String!, $userId: String!, $type: String!) {
+    changeProfileInfo(info: $info, userId: $userId, type: $type) {
+      id
     }
   }
 `;
 
-export { GetUserData, ChangeProfileImage, ChangeProfileNickname };
+export {
+  GetUserData,
+  ChangeProfileImage,
+  ChangeProfileNickname,
+  ChangeProfileInfo,
+};
