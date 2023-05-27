@@ -12,6 +12,7 @@ export const typeDefs = gql`
     nickname: String
     image: String
     createdAt: Date
+    type: String
     introduction: String
   }
 
@@ -138,6 +139,7 @@ export const typeDefs = gql`
     changeProfileImage(image: String!, userId: String!): UserResponse
     changeProfileNickname(nickname: String!, userId: String!): UserResponse
     changeProfileInfo(info: String!, userId: String!, type: String!): User
+    changePassword(password: String!, userId: String!): User
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse

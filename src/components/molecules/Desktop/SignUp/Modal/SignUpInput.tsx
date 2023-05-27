@@ -109,12 +109,14 @@ const SignUpInput: FC = () => {
           pwdCheck={check["password"]}
         />
         <ErrorContainer>{message["password"]}</ErrorContainer>
-        <ModalSubmitButton
-          cb={signUpHandler}
-          submitOk={submitOk}
-          text={"회원가입"}
-          loading={loading}
-        />
+        <ButtonContainer>
+          <ModalSubmitButton
+            cb={signUpHandler}
+            submitOk={submitOk}
+            text={"회원가입"}
+            loading={loading}
+          />
+        </ButtonContainer>
         <ErrorContainer>{error && "회원 생성에 실패했습니다."}</ErrorContainer>
       </InputContainer>
     </FormContainer>
@@ -136,4 +138,8 @@ const ErrorContainer = styled.div`
   padding-top: 0.5rem !important;
   font-size: var(--font-size-9) !important;
   color: var(--color-text-error) !important;
+`;
+
+const ButtonContainer = styled.div`
+  padding-top: 20px;
 `;

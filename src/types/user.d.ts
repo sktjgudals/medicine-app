@@ -5,4 +5,5 @@ export interface User_TYPE {
   email?: string;
   introduction?: string;
   createdAt?: Date;
+  type: string;
 }

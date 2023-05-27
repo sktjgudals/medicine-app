@@ -24,7 +24,7 @@ const ModalPassword: FC<Props> = ({ value, onChangeValue, cb, pwdCheck }) => {
   return (
     <PasswordContainer>
       <PasswordLabelContainer>
-        <PasswordLabel htmlFor="password_input">패스워드</PasswordLabel>
+        <PasswordLabel htmlFor="password_input">비밀번호</PasswordLabel>
         {value.length > 0 && pwdCheck !== undefined && (
           <DuplicatedValue loading={false} check={pwdCheck} />
         )}

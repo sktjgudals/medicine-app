@@ -17,6 +17,7 @@ import {
   postTagCreateFunc,
 } from "./resolverFunc/post";
 import {
+  changePasswordFunc,
   changeProfileImageFunc,
   changeProfileInfoFunc,
   changeProfileNicknameFunc,
@@ -88,5 +89,9 @@ export const resolvers = {
       _: any,
       { info, userId, type }: { info: string; userId: string; type: string }
     ) => changeProfileInfoFunc(info, userId, type),
+    changePassword: (
+      _: any,
+      { userId, password }: { userId: string; password: string }
+    ) => changePasswordFunc(userId, password),
   },
 };

@@ -30,9 +30,10 @@ const SettingNickName: FC<Props> = ({ userId, nickname }) => {
     const { data } = await mutateFunc({
       variables: { userId, nickname: value },
     });
-    const apolloClient = initializeApollo();
-    apolloClient.cache.evict({ fieldName: "findUserNickname" });
     if (data.changeProfileNickname) {
+      const apolloClient = initializeApollo();
+      apolloClient.cache.evict({ fieldName: "findUserNickname" });
+      apolloClient.cache.evict({ fieldName: "getUserData" });
       tokenSet(
         data.changeProfileNickname["access_token"],
         data.changeProfileNickname["refresh_token"]
@@ -129,6 +130,9 @@ const InputContainer = styled.label`
   gap: 20px;
   width: 100%;
   flex-direction: column;
+  @media screen and (max-width: 620px) {
+    padding-right: 15px;
+  }
 `;
 
 const LoadingPadding = styled.div`
@@ -189,8 +193,6 @@ const ErrorContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: relative;
   max-width: 415px;
-  top: -20px;
-  height: 50px;
+  padding-top: 10px;
 `;

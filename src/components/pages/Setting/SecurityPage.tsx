@@ -30,7 +30,7 @@ const SecurityPage: FC<Props> = ({ session }) => {
   return (
     <MainContainer>
       <ProfileNav />
-      <ProfileSecurity />
+      <ProfileSecurity {...data.getUserData} />
     </MainContainer>
   );
 };

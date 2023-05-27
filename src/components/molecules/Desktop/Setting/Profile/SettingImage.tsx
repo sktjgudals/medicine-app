@@ -8,6 +8,7 @@ import { ChangeProfileImage } from "apollo/querys/setting";
 import { useSession } from "@/hooks/useSession";
 import { tokenCall, tokenSet } from "@/utils/varible";
 import { toast } from "react-toastify";
+import { initializeApollo } from "apollo/client";
 
 interface Props {
   userId: string;
@@ -39,6 +40,8 @@ const SettingImage: FC<Props> = ({ userId }) => {
           profileImageState(res["url"]);
           setLoading(false);
           imageState(false);
+          const apolloClient = initializeApollo();
+          apolloClient.cache.evict({ fieldName: "getUserData" });
           setReset(true);
           toast.success("프로필 이미지 변경을 완료하였습니다.");
         } else {

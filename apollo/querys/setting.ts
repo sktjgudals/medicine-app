@@ -8,6 +8,7 @@ const GetUserData = gql`
       image
       introduction
       createdAt
+      type
     }
   }
 `;
@@ -40,9 +41,18 @@ const ChangeProfileInfo = gql`
   }
 `;
 
+const ChangePassword = gql`
+  mutation data($password: String!, $userId: String!) {
+    changePassword(password: $password, userId: $userId) {
+      id
+    }
+  }
+`;
+
 export {
   GetUserData,
   ChangeProfileImage,
   ChangeProfileNickname,
   ChangeProfileInfo,
+  ChangePassword,
 };

@@ -6,6 +6,7 @@ import ModalSubmitButton from "../../Modal/ModalSubmitButton";
 import { useMutation } from "@apollo/client";
 import { ChangeProfileInfo } from "apollo/querys/setting";
 import { toast } from "react-toastify";
+import { initializeApollo } from "apollo/client";
 interface Props {
   userId: string;
   introduction?: string | null;
@@ -29,6 +30,8 @@ const SettingIntroduction: FC<Props> = ({ introduction, userId }) => {
         variables: { info: value, userId, type: "UPDATE" },
       });
       if (data.changeProfileInfo) {
+        const apolloClient = initializeApollo();
+        apolloClient.cache.evict({ fieldName: "getUserData" });
         return toast.success("소개글 변경에 성공하였습니다.");
       } else {
         toast.error("소개글 변경에 실패하였습니다");
@@ -88,6 +91,9 @@ const MainContainer = styled.div`
 const InputContainer = styled.div`
   padding-top: 10px;
   z-index: 1;
+  @media screen and (max-width: 620px) {
+    padding-right: 15px;
+  }
 `;
 
 const IntroInput = styled(Input)`
@@ -135,8 +141,6 @@ const SmallText = styled.p`
 `;
 
 const ButtonContainer = styled.div`
-  position: relative;
   max-width: 415px;
-  top: -25px;
-  height: 50px;
+  padding-top: 10px;
 `;

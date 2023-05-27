@@ -1,9 +1,6 @@
 import { settingTokenGenerateFunc } from "@/utils/func/setting";
-import {
-  generateAccessOauthToken,
-  generateAccessToken,
-  generateRefreshToken,
-} from "@/utils/token";
+import { bcryptGenSalt, bcryptHash } from "@/utils/secure";
+
 import prisma from "prisma/prisma";
 
 const getUserDataFunc = async (userId: string) => {
@@ -105,9 +102,24 @@ const changeProfileInfoFunc = async (
   }
 };
 
+const changePasswordFunc = async (userId: string, password: string) => {
+  try {
+    const salt = await bcryptGenSalt();
+    const hashedPassword = await bcryptHash(password, salt);
+    const res = await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
 export {
   getUserDataFunc,
   changeProfileImageFunc,
   changeProfileNicknameFunc,
   changeProfileInfoFunc,
+  changePasswordFunc,
 };

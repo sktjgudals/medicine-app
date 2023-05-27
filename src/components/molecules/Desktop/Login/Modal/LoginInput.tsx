@@ -81,12 +81,14 @@ const LoginInput: FC = () => {
             onChangeValue={onChangePassword}
             cb={signinHandler}
           />
-          <LoginSubmitButton
-            cb={signinHandler}
-            text={"로그인"}
-            submitOk={submitOk}
-            loading={loading}
-          />
+          <ButtonContainer>
+            <LoginSubmitButton
+              cb={signinHandler}
+              text={"로그인"}
+              submitOk={submitOk}
+              loading={loading}
+            />
+          </ButtonContainer>
         </InputContainer>
       </FormContainer>
     </>
@@ -123,4 +125,8 @@ const ErrorMessage = styled.div`
 const ErrorIcon = styled.div`
   align-items: center;
   padding-right: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  padding-top: 20px;
 `;

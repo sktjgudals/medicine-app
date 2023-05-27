@@ -19,7 +19,7 @@ const ModalSubmitButton: FC<Props> = ({
   color,
 }) => {
   return (
-    <SubmitButtonContainer>
+    <>
       <ButtonNotAllow
         type="button"
         disabled={true}
@@ -47,19 +47,15 @@ const ModalSubmitButton: FC<Props> = ({
           text
         )}
       </ButtonAllow>
-    </SubmitButtonContainer>
+    </>
   );
 };
 
 export default ModalSubmitButton;
 
-const SubmitButtonContainer = styled.div`
-  margin-top: 2rem !important;
-`;
-
 const SubmitButton = styled.button`
   width: 100%;
-  display: inline-flex;
+  display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
