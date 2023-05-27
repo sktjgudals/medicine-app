@@ -13,7 +13,7 @@ interface Props {
 const Profile: FC<Props> = ({ session, toggleDropDown }) => {
   const router = useRouter();
   const handler = () => {
-    router.push("/setting/profile").then(() => toggleDropDown());
+    router.push(`/profile/${session.nickname}`).then(() => toggleDropDown());
   };
   return (
     <>

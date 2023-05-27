@@ -49,10 +49,10 @@ const imageHandler = async () => {
           const range = quillObj.getEditorSelection();
           quillObj.getEditor().insertEmbed(range.index, "image", url);
         } else {
-          console.info(error);
+          toast.error("이미지를 등록하는 도중 에러가 발생하였습니다.");
         }
       } else {
-        console.info("로그인필요");
+        toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
       }
     } else {
       console.info("이미지 등록");
@@ -111,17 +111,17 @@ const MainEditor: FC = () => {
           const { post, token } = data.postDataCreate;
           setLoading(false);
           if (!token) {
-            console.info("토큰 만료");
+            toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
           } else {
             return router.push(`/post/${post["id"]}`);
           }
         })
         .catch((e) => {
-          console.info(e);
+          toast.error("새로고침후, 다시 시도해주시길 바랍니다.");
           setLoading(false);
         });
     } else {
-      toast.error("로그인 에러");
+      toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
     }
   };
 
