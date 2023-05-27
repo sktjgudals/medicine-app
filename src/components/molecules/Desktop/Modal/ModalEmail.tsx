@@ -37,35 +37,37 @@ const ModalEmail: FC<Props> = ({
   );
 
   const apiCall = async (value: string) => {
-    const res = await emailVerify(value);
-    if (res) {
-      const { data } = await findUserEmail(value);
-      if (data.findUserEmail === null) {
-        emailSubmitCheck(true);
-        emailLoadingCheck(false);
-        if (setMessage) {
-          setMessage((prev) => {
-            return {
-              ...prev,
-              email: "",
-            };
-          });
+    if (checkDuplicate) {
+      const res = await emailVerify(value);
+      if (res) {
+        const { data } = await findUserEmail(value);
+        if (data.findUserEmail === null) {
+          emailSubmitCheck(true);
+          emailLoadingCheck(false);
+          if (setMessage) {
+            setMessage((prev) => {
+              return {
+                ...prev,
+                email: "",
+              };
+            });
+          }
+        } else {
+          if (setMessage) {
+            setMessage((prev) => {
+              return {
+                ...prev,
+                email: "중복된 이메일이 있습니다.",
+              };
+            });
+          }
+          emailSubmitCheck(false);
+          emailLoadingCheck(false);
         }
       } else {
-        if (setMessage) {
-          setMessage((prev) => {
-            return {
-              ...prev,
-              email: "중복된 이메일이 있습니다.",
-            };
-          });
-        }
         emailSubmitCheck(false);
         emailLoadingCheck(false);
       }
-    } else {
-      emailSubmitCheck(false);
-      emailLoadingCheck(false);
     }
   };
 
@@ -80,9 +82,11 @@ const ModalEmail: FC<Props> = ({
       <EmailLabelContainer>
         <EmailLabel htmlFor={`${text}_input`}>{text}</EmailLabel>
         {value.length > 0 && (
-          {
-               checkDuplicate&&<DuplicatedValue loading={loading} check={checkEmail} />
-          }
+          <>
+            {checkDuplicate && (
+              <DuplicatedValue loading={loading} check={checkEmail} />
+            )}
+          </>
         )}
       </EmailLabelContainer>
       <EmailInputContainer>
