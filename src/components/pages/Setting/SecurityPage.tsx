@@ -1,18 +1,18 @@
-import React, { FC } from "react";
-import ProfileSetting from "@/components/organisms/Setting/ProfileSetting";
+import ApolloError from "@/components/atoms/ApolloError";
+import Title from "@/components/atoms/Title";
+import ProfileNav from "@/components/organisms/Setting/ProfileNav";
+import ProfileSecurity from "@/components/organisms/Setting/ProfileSecurity";
 import { SESSIONTYPE } from "@/types/session";
 import { useQuery } from "@apollo/client";
 import { GetUserData } from "apollo/querys/setting";
-import ApolloError from "@/components/atoms/ApolloError";
-import Title from "@/components/atoms/Title";
+import { FC } from "react";
 import styled from "styled-components";
-import ProfileNav from "@/components/organisms/Setting/ProfileNav";
 
 interface Props {
   session: SESSIONTYPE;
 }
 
-const ProfilePage: FC<Props> = ({ session }) => {
+const SecurityPage: FC<Props> = ({ session }) => {
   const { loading, data, error, refetch } = useQuery(GetUserData, {
     variables: { userId: session.id },
   });
@@ -30,12 +30,12 @@ const ProfilePage: FC<Props> = ({ session }) => {
   return (
     <MainContainer>
       <ProfileNav />
-      <ProfileSetting {...data.getUserData} />
+      <ProfileSecurity />
     </MainContainer>
   );
 };
 
-export default ProfilePage;
+export default SecurityPage;
 
 const MainContainer = styled.div`
   display: flex;

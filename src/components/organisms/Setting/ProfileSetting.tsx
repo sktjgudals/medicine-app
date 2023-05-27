@@ -1,8 +1,9 @@
+import { FC, useEffect } from "react";
+import styled from "styled-components";
+
 import SettingImage from "@/components/molecules/Desktop/Setting/Profile/SettingImage";
 import SettingNickName from "@/components/molecules/Desktop/Setting/Profile/SettingNickName";
 import SettingIntroduction from "@/components/molecules/Desktop/Setting/Profile/SettingIntroduction";
-import { FC, useEffect } from "react";
-import styled from "styled-components";
 import { User_TYPE } from "@/types/user";
 import { profileImageState } from "apollo/cache";
 
@@ -20,7 +21,7 @@ const ProfileSetting: FC<User_TYPE> = ({
   return (
     <MainContainer>
       <HeaderContainer>
-        <HeaderText>프로필 설정</HeaderText>
+        <HeaderText>프로필</HeaderText>
       </HeaderContainer>
       <SettingImage userId={id} />
       <SettingNickName userId={id} nickname={nickname} />

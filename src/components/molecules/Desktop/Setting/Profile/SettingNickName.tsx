@@ -137,9 +137,10 @@ const LoadingPadding = styled.div`
 
 const LoadingContainer = styled.div`
   position: absolute;
-  max-width: 440px;
-  padding-top: 3px;
-  width: 100%;
+  left: 220px;
+  @media screen and (max-width: 500px) {
+    left: 150px;
+  }
 `;
 
 const NickNameInput = styled(Input)`
@@ -165,7 +166,7 @@ const TextContainer = styled.label`
   display: flex;
   flex-direction: column;
   padding: 0 2px;
-  height: 60px;
+  height: 70px;
 `;
 
 const TextContent = styled.p`

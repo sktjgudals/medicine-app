@@ -113,7 +113,7 @@ const TextContainer = styled.label`
   display: flex;
   flex-direction: column;
   padding: 0 2px;
-  height: 60px;
+  height: 70px;
 `;
 
 const TextContent = styled.p`
