@@ -1,7 +1,32 @@
 import { FC } from "react";
 import styled from "styled-components";
+import ModalSubmitButton from "../../Modal/ModalSubmitButton";
+import { useMutation } from "@apollo/client";
+import { DeleteUser } from "apollo/querys/setting";
+import { toast } from "react-toastify";
+import { tokenDelete } from "@/utils/varible";
+import { useRouter } from "next/router";
 
-const SettingDeleteUser: FC = () => {
+interface Props {
+  id: string;
+}
+
+const SettingDeleteUser: FC<Props> = ({ id }) => {
+  const router = useRouter();
+  const [mutateFunc, { loading }] = useMutation(DeleteUser);
+
+  const submitHandler = async () => {
+    const { data } = await mutateFunc({ variables: { userId: id } });
+    if (data.deleteUser) {
+      tokenDelete();
+      router.push("/");
+      router.reload();
+      toast.success(data.deleteUser);
+    } else {
+      toast.error("회원 삭제에 실패했습니다.");
+    }
+  };
+
   return (
     <MainContainer>
       <TextContainer htmlFor="introduction">
@@ -9,6 +34,15 @@ const SettingDeleteUser: FC = () => {
         <SubTextContent>
           계정을 삭제하면 사용자 정보가 삭제됩니다.
         </SubTextContent>
+        <ButtonContainer>
+          <ModalSubmitButton
+            cb={submitHandler}
+            loading={loading}
+            text={"삭제"}
+            color="red"
+            submitOk={true}
+          />
+        </ButtonContainer>
       </TextContainer>
     </MainContainer>
   );

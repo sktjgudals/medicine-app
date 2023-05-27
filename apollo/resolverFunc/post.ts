@@ -7,13 +7,11 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
     const verifyToken = (await tokenVerify(token)) as any;
     if (verifyToken) {
       const { title, tag, thumbnail, body } = JSON.parse(data as any);
-      const countPost = (await prisma.post.count()) + 1;
       const postCreate = await prisma.post.create({
         data: {
           userId: verifyToken["id"],
           body: body,
           title: title,
-          number: countPost,
           thumbnail: thumbnail,
         },
       });
@@ -32,9 +30,9 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
   }
 };
 
-const postGetDataFunc = async (userId: string, num: number) => {
+const postGetDataFunc = async (userId: string, postId: string) => {
   const post = await prisma.post.findFirst({
-    where: { number: num },
+    where: { id: postId },
     include: {
       like: true,
       user: { select: { nickname: true, id: true, image: true } },

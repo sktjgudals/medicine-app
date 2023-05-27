@@ -116,10 +116,23 @@ const changePasswordFunc = async (userId: string, password: string) => {
   }
 };
 
+const deleteUserFunc = async (userId: string) => {
+  try {
+    console.info(userId);
+    const res = await prisma.user.delete({ where: { id: userId } });
+    console.info(res);
+    return "회원 삭제에 성공하였습니다.";
+  } catch (e) {
+    console.info(e);
+    return null;
+  }
+};
+
 export {
   getUserDataFunc,
   changeProfileImageFunc,
   changeProfileNicknameFunc,
   changeProfileInfoFunc,
   changePasswordFunc,
+  deleteUserFunc,
 };

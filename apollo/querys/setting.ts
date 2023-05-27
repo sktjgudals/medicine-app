@@ -49,10 +49,17 @@ const ChangePassword = gql`
   }
 `;
 
+const DeleteUser = gql`
+  mutation data($userId: String!) {
+    deleteUser(userId: $userId)
+  }
+`;
+
 export {
   GetUserData,
   ChangeProfileImage,
   ChangeProfileNickname,
   ChangeProfileInfo,
   ChangePassword,
+  DeleteUser,
 };

@@ -113,7 +113,7 @@ const MainEditor: FC = () => {
           if (!token) {
             console.info("토큰 만료");
           } else {
-            return router.push(`/post/${post["number"]}`);
+            return router.push(`/post/${post["id"]}`);
           }
         })
         .catch((e) => {

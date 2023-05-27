@@ -16,7 +16,7 @@ const ProfileSecurity: FC<User_TYPE> = ({
       <HeaderContainer>
         <HeaderText>보안</HeaderText>
         <SettingPassword id={id} type={type} />
-        <SettingDeleteUser />
+        <SettingDeleteUser id={id} />
       </HeaderContainer>
     </MainContainer>
   );

@@ -33,7 +33,6 @@ const findUserEmail = (email: string) => {
 const findUserNickname = (nickname: string) => {
   const reg = /[`~!#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gim;
   const newNickname = nickname.replace(reg, "");
-
   const data = gql`
     query data{
         findUserNickname(nickname:"${newNickname}"){

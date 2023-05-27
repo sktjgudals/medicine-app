@@ -16,4 +16,9 @@ const tokenSet = (access: string, refresh: string) => {
   localStorage.setItem("refresh_token", refresh);
 };
 
-export { tokenCall, tokenSet };
+const tokenDelete = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+};
+
+export { tokenCall, tokenSet, tokenDelete };

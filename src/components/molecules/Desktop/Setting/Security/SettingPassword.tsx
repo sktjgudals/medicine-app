@@ -6,6 +6,7 @@ import ModalPassword from "../../Modal/ModalPassword";
 import useInput from "@/hooks/useInput";
 import { passwordVerify } from "@/utils/refexp";
 import ModalSubmitButton from "../../Modal/ModalSubmitButton";
+import { toast } from "react-toastify";
 
 interface Props {
   type: string;
@@ -47,7 +48,11 @@ const SettingPassword: FC<Props> = ({ id, type }) => {
     const { data } = await mutateFunc({
       variables: { userId: id, password: value },
     });
-    console.info(data);
+    if (!data) {
+      toast.error("비밀번호 변경에 실패하였습니다.");
+    } else {
+      toast.success("비밀번호 변경에 성공하였습니다.");
+    }
   };
 
   return (
@@ -63,20 +68,24 @@ const SettingPassword: FC<Props> = ({ id, type }) => {
         )}
       </TextContainer>
       {type === "local" && (
-        <ModalPassword
-          value={value}
-          onChangeValue={onChangeValue}
-          cb={() => {}}
-          pwdCheck={check}
-        />
+        <PasswordContainer>
+          <ModalPassword
+            value={value}
+            onChangeValue={onChangeValue}
+            cb={() => {}}
+            pwdCheck={check}
+          />
+        </PasswordContainer>
       )}
       <ErrorContainer>{message}</ErrorContainer>
-      <ModalSubmitButton
-        cb={submitHandler}
-        loading={loading}
-        text={"변경"}
-        submitOk={check}
-      />
+      <ButtonContainer>
+        <ModalSubmitButton
+          cb={submitHandler}
+          loading={loading}
+          text={"변경"}
+          submitOk={check}
+        />
+      </ButtonContainer>
     </MainContainer>
   );
 };
@@ -113,4 +122,16 @@ const ErrorContainer = styled.div`
   padding-bottom: 5px;
   font-size: var(--font-size-9);
   color: var(--color-text-error);
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  max-width: 415px;
+  width: 100%;
+  padding-top: 10px;
+`;
+
+const PasswordContainer = styled.div`
+  max-width: 415px;
+  width: 100%;
 `;

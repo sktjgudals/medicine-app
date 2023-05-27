@@ -21,6 +21,7 @@ import {
   changeProfileImageFunc,
   changeProfileInfoFunc,
   changeProfileNicknameFunc,
+  deleteUserFunc,
   getUserDataFunc,
 } from "./resolverFunc/setting";
 
@@ -51,8 +52,8 @@ export const resolvers = {
       findUserNicknameFunc(nickname),
     postGetData: async (
       _: any,
-      { userId, num }: { userId: string; num: number }
-    ) => postGetDataFunc(userId, num),
+      { userId, postId }: { userId: string; postId: string }
+    ) => postGetDataFunc(userId, postId),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
   },
@@ -93,5 +94,7 @@ export const resolvers = {
       _: any,
       { userId, password }: { userId: string; password: string }
     ) => changePasswordFunc(userId, password),
+    deleteUser: (_: any, { userId }: { userId: string }) =>
+      deleteUserFunc(userId),
   },
 };

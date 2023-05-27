@@ -33,7 +33,6 @@ export const typeDefs = gql`
   type Post {
     _id: String
     id: String
-    number: Int
     title: String
     body: String
     views: Int
@@ -127,7 +126,7 @@ export const typeDefs = gql`
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
-    postGetData(userId: String, num: Int!): PostResoponse
+    postGetData(userId: String, postId: String!): PostResoponse
   }
 
   type Mutation {
@@ -140,6 +139,7 @@ export const typeDefs = gql`
     changeProfileNickname(nickname: String!, userId: String!): UserResponse
     changeProfileInfo(info: String!, userId: String!, type: String!): User
     changePassword(password: String!, userId: String!): User
+    deleteUser(userId: String!): String
     signinLocalUser(email: String!, password: String!): UserResponse
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse

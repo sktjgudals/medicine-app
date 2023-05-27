@@ -6,14 +6,14 @@ import { GetServerSideProps } from "next";
 import NotFoundPage from "@/pages/404";
 
 interface Props {
-  num: number;
+  postId: string;
 }
 
-const PostNumber: FC<Props> = ({ num }) => {
+const PostNumber: FC<Props> = ({ postId }) => {
   const { loading, session } = useSession();
   if (loading) return <Title title={`약정`} content={"약을 찾아주는 요정"} />;
-  if (num) {
-    return <Post session={session} num={num} />;
+  if (postId) {
+    return <Post session={session} postId={postId} />;
   } else {
     return <NotFoundPage />;
   }
@@ -22,10 +22,9 @@ const PostNumber: FC<Props> = ({ num }) => {
 export default PostNumber;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { num } = context.query;
-  const result = Number(num);
-  if (!result) {
+  const { postId } = context.query;
+  if (!postId) {
     return { props: {} };
   }
-  return { props: { num } };
+  return { props: { postId } };
 };

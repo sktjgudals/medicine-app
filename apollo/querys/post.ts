@@ -6,7 +6,6 @@ const PostDataMutation = gql`
       post {
         id
         title
-        number
         views
         createdAt
       }
@@ -25,12 +24,11 @@ const PostTagMutation = gql`
 `;
 
 const PostGetData = gql`
-  query data($userId: String, $num: Int!) {
-    postGetData(userId: $userId, num: $num) {
+  query data($userId: String, $postId: String!) {
+    postGetData(userId: $userId, postId: $postId) {
       post {
         id
         title
-        number
         thumbnail
         body
         views
