@@ -16,6 +16,7 @@ interface Props {
   onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
   text: string;
   id: string;
+  checkDuplicate: boolean;
   setMessage?: Dispatch<SetStateAction<ERROR_PROPS>>;
 }
 
@@ -24,6 +25,7 @@ const ModalEmail: FC<Props> = ({
   onChangeValue,
   text,
   id,
+  checkDuplicate,
   setMessage,
 }) => {
   const loading = useReactiveVar(emailLoadingCheck);
@@ -78,7 +80,9 @@ const ModalEmail: FC<Props> = ({
       <EmailLabelContainer>
         <EmailLabel htmlFor={`${text}_input`}>{text}</EmailLabel>
         {value.length > 0 && (
-          <DuplicatedValue loading={loading} check={checkEmail} />
+          {
+               checkDuplicate&&<DuplicatedValue loading={loading} check={checkEmail} />
+          }
         )}
       </EmailLabelContainer>
       <EmailInputContainer>

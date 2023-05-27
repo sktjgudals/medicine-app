@@ -75,6 +75,7 @@ const LoginInput: FC = () => {
             onChangeValue={onChangeEmail}
             text={"이메일"}
             id={"signin_id"}
+            checkDuplicate={false}
           />
           <ModalPassword
             value={password}
