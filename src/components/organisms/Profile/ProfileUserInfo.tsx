@@ -52,12 +52,12 @@ const MainContents = styled.div`
   padding: 20px;
   margin: 8px;
   background: var(--color-modal-default-background);
+  border-radius: 20px;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  padding-left: 10px;
+  padding-left: 20px;
 `;

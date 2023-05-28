@@ -32,7 +32,7 @@ const MainContainer = styled.div`
 `;
 
 const SettingsContainer = styled.div`
-  background: var(--color-background-button);
+  background: var(--color-default-background);
   width: 100px;
   height: 60px;
   display: flex;

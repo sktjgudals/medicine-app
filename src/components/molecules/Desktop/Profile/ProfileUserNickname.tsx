@@ -6,13 +6,21 @@ interface Props {
 }
 
 const ProfileUserNickname: FC<Props> = ({ nickname }) => {
-  return <MainContainer>{nickname}</MainContainer>;
+  return (
+    <MainContainer>
+      <NicknameContent>{nickname}</NicknameContent>
+    </MainContainer>
+  );
 };
 
 export default ProfileUserNickname;
 
 const MainContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
   height: 30px;
+`;
+
+const NicknameContent = styled.h2`
+  font-size: var(--font-size-5);
+  font-weight: var(--font-weight-bold);
 `;

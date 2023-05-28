@@ -364,6 +364,7 @@
 ///
 ///
 :root[color-theme="light"] {
+  --color-default-background: var(--color-opac-gl-2);
   --color-modal-default-background: var(--color-opac-gl-2);
   --color-modal-default-text: var(--color-hinted-grey-2);
   --color-border-brand: var(--color-green);
@@ -654,6 +655,7 @@
 ///
 ///
 :root[color-theme="dark"] {
+  --color-default-background: var(--color-opac-gd-3);
   --color-modal-default-background: var(--color-opac-gd-2);
   --color-modal-default-text: var(--color-hinted-grey-15);
   --color-background-button: var(--color-black);
