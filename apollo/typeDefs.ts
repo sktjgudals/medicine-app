@@ -122,11 +122,17 @@ export const typeDefs = gql`
     error: String
   }
 
+  type ProfileDataResponse {
+    user: User
+    posts: [Post]
+  }
+
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
     postGetData(userId: String, postId: String!): PostResoponse
+    getProfileData(nickname: String!): ProfileDataResponse
   }
 
   type Mutation {

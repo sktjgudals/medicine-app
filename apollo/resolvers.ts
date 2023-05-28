@@ -24,6 +24,7 @@ import {
   deleteUserFunc,
   getUserDataFunc,
 } from "./resolverFunc/setting";
+import { getProfileDataFunc } from "./resolverFunc/profile";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -56,6 +57,8 @@ export const resolvers = {
     ) => postGetDataFunc(userId, postId),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
+    getProfileData: async (_: any, { nickname }: { nickname: string }) =>
+      getProfileDataFunc(nickname),
   },
   Mutation: {
     createLocalUser: (

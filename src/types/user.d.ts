@@ -3,7 +3,7 @@ export interface User_TYPE {
   image: string;
   nickname: string;
   email?: string;
-  introduction?: string;
-  createdAt?: Date;
+  introduction?: string | undefined | null;
+  createdAt: number;
   type: string;
 }

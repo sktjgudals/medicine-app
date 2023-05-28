@@ -1,12 +1,25 @@
 import { SESSIONTYPE } from "@/types/session";
 import { FC } from "react";
+import ProfileUserInfo from "../organisms/Profile/ProfileUserInfo";
+import ProfilePostInfo from "../organisms/Profile/ProfilePostInfo";
+import styled from "styled-components";
+import { useSession } from "@/hooks/useSession";
+import { PROFILE_DATA } from "@/types/profile";
 
-interface Props {
-  session: SESSIONTYPE | null;
-}
+const ProfilePage: FC<PROFILE_DATA> = ({ user, posts }) => {
+  const { loading, session } = useSession();
+  if (loading) return <></>;
 
-const ProfilePage: FC<Props> = ({ session }) => {
-  return <div></div>;
+  return (
+    <MainContainer>
+      <ProfileUserInfo user={user} session={session} />
+      <ProfilePostInfo posts={posts} session={session} />
+    </MainContainer>
+  );
 };
 
 export default ProfilePage;
+
+const MainContainer = styled.main`
+  padding: 56px 30px 40px 30px;
+`;
