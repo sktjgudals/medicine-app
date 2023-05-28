@@ -564,64 +564,18 @@
   );
   --color-background-button-overlay-brand: var(--color-white);
   --color-background-button-overlay-brand-hover: var(--color-opac-w-14);
-  --color-background-button-overlay-brand-active: var(--color-opac-w-13);
-  --color-background-button-icon-overlay-default: var(--color-transparent);
-  --color-background-button-icon-overlay-hover: var(
-    --color-background-interactable-overlay-hover
-  );
-  --color-background-button-icon-overlay-active: var(
-    --color-background-interactable-overlay-active
-  );
+
   --color-background-button-disabled: var(--color-opac-gl-1);
   --color-background-button-overlay-disabled: var(--color-opac-w-2);
-  --color-background-image-selector-overlay: var(--color-transparent);
+
   --color-background-input: var(--color-opac-b-2);
   --color-background-input-focus: var(--color-white);
-  --color-background-input-checked: var(--color-twitch-purple-8);
-  --color-background-input-overlay: var(--color-opac-b-4);
-  --color-background-input-overlay-focus: var(--color-black);
-  --color-background-input-checkbox-checked: var(--color-border-brand);
-  --color-background-input-checkbox-checked-background: var(--color-white);
-  --color-background-input-checkbox-checked-background-overlay: var(
-    --color-black
-  );
-  --color-background-input-checkbox-checked-overlay: var(--color-white);
-  --color-background-keyboard-prompt: var(--color-opac-gl-1);
-  --color-background-keyboard-prompt-tooltip: var(--color-opac-gd-1);
-  --color-background-selectable: var(--color-opac-b-1);
-  --color-background-selectable-hover: var(--color-opac-b-2);
-  --color-background-selectable-overlay: var(--color-opac-w-3);
-  --color-background-selectable-overlay-hover: var(--color-opac-w-4);
-  --color-background-tag-default: var(--color-opac-b-1);
-  --color-background-tag-hover: var(--color-background-interactable-hover);
-  --color-background-tag-active: var(--color-background-interactable-active);
-  --color-background-toggle: var(--color-transparent);
-  --color-background-toggle-handle: var(--color-black);
-  --color-background-toggle-handle-checked: var(--color-twitch-purple-8);
-  --color-background-toggle-handle-overlay: var(--color-white);
-  --color-background-toggle-hover: var(--color-opac-b-9);
-  --color-background-toggle-focus: var(--color-opac-b-7);
-  --color-background-toggle-checked: var(--color-white);
-  --color-background-toggle-overlay: var(--color-opac-b-4);
-  --color-background-toggle-overlay-checked: var(--color-black);
-  --color-background-tooltip: var(--color-hinted-grey-3);
+
   --color-background-overlay: var(--color-opac-b-9);
 
   --color-background-modal-overlay: var(--color-opac-b-13);
-  --color-background-modal: var(--color-white);
-  --color-background-graph: var(--color-twitch-purple-15);
-  --color-background-graph-fill: var(--color-twitch-purple-9);
-  --color-background-scrollbar: var(--color-opac-b-7);
-  --color-background-hover: var(--color-opac-b-1);
+
   --color-text-base: var(--color-hinted-grey-1);
-  --color-text-alt: var(--color-hinted-grey-3);
-  --color-text-alt-2: var(--color-hinted-grey-7);
-  --color-text-link: var(--color-twitch-purple-7);
-  --color-text-link-hover: var(--color-twitch-purple-8);
-  --color-text-link-active: var(--color-twitch-purple-7);
-  --color-text-link-focus: var(--color-twitch-purple-8);
-  --color-text-link-visited: var(--color-twitch-purple-7);
-  --color-text-live: var(--color-text-accessible-red);
   --color-text-alert: var(--color-text-accessible-red);
   --color-text-prime: var(--color-prime-blue);
   --color-text-error: var(--color-red-7);
@@ -629,51 +583,21 @@
   --color-text-success: var(--color-green-7);
   --color-text-info: var(--color-blue-7);
   --color-text-brand: var(--color-twitch-purple-7);
-  --color-text-overlay-error: var(--color-red-11);
-  --color-text-overlay-warn: var(--color-orange-11);
-  --color-text-overlay-success: var(--color-green-11);
-  --color-text-overlay-info: var(--color-blue-11);
-  --color-text-overlay-brand: var(--color-white);
-  --color-text-accessible-red: var(--color-red-7);
-  --color-text-accessible-green: var(--color-green-7);
-  --color-text-accessible-blue: var(--color-blue-7);
-  --color-text-tab: var(--color-text-base);
-  --color-text-tab-active: var(--color-twitch-purple-8);
-  --color-text-badge-alt: var(--color-white);
-  --color-text-badge-alt-2: var(--color-white);
+
   --color-text-button-primary: var(--color-white);
   --color-text-button-secondary: var(--color-text-base);
   --color-text-button-text: var(--color-text-brand);
-  --color-text-button-text-hover: var(--color-text-base);
-  --color-text-button-destructive: var(--color-text-button-error);
-  --color-text-button-error: var(--color-black);
-  --color-text-button-warn: var(--color-black);
-  --color-text-button-success: var(--color-black);
-  --color-text-button-info: var(--color-black);
-  --color-text-button-brand: var(--color-white);
-  --color-text-button-overlay-primary: var(--color-black);
-  --color-text-button-overlay-secondary: var(--color-text-overlay);
-  --color-text-button-overlay-text: var(--color-white);
-  --color-text-button-overlay-error: var(--color-black);
-  --color-text-button-overlay-warn: var(--color-black);
-  --color-text-button-overlay-success: var(--color-black);
-  --color-text-button-overlay-info: var(--color-black);
-  --color-text-button-overlay-brand: var(--color-black);
-  --color-text-button-disabled: var(--color-hinted-grey-8);
-  --color-text-interactable-selected: var(--color-text-overlay);
-  --color-text-interactable-overlay-selected: var(--color-text-base);
+
   --color-text-input: var(--color-text-base);
   --color-text-input-placeholder: var(--color-opac-b-10);
   --color-text-input-placeholder-overlay: var(--color-opac-w-10);
   --color-text-input-checked-icon: var(--color-white);
-  --color-text-keyboard-prompt: var(--color-text-alt-2);
-  --color-text-keyboard-prompt-tooltip: var(--color-hinted-grey-9);
+
   --color-text-label: var(--color-hinted-grey-2);
   --color-text-label-optional: var(--color-hinted-grey-7);
   --color-text-hint: var(--color-hinted-grey-7);
   --color-text-tag: var(--color-opac-b-10);
-  --color-text-toggle-checked-icon: var(--color-border-brand);
-  --color-text-toggle-checked-icon-overlay: var(--color-white);
+
   --color-text-tooltip: var(--color-hinted-grey-14);
   --color-text-overlay: var(--color-white);
   --color-text-overlay-alt: var(--color-opac-w-13);
@@ -682,19 +606,7 @@
   --color-text-overlay-link-active: var(--color-white);
   --color-text-overlay-link-focus: var(--color-opac-w-12);
   --color-text-overlay-link-visited: var(--color-white);
-  --color-text-pill: var(--color-black);
-  --color-text-chat-line-mentioning: var(--color-hinted-grey-2);
-  --color-text-chat-line-mentioned: var(--color-white);
-  --color-text-channel-status-text-indicator-hosting: var(--color-white);
-  --color-text-channel-status-text-indicator-rerun: var(--color-white);
-  --color-text-channel-status-text-indicator-offline: var(--color-white);
-  --color-text-channel-status-text-indicator-hosting-overlay: var(
-    --color-black
-  );
-  --color-text-channel-status-text-indicator-rerun-overlay: var(--color-black);
-  --color-text-channel-status-text-indicator-offline-overlay: var(
-    --color-black
-  );
+
   --color-border-base: var(--color-opac-gl-2);
   --color-border-region: var(--color-hinted-grey-12);
   --color-border-overlay: var(--color-opac-w-5);
@@ -703,13 +615,6 @@
   --color-border-warn: var(--color-orange-8);
   --color-border-success: var(--color-green-8);
   --color-border-info: var(--color-blue-8);
-  --color-border-error-decorative: var(--color-red-10);
-  --color-border-warn-decorative: var(--color-orange-12);
-  --color-border-success-decorative: var(--color-green-12);
-  --color-border-info-decorative: var(--color-blue-10);
-  --color-border-brand-decorative: var(--color-twitch-purple-9);
-  --color-border-overlay-error: var(--color-red-10);
-  --color-border-overlay-warn: var(--color-orange-12);
   --color-border-overlay-success: var(--color-green-12);
   --color-border-overlay-info: var(--color-blue-10);
   --color-border-overlay-brand: var(--color-white);
@@ -832,7 +737,6 @@
   --color-text-input: var(--color-text-base);
   --color-text-input-placeholder: var(--color-opac-w-10);
   --color-text-hint: var(--color-hinted-grey-8);
-
   --color-text-tooltip: var(--color-hinted-grey-1);
 
   --color-border-base: var(--color-opac-gd-2);
