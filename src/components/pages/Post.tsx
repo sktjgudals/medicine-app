@@ -5,7 +5,6 @@ import { PostGetData } from "apollo/querys/post";
 
 import { SESSIONTYPE } from "@/types/session";
 
-import PostBody from "../molecules/Desktop/Post/PostBody";
 import Title from "../atoms/Title";
 import ApolloError from "../atoms/ApolloError";
 import PostComment from "../molecules/Desktop/Post/PostComment";
@@ -44,7 +43,7 @@ const Post: FC<Props> = ({ session, postId }) => {
       </>
     );
   }
-  console.info(res.post.postTag);
+  console.info(res.post);
   return (
     <MainContainer>
       <Title

@@ -48,7 +48,7 @@ const postGetDataFunc = async (userId: string, postId: string) => {
     const newPost = {
       ...post,
       isLike: false,
-      postTag: tag,
+      tag: tag,
       likeCount: 0,
     };
 
