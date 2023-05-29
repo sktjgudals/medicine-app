@@ -4,7 +4,14 @@ const getProfileDataFunc = async (nickname: string) => {
   try {
     const res = await prisma.user.findFirst({
       where: { nickname },
-      include: { posts: { take: 5, orderBy: { createdAt: "desc" } } },
+      include: {
+        posts: {
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          include: { tag: true },
+        },
+        comments: { take: 5, orderBy: { createdAt: "desc" } },
+      },
     });
     if (res) {
       return { user: res, posts: res.posts };

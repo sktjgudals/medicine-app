@@ -43,7 +43,7 @@ export const typeDefs = gql`
     user: User
     thumbnail: String
     comments: [Comment]
-    postTag: [PostTag]
+    tag: [PostTag]
     updatedAt: Date
     createdAt: Date
     deletedAt: Date

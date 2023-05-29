@@ -1,24 +1,60 @@
 import { arrCompare } from "./common";
 import prisma from "prisma/prisma";
 
-const tagDBFunc = async (tag: any, postId: string) => {
-  for (let i = 0; i < tag.length; i++) {
-    await prisma.$runCommandRaw({
+const tagPush = async (tagId: string, postId: string) => {
+  try {
+    return await prisma.$runCommandRaw({
       update: "Tag",
       updates: [
         {
           q: {
-            _id: { $oid: tag[i].id },
+            _id: { $oid: tagId },
           },
           u: {
             $push: {
               postId: { $oid: postId },
             },
           },
-          multi: true,
+          multi: false,
         },
       ],
     });
+  } catch (e) {
+    return false;
+  }
+};
+
+const postPush = async (tagId: string, postId: string) => {
+  try {
+    return await prisma.$runCommandRaw({
+      update: "Post",
+      updates: [
+        {
+          q: {
+            _id: { $oid: postId },
+          },
+          u: {
+            $push: {
+              tagId: { $oid: tagId },
+            },
+          },
+          multi: false,
+        },
+      ],
+    });
+  } catch (e) {
+    return false;
+  }
+};
+
+const tagDBFunc = async (tag: any, postId: string) => {
+  console.info(tag);
+  for (let i = 0; i < tag.length; i++) {
+    const res = await Promise.all([
+      postPush(tag[i].id, postId),
+      tagPush(tag[i].id, postId),
+    ]);
+    console.info(res);
   }
 };
 

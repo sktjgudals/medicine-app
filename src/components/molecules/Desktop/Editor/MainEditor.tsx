@@ -108,6 +108,10 @@ const MainEditor: FC = () => {
         variables: { postData: JSON.stringify(res), token: access },
       })
         .then(({ data }) => {
+          editorTagState([]);
+          editorErrorMessage({ title: "", content: "" });
+          editorTitleState("");
+          editorThumbnail("");
           const { post, token } = data.postDataCreate;
           setLoading(false);
           if (!token) {
@@ -117,10 +121,18 @@ const MainEditor: FC = () => {
           }
         })
         .catch((e) => {
+          editorTagState([]);
+          editorErrorMessage({ title: "", content: "" });
+          editorTitleState("");
+          editorThumbnail("");
           toast.error("새로고침후, 다시 시도해주시길 바랍니다.");
           setLoading(false);
         });
     } else {
+      editorTagState([]);
+      editorErrorMessage({ title: "", content: "" });
+      editorTitleState("");
+      editorThumbnail("");
       toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
     }
   };

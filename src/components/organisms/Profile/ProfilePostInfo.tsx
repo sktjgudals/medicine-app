@@ -8,6 +8,7 @@ interface Props {
 }
 
 const ProfilePostInfo: FC<Props> = ({ posts, session }) => {
+  console.info(posts);
   return <div></div>;
 };
 

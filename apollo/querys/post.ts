@@ -35,7 +35,7 @@ const PostGetData = gql`
         createdAt
         updatedAt
         isLike
-        postTag {
+        tag {
           id
           name
         }

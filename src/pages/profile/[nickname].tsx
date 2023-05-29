@@ -27,7 +27,6 @@ const Profile: FC<Props> = ({ nickname }) => {
   const { data, loading, error } = useQuery(GetProfileData, {
     variables: { nickname },
   });
-  console.info(data);
   if (loading) return <></>;
   if (error)
     return (
