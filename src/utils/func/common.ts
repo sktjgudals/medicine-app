@@ -29,16 +29,7 @@ const dateFunc = (num: number) => {
   return date.toLocaleDateString("ko").replaceAll(". ", "-").split(".")[0];
 };
 
-function leftPad(value: any) {
-  if (value >= 10) {
-    return value;
-  }
-  return `0${value}`;
-}
-
-export { arrCompare, debounceFunc, dateFunc };
-
-export const customTime = (getedValue: Date | number | string) => {
+const customTime = (getedValue: Date | number | string) => {
   const date =
     typeof getedValue === "object" ? getedValue : new Date(getedValue);
   const now = new Date();
@@ -55,3 +46,5 @@ export const customTime = (getedValue: Date | number | string) => {
     return date.toLocaleDateString("ko");
   }
 };
+
+export { arrCompare, debounceFunc, dateFunc, customTime };

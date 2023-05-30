@@ -46,7 +46,6 @@ const MainEditor: FC = () => {
       });
     }
   }, [editor]);
-  console.info("hi");
   useEffect(() => {
     editorTagState([]);
     editorErrorMessage({ title: "", content: "" });
@@ -84,7 +83,7 @@ const MainEditor: FC = () => {
           if (!token) {
             toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
           } else {
-            return router.push(`/post/${post["id"]}`);
+            return router.push(`/post/${post["num"]}`);
           }
         })
         .catch((e) => {

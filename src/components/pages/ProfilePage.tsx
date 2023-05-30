@@ -1,4 +1,3 @@
-import { SESSIONTYPE } from "@/types/session";
 import { FC } from "react";
 import ProfileUserInfo from "../organisms/Profile/ProfileUserInfo";
 import ProfilePostInfo from "../organisms/Profile/ProfilePostInfo";
@@ -13,7 +12,7 @@ const ProfilePage: FC<PROFILE_DATA> = ({ user, posts }) => {
   return (
     <MainContainer>
       <ProfileUserInfo user={user} session={session} />
-      <ProfilePostInfo posts={posts} session={session} />
+      <ProfilePostInfo posts={posts} session={session} user={user} />
     </MainContainer>
   );
 };

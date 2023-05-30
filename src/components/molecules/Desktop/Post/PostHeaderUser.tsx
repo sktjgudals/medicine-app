@@ -3,15 +3,12 @@ import { User_TYPE } from "@/types/user";
 import { FC } from "react";
 import styled from "styled-components";
 import CircleImage from "@/components/atoms/CircleImage";
-import Link from "next/link";
 
 const PostHeaderUser: FC<User_TYPE> = ({ id, nickname, image }) => {
   return (
     <MainContainer>
       <CircleImage image={image} width={30} height={30} />
-      <Link href={`/profile/${nickname}`}>
-        <NickNameContainer>{nickname}</NickNameContainer>
-      </Link>
+      <NickNameContainer>{nickname}</NickNameContainer>
     </MainContainer>
   );
 };

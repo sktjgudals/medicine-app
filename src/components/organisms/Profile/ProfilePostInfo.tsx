@@ -18,13 +18,13 @@ const ProfilePostInfo: FC<Props> = ({ posts, session, user }) => {
     <MainContainer>
       <PostCotainer>
         {posts.length > 0 ? (
-          <ul>
+          <PostListContainer>
             {posts.map((el: POST_TYPE) => (
-              <ProfilePost key={el.id} {...el} />
+              <ProfilePost key={el.id} {...el} user={user} />
             ))}
-          </ul>
+          </PostListContainer>
         ) : (
-          "없음"
+          "작성한 게시글이 없습니다."
         )}
       </PostCotainer>
     </MainContainer>
@@ -43,11 +43,11 @@ const MainContainer = styled.div`
 `;
 
 const PostCotainer = styled.div`
-  display: flex;
+  border-radius: 10px;
+  background: var(--color-modal-default-background);
+  padding: 5px;
   width: 100%;
   max-width: 1000px;
-  padding: 20px;
-  margin: 8px;
-  background: var(--color-modal-default-background);
-  border-radius: 20px;
 `;
+
+const PostListContainer = styled.ul``;

@@ -30,13 +30,13 @@ const PostGetData = gql`
       post {
         id
         title
+        num
         thumbnail
         body
         views
         createdAt
         updatedAt
         isLike
-        num
         tag {
           id
           name

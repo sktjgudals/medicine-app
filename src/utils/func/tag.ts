@@ -48,13 +48,11 @@ const postPush = async (tagId: string, postId: string) => {
 };
 
 const tagDBFunc = async (tag: any, postId: string) => {
-  console.info(tag);
   for (let i = 0; i < tag.length; i++) {
     const res = await Promise.all([
       postPush(tag[i].id, postId),
       tagPush(tag[i].id, postId),
     ]);
-    console.info(res);
   }
 };
 

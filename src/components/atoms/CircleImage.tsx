@@ -30,7 +30,7 @@ const CircleImage: FC<Props> = ({ image, width, height }) => {
 
 export default CircleImage;
 
-const ProfileImageLink = styled.a`
+const ProfileImageLink = styled.div`
   user-select: none;
   display: flex;
   align-items: center;

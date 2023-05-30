@@ -17,6 +17,7 @@ const GetProfileData = gql`
         thumbnail
         body
         views
+        num
         createdAt
         updatedAt
         isLike

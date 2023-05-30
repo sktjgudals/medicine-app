@@ -2,6 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 import PostHeaderUser from "./PostHeaderUser";
 import { User_TYPE } from "@/types/user";
+import Link from "next/link";
 
 interface Props {
   title: string;
@@ -12,7 +13,9 @@ const PostHeader: FC<Props> = ({ title, user }) => {
   return (
     <MainContainer>
       <Title>{title}</Title>
-      <PostHeaderUser {...user} />
+      <Link href={`/profile/${user.nickname}`}>
+        <PostHeaderUser {...user} />
+      </Link>
     </MainContainer>
   );
 };
