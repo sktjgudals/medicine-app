@@ -53,8 +53,8 @@ export const resolvers = {
       findUserNicknameFunc(nickname),
     postGetData: async (
       _: any,
-      { userId, postId }: { userId: string; postId: string }
-    ) => postGetDataFunc(userId, postId),
+      { userId, num }: { userId: string; num: number }
+    ) => postGetDataFunc(userId, num),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
     getProfileData: async (_: any, { nickname }: { nickname: string }) =>

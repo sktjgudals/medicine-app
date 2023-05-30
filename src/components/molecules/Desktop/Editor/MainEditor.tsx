@@ -46,7 +46,7 @@ const MainEditor: FC = () => {
       });
     }
   }, [editor]);
-
+  console.info("hi");
   useEffect(() => {
     editorTagState([]);
     editorErrorMessage({ title: "", content: "" });

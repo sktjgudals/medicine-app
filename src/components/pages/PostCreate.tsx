@@ -7,6 +7,7 @@ import Tag from "../molecules/Desktop/Editor/Tag";
 import ImageEditor from "../molecules/Desktop/Editor/ImageEditor";
 import { useReactiveVar } from "@apollo/client";
 import { imageUploadFetch } from "@/utils/api/image";
+
 const LazyEditor = memo(
   lazy(() => import("../molecules/Desktop/Editor/MainEditor"))
 );

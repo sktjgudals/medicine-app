@@ -10,7 +10,6 @@ const getProfileDataFunc = async (nickname: string) => {
           orderBy: { createdAt: "desc" },
           include: { tag: true },
         },
-        comments: { take: 5, orderBy: { createdAt: "desc" } },
       },
     });
     if (res) {

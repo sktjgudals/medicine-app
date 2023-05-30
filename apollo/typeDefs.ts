@@ -31,10 +31,10 @@ export const typeDefs = gql`
   }
 
   type Post {
-    _id: String
     id: String
     title: String
     body: String
+    num: Int
     views: Int
     likeCount: Int
     userId: String
@@ -131,7 +131,7 @@ export const typeDefs = gql`
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
-    postGetData(userId: String, postId: String!): PostResoponse
+    postGetData(userId: String, num: Int!): PostResoponse
     getProfileData(nickname: String!): ProfileDataResponse
   }
 

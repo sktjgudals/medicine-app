@@ -8,6 +8,7 @@ const PostDataMutation = gql`
         title
         views
         createdAt
+        num
       }
       token
     }
@@ -24,8 +25,8 @@ const PostTagMutation = gql`
 `;
 
 const PostGetData = gql`
-  query data($userId: String, $postId: String!) {
-    postGetData(userId: $userId, postId: $postId) {
+  query data($userId: String, $num: Int!) {
+    postGetData(userId: $userId, num: $num) {
       post {
         id
         title
@@ -35,6 +36,7 @@ const PostGetData = gql`
         createdAt
         updatedAt
         isLike
+        num
         tag {
           id
           name

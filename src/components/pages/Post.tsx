@@ -13,12 +13,12 @@ import PostContents from "../organisms/Post/PostContents";
 
 interface Props {
   session: SESSIONTYPE | null;
-  postId: string;
+  num: string;
 }
 
-const Post: FC<Props> = ({ session, postId }) => {
+const Post: FC<Props> = ({ session, num }) => {
   const { loading, data, error, refetch } = useQuery(PostGetData, {
-    variables: { userId: session ? session.id : null, postId: postId },
+    variables: { userId: session ? session.id : null, num: Number(num) },
   });
 
   if (loading) return <></>;

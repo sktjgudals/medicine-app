@@ -68,6 +68,7 @@ model Post {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   body          String
+  num           Int     @unique()
   views         Int       @default(1)
   likeCount     Int       @default(0)
   thumbnail     String?
