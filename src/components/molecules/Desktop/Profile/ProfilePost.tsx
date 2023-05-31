@@ -47,6 +47,7 @@ const MainContainer = styled.li`
 const LastRawContainer = styled.div`
   display: flex;
   align-items: center;
+  height: 100%;
 `;
 
 const UserContainer = styled.div`

@@ -13,7 +13,6 @@ interface Props {
 const ProfilePage: FC<Props> = ({ profile, cb }) => {
   const { loading, session } = useSession();
   if (loading) return <></>;
-
   return (
     <MainContainer>
       <ProfileUserInfo user={profile.user} session={session} />
@@ -22,6 +21,7 @@ const ProfilePage: FC<Props> = ({ profile, cb }) => {
         posts={profile.posts}
         session={session}
         user={profile.user}
+        pageInfo={profile.pageInfo}
       />
     </MainContainer>
   );

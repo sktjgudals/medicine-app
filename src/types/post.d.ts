@@ -22,8 +22,6 @@ export interface POST_TAG_TYPE {
 }
 
 export type POST_PAGE_INFO = {
-  pageInfo: {
-    cursor: string;
-    hasNextPage: boolean;
-  };
+  cursor: string;
+  hasNextPage: boolean;
 };

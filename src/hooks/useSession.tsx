@@ -39,12 +39,15 @@ export const SessionProvider = ({ children }: { children: JSX.Element }) => {
         if (result) {
           setSession(result);
           setLoading(false);
+          setReset(false);
         } else {
           setSession(null);
           setLoading(false);
+          setReset(false);
         }
       });
     } else {
+      setReset(false);
       setSession(null);
       setLoading(false);
     }
@@ -52,9 +55,6 @@ export const SessionProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     tokenCallback();
-    return () => {
-      setReset(false);
-    };
   }, [tokenCallback]);
 
   return (

@@ -27,7 +27,29 @@ const createApolloClient = () => {
     connectToDevTools: true,
     ssrMode: typeof window === "undefined",
     link: createIsomorphLink(),
-    cache: new InMemoryCache({}),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            getProfileData: {
+              keyArgs: ["nickname"],
+              merge(existing = { posts: [] }, incoming, { mergeObjects }) {
+                return {
+                  __typename: "ProfileDataResponse",
+                  user: existing.user ? existing.user : incoming.user,
+                  posts: [...existing.posts, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 };
 

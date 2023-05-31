@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-import { POST_TYPE } from "@/types/post";
+import { POST_PAGE_INFO, POST_TYPE } from "@/types/post";
 import { SESSIONTYPE } from "@/types/session";
 
 import ProfilePost from "@/components/molecules/Desktop/Profile/ProfilePost";
@@ -12,11 +12,15 @@ interface Props {
   session: SESSIONTYPE | null;
   user: User_TYPE;
   cb: () => void;
+  pageInfo: POST_PAGE_INFO;
 }
 
-const ProfilePostInfo: FC<Props> = ({ posts, session, user, cb }) => {
+const ProfilePostInfo: FC<Props> = ({ posts, session, user, cb, pageInfo }) => {
   return (
     <MainContainer>
+      <TextContainer>
+        <TextContent>사용자가 작성한 글</TextContent>
+      </TextContainer>
       <PostCotainer>
         {posts.length > 0 ? (
           <PostListContainer>
@@ -28,7 +32,9 @@ const ProfilePostInfo: FC<Props> = ({ posts, session, user, cb }) => {
           "작성한 게시글이 없습니다."
         )}
       </PostCotainer>
-      <ButtonContainer onClick={cb}>더보기</ButtonContainer>
+      {pageInfo.hasNextPage && (
+        <ButtonContainer onClick={cb}>더보기</ButtonContainer>
+      )}
     </MainContainer>
   );
 };
@@ -37,6 +43,7 @@ export default ProfilePostInfo;
 
 const MainContainer = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,10 +57,13 @@ const PostCotainer = styled.div`
   background: var(--color-modal-default-background);
   padding: 5px;
   width: 100%;
+  height: 100%;
   max-width: 1000px;
 `;
 
-const PostListContainer = styled.ul``;
+const PostListContainer = styled.ul`
+  height: 100%;
+`;
 
 const ButtonContainer = styled.button`
   cursor: pointer;
@@ -73,4 +83,17 @@ const ButtonContainer = styled.button`
   justify-content: center;
   height: 36px;
   border-radius: 18px;
+`;
+
+const TextContainer = styled.div`
+  padding: 20px;
+`;
+
+const TextContent = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: var(--font-size-5);
+  font-weight: var(--font-weight-bold);
+  user-select: none;
 `;

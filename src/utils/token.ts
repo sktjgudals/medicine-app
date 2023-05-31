@@ -46,7 +46,7 @@ const generateRefreshToken = async (id: string, type: string) => {
       },
       process.env.NEXT_PUBLIC_TOKEN_SECRET as string,
       {
-        expiresIn: 60 * 60 * 60,
+        expiresIn: 60 * 60 * 60 * 1000,
         issuer: "YAKJUNG",
         algorithm: "HS512",
       },
@@ -79,7 +79,7 @@ const generateAccessOauthToken = (
       },
       process.env.NEXT_PUBLIC_TOKEN_SECRET as string,
       {
-        expiresIn: 10,
+        expiresIn: 60 * 60 * 60,
         issuer: "YAKJUNG",
         algorithm: "HS512",
       },

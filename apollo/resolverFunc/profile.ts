@@ -6,7 +6,6 @@ const getProfileDataFunc = async (
   limit: number
 ) => {
   try {
-    console.info(cursor);
     const pageInfo = {
       cursor: cursor,
       hasNextPage: false,
@@ -16,11 +15,12 @@ const getProfileDataFunc = async (
         skip: 1,
         take: limit,
         orderBy: { createdAt: "desc" },
-        where: { id: cursor },
+        cursor: { id: cursor },
       });
-      console.info(res);
-      // skip: 1,
-      // take: limit,
+      if (res.length > limit - 1) {
+        pageInfo["hasNextPage"] = true;
+      }
+      return { posts: res, pageInfo };
     }
 
     const res = await prisma.user.findFirst({
@@ -35,7 +35,7 @@ const getProfileDataFunc = async (
     });
 
     if (res) {
-      if (res.posts.length === 5) {
+      if (res.posts.length > limit - 1) {
         pageInfo["hasNextPage"] = true;
       }
 
