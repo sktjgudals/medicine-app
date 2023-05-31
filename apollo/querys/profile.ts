@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const GetProfileData = gql`
-  query data($nickname: String!) {
-    getProfileData(nickname: $nickname) {
+  query data($nickname: String!, $cursor: String, $limit: Int!) {
+    getProfileData(nickname: $nickname, cursor: $cursor, limit: $limit) {
       user {
         id
         nickname
@@ -25,6 +25,10 @@ const GetProfileData = gql`
           id
           name
         }
+      }
+      pageInfo {
+        cursor
+        hasNextPage
       }
     }
   }

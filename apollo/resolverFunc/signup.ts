@@ -59,15 +59,18 @@ const createLocalUserFunc = async (
       });
       if (createdUser) {
         const access_token = (await generateAccessToken(
-          createdUser.id,
+          createdUser["id"],
           nickname,
           email,
           createdUser.image
         )) as string;
-        const refresh_token = await generateRefreshToken(access_token, "local");
+        const refresh_token = await generateRefreshToken(
+          createdUser["id"],
+          "local"
+        );
         res["access_token"] = access_token;
         res["refresh_token"] = refresh_token;
-        res["id"] = createdUser.id;
+        res["id"] = createdUser["id"];
         return res;
       } else {
         throw new Error("아이디 생성에 실패했습니다.");

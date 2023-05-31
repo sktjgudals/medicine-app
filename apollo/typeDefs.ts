@@ -57,6 +57,14 @@ export const typeDefs = gql`
     postId: String
   }
 
+  type PageInfo {
+    cursor: String
+    hasNextPage: Boolean
+    nowPageNumber: Int
+    totalPageNumber: Int
+    searchResults: Boolean
+  }
+
   type Comment {
     _id: String
     id: String
@@ -125,6 +133,7 @@ export const typeDefs = gql`
   type ProfileDataResponse {
     user: User
     posts: [Post]
+    pageInfo: PageInfo
   }
 
   type Query {
@@ -132,7 +141,11 @@ export const typeDefs = gql`
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
     postGetData(userId: String, num: Int!): PostResoponse
-    getProfileData(nickname: String!): ProfileDataResponse
+    getProfileData(
+      nickname: String!
+      cursor: String
+      limit: Int!
+    ): ProfileDataResponse
   }
 
   type Mutation {

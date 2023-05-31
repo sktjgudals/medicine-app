@@ -1,5 +1,8 @@
+import { SESSIONTYPE } from "@/types/session";
 import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
+import { tokenFetch } from "./api/token";
+import { tokenDelete } from "./varible";
 
 const generateAccessToken = async (
   id: string,
@@ -34,11 +37,11 @@ const generateAccessToken = async (
   });
 };
 
-const generateRefreshToken = async (token: string, type: string) => {
+const generateRefreshToken = async (id: string, type: string) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
       {
-        access_token: token,
+        id: id,
         type: type,
       },
       process.env.NEXT_PUBLIC_TOKEN_SECRET as string,
@@ -76,7 +79,7 @@ const generateAccessOauthToken = (
       },
       process.env.NEXT_PUBLIC_TOKEN_SECRET as string,
       {
-        expiresIn: 60 * 60 * 60,
+        expiresIn: 10,
         issuer: "YAKJUNG",
         algorithm: "HS512",
       },
@@ -94,14 +97,34 @@ const generateAccessOauthToken = (
 const tokenVerify = (token: any) => {
   try {
     return jwt.verify(token, process.env.NEXT_PUBLIC_TOKEN_SECRET as string);
-  } catch (e) {
-    console.info(e);
+  } catch (e: any) {
+    return false;
+  }
+};
+
+const serverTokenVerify = async (accessToken: string, refreshToken: string) => {
+  const { session, type, access_token } = await tokenFetch(
+    accessToken,
+    refreshToken
+  );
+  if (type) {
+    if (type === "verify") {
+      return session;
+    } else if (type === "reissue") {
+      localStorage.setItem("access_token", access_token);
+      window.location.reload();
+      return false;
+    } else {
+      tokenDelete();
+      return false;
+    }
+  } else {
     return false;
   }
 };
 
 const localTokenVerify = (token: string) => {
-  return jwt_decode(token);
+  return jwt_decode(token) as SESSIONTYPE;
 };
 
 const getValidTokenFromOauth = async (url: string) => {
@@ -131,4 +154,5 @@ export {
   getValidTokenFromOauth,
   generateAccessOauthToken,
   generateRefreshToken,
+  serverTokenVerify,
 };

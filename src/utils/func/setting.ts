@@ -13,7 +13,7 @@ const settingTokenGenerateFunc = async (res: any) => {
         res["nickname"],
         res["image"]
       )) as any;
-      const refresh_token = await generateRefreshToken(access_token, "local");
+      const refresh_token = await generateRefreshToken(res["id"], "local");
       return { access_token, refresh_token };
     }
   } else {
@@ -23,7 +23,7 @@ const settingTokenGenerateFunc = async (res: any) => {
       res["image"],
       res["email"]
     )) as any;
-    const refresh_token = await generateRefreshToken(access_token, res["type"]);
+    const refresh_token = await generateRefreshToken(res["id"], res["type"]);
     return { access_token, refresh_token };
   }
 };

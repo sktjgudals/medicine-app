@@ -57,8 +57,14 @@ export const resolvers = {
     ) => postGetDataFunc(userId, num),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
-    getProfileData: async (_: any, { nickname }: { nickname: string }) =>
-      getProfileDataFunc(nickname),
+    getProfileData: async (
+      _: any,
+      {
+        nickname,
+        cursor,
+        limit,
+      }: { nickname: string; cursor: string; limit: number }
+    ) => getProfileDataFunc(nickname, cursor, limit),
   },
   Mutation: {
     createLocalUser: (

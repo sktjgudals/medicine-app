@@ -244,6 +244,10 @@
   --color-red-13: #ffcdcc;
   --color-red-14: #ffdcdb;
   --color-red-15: #ffe6e5;
+  --color-black-1: #303134;
+  --color-black-2: #202124;
+  --color-white-1: #e8eaed;
+  --color-white-2: #f1f3f4;
   --color-twitter: #1da1f2;
   --color-facebook: #3b5998;
   --color-reddit: #ff4500;
@@ -348,6 +352,10 @@
 ///
 ///
 :root[color-theme="light"] {
+  --color-background-radius-button: var(--color-white-1);
+  --color-font-radius-color: var(--color-black-2)
+
+
   --color-default-background: var(--color-opac-gl-2);
   --color-modal-default-background: var(--color-opac-gl-2);
   --color-modal-default-text: var(--color-hinted-grey-2);
@@ -639,6 +647,10 @@
 ///
 ///
 :root[color-theme="dark"] {
+  --color-background-radius-button: var(--color-black-1);
+  --color-font-radius-color: var(--color-white-1)
+
+
   --color-default-background: var(--color-opac-gd-3);
   --color-modal-default-background: var(--color-opac-gd-2);
   --color-modal-default-text: var(--color-hinted-grey-15);

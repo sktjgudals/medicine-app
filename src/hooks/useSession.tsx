@@ -5,10 +5,11 @@ import {
   useEffect,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
-import { localTokenVerify } from "@/utils/token";
+import { localTokenVerify, serverTokenVerify } from "@/utils/token";
 import { SESSIONTYPE } from "@/types/session";
-import { tokenCall } from "@/utils/varible";
+import { tokenCall, tokenDelete } from "@/utils/varible";
 
 export type Session = {
   session: SESSIONTYPE | null;
@@ -31,20 +32,30 @@ export const SessionProvider = ({ children }: { children: JSX.Element }) => {
   const [session, setSession] = useState<SESSIONTYPE | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [reset, setReset] = useState<boolean>(false);
-  useEffect(() => {
+  const tokenCallback = useCallback(() => {
     const { access, refresh } = tokenCall();
     if (access && refresh) {
-      const user = localTokenVerify(access) as SESSIONTYPE;
-      setSession(user);
-      setLoading(false);
+      serverTokenVerify(access, refresh).then((result) => {
+        if (result) {
+          setSession(result);
+          setLoading(false);
+        } else {
+          setSession(null);
+          setLoading(false);
+        }
+      });
     } else {
       setSession(null);
       setLoading(false);
     }
+  }, [reset]);
+
+  useEffect(() => {
+    tokenCallback();
     return () => {
       setReset(false);
     };
-  }, [reset]);
+  }, [tokenCallback]);
 
   return (
     <SessionContext.Provider value={{ session, loading, setReset }}>

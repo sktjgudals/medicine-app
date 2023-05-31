@@ -24,8 +24,8 @@ const Profile: FC<Props> = ({ nickname }) => {
       </>
     );
 
-  const { data, loading, error } = useQuery(GetProfileData, {
-    variables: { nickname },
+  const { data, loading, error, fetchMore } = useQuery(GetProfileData, {
+    variables: { nickname, limit: 5 },
   });
   if (loading) return <></>;
   if (error)
@@ -55,6 +55,17 @@ const Profile: FC<Props> = ({ nickname }) => {
       </>
     );
   }
+  const handlerFetchMore = () => {
+    if (data && data.getProfileData.pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          limit: 5,
+          cursor:
+            data.getProfileData.posts[data.getProfileData.posts.length - 1].id,
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -62,7 +73,7 @@ const Profile: FC<Props> = ({ nickname }) => {
         title={`${nickname} - 약정`}
         content={`약을 찾아주는 요정 ${nickname}님 프로필 페이지입니다.`}
       />
-      <ProfilePage {...data.getProfileData} />
+      <ProfilePage profile={data.getProfileData} cb={handlerFetchMore} />
     </>
   );
 };

@@ -5,14 +5,24 @@ import styled from "styled-components";
 import { useSession } from "@/hooks/useSession";
 import { PROFILE_DATA } from "@/types/profile";
 
-const ProfilePage: FC<PROFILE_DATA> = ({ user, posts }) => {
+interface Props {
+  profile: PROFILE_DATA;
+  cb: () => void;
+}
+
+const ProfilePage: FC<Props> = ({ profile, cb }) => {
   const { loading, session } = useSession();
   if (loading) return <></>;
 
   return (
     <MainContainer>
-      <ProfileUserInfo user={user} session={session} />
-      <ProfilePostInfo posts={posts} session={session} user={user} />
+      <ProfileUserInfo user={profile.user} session={session} />
+      <ProfilePostInfo
+        cb={cb}
+        posts={profile.posts}
+        session={session}
+        user={profile.user}
+      />
     </MainContainer>
   );
 };

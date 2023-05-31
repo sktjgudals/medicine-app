@@ -71,10 +71,7 @@ const oauthKakaoUserCode = async (code: string) => {
             user["image"],
             user["email"]
           )) as string;
-          const refresh_token = await generateRefreshToken(
-            access_token,
-            "kakao"
-          );
+          const refresh_token = await generateRefreshToken(res["id"], "kakao");
           return { access_token, refresh_token };
         } else {
           let date = String(Date.now()).slice(4, 13);
@@ -104,10 +101,7 @@ const oauthKakaoUserCode = async (code: string) => {
             user["image"],
             user["email"]
           )) as string;
-          const refresh_token = await generateRefreshToken(
-            access_token,
-            "kakao"
-          );
+          const refresh_token = await generateRefreshToken(user["id"], "kakao");
           return { access_token, refresh_token };
         }
       } else {
@@ -138,7 +132,10 @@ const oauthNaverUserCode = async (code: string, state: string) => {
           findedUser["image"],
           findedUser["email"] ? findedUser["email"] : null
         )) as string;
-        const refresh_token = await generateRefreshToken(access_token, "naver");
+        const refresh_token = await generateRefreshToken(
+          findedUser["id"],
+          "naver"
+        );
         return { access_token, refresh_token };
       }
     } else {
@@ -169,7 +166,10 @@ const oauthNaverUserCode = async (code: string, state: string) => {
         userCreated["image"],
         userCreated["email"]
       )) as string;
-      const refresh_token = await generateRefreshToken(access_token, "naver");
+      const refresh_token = await generateRefreshToken(
+        userCreated["id"],
+        "naver"
+      );
       return { access_token, refresh_token };
     }
   } else {
