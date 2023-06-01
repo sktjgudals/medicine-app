@@ -2,6 +2,7 @@ import prisma from "prisma/prisma";
 import { tokenVerify } from "@/utils/token";
 import { tagDBFunc } from "@/utils/func/tag";
 import { likeCountFunc, postLikeDBFunc } from "@/utils/func/post";
+import { deleteImageS3 } from "@/utils/api/image";
 
 const postDataCreateFunc = async (data: JSON, token: string) => {
   try {
@@ -10,6 +11,7 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
       const { title, tag, thumbnail, body } = JSON.parse(data as any);
       const postCounted = await prisma.post.findFirst({
         orderBy: { createdAt: "desc" },
+        take: 1,
       });
       const postCreate = await prisma.post.create({
         data: {
@@ -21,17 +23,17 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
         },
       });
       if (tag.length === 0) {
-        return { post: postCreate, token };
+        return { ...postCreate };
       } else {
         tagDBFunc(tag, postCreate["id"]);
-        return { post: postCreate, token };
+        return { ...postCreate };
       }
     } else {
-      return { post: null, token: null };
+      return null;
     }
   } catch (e) {
     console.info(e);
-    return { post: null, token: token };
+    return null;
   }
 };
 
@@ -126,10 +128,23 @@ const postLikeFunc = async (
   }
 };
 
+const postDeleteFunc = async (postId: string, thumbnail: string | null) => {
+  try {
+    if (thumbnail) {
+      deleteImageS3(thumbnail);
+    }
+    await prisma.post.delete({ where: { id: postId } });
+    return { id: postId };
+  } catch (e) {
+    return null;
+  }
+};
+
 export {
   postDataCreateFunc,
   postGetDataFunc,
   postTagCreateFunc,
   postViewUpsertFunc,
   postLikeFunc,
+  postDeleteFunc,
 };

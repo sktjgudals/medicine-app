@@ -63,6 +63,7 @@ const Profile: FC<Props> = ({ nickname }) => {
           limit: 5,
           cursor:
             data.getProfileData.posts[data.getProfileData.posts.length - 1].id,
+          postUserId: data.getProfileData.user.id,
         },
       });
     }

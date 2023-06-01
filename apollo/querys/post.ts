@@ -3,14 +3,16 @@ import { gql } from "@apollo/client";
 const PostDataMutation = gql`
   mutation data($postData: JSON!, $token: String!) {
     postDataCreate(postData: $postData, token: $token) {
-      post {
-        id
-        title
-        views
-        createdAt
-        num
-      }
-      token
+      id
+      title
+      num
+      thumbnail
+      body
+      views
+      createdAt
+      updatedAt
+      isLike
+      likeCount
     }
   }
 `;
@@ -92,10 +94,19 @@ const PostLikeMutation = gql`
   }
 `;
 
+const PostDeleteMutation = gql`
+  mutation data($postId: String!, $thumbnail: String) {
+    postDelete(postId: $postId, thumbnail: $thumbnail) {
+      id
+    }
+  }
+`;
+
 export {
   PostDataMutation,
   PostGetData,
   PostTagMutation,
   PostViewMutation,
   PostLikeMutation,
+  PostDeleteMutation,
 };

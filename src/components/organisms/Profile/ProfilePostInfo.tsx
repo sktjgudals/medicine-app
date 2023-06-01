@@ -29,7 +29,7 @@ const ProfilePostInfo: FC<Props> = ({ posts, session, user, cb, pageInfo }) => {
             ))}
           </PostListContainer>
         ) : (
-          "작성한 게시글이 없습니다."
+          <PostEmptyContainer>작성한 게시글이 없습니다.</PostEmptyContainer>
         )}
       </PostCotainer>
       {pageInfo.hasNextPage && (
@@ -63,6 +63,14 @@ const PostCotainer = styled.div`
 
 const PostListContainer = styled.ul`
   height: 100%;
+`;
+
+const PostEmptyContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: var(--font-size-6);
 `;
 
 const ButtonContainer = styled.button`

@@ -35,7 +35,7 @@ export const imageUploadFunc = async (
 ) => {
   try {
     const params = {
-      Bucket: `yakjung/post/images`,
+      Bucket: `yakjung/images`,
       Key: `${id}${Date.now()}.${type}`,
       Body: buffer,
       ACL: "public-read",
@@ -53,11 +53,26 @@ export const imageBase64Func = async (file: any) => {
     try {
       let reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = function () {
+      reader.onload = () => {
         return resolve(reader.result);
       };
     } catch (e) {
       reject(e);
     }
   });
+};
+
+export const deleteImageS3 = async (url: string) => {
+  const params = {
+    Bucket: `yakjung`,
+    Key: `images/${url.split("/images/")[1]}`,
+  };
+  await s3
+    .deleteObject(params)
+    .promise()
+    .catch((e) => {
+      console.info(e);
+    });
+
+  return true;
 };

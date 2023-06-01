@@ -29,7 +29,12 @@ const MainEditor: FC = () => {
   const [editor, setEditor] = useState<string>("");
   const [done, setDone] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [mutateFunc, post] = useMutation(PostDataMutation);
+  const [mutateFunc, post] = useMutation(PostDataMutation, {
+    update: (cache, { data }) => {
+      cache.modify({ fields: { getProfileData: () => {} } });
+      cache.evict({ fieldName: "postGetData" });
+    },
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -78,13 +83,9 @@ const MainEditor: FC = () => {
         variables: { postData: JSON.stringify(res), token: access },
       })
         .then(({ data }) => {
-          const { post, token } = data.postDataCreate;
+          const { id, num } = data.postDataCreate;
           setDone(true);
-          if (!token) {
-            toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
-          } else {
-            return router.push(`/post/${post["num"]}`);
-          }
+          return router.push(`/post/${num}`);
         })
         .catch((e) => {
           toast.error("새로고침후, 다시 시도해주시길 바랍니다.");

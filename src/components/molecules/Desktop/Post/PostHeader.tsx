@@ -9,14 +9,24 @@ import ReEditToolBar from "./Toolbar/ReEditToolBar";
 import DeleteToolBar from "./Toolbar/DeleteToolBar";
 
 interface Props {
+  id: string;
   title: string;
   user: User_TYPE;
   views: number;
+  thumbnail: string | null;
   createdAt: number;
   userId: string | null;
 }
 
-const PostHeader: FC<Props> = ({ title, user, views, createdAt, userId }) => {
+const PostHeader: FC<Props> = ({
+  id,
+  title,
+  user,
+  views,
+  thumbnail,
+  createdAt,
+  userId,
+}) => {
   return (
     <MainContainer>
       <Title>{title}</Title>
@@ -34,7 +44,12 @@ const PostHeader: FC<Props> = ({ title, user, views, createdAt, userId }) => {
       {userId === user.id && (
         <SessionToolBar>
           <ReEditToolBar />
-          <DeleteToolBar />
+          <DeleteToolBar
+            postId={id}
+            userId={userId}
+            postUserId={user.id}
+            thumbnail={thumbnail}
+          />
         </SessionToolBar>
       )}
     </MainContainer>

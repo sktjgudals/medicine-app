@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 import HeartToolBar from "./Toolbar/HeartToolBar";
 import LinkToolBar from "./Toolbar/LinkToolBar";
-import DeleteToolBar from "./Toolbar/DeleteToolBar";
-import ReEditToolBar from "./Toolbar/ReEditToolBar";
 
 interface Props {
   isLike: boolean;

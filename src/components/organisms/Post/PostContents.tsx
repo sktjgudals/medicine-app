@@ -32,11 +32,13 @@ const PostContents: FC<Props> = ({ post, session }) => {
     <MainContainer>
       <PostContainer>
         <PostHeader
+          id={post.id}
           title={post.title}
           user={post.user}
           views={post.views}
           createdAt={post.createdAt}
           userId={session ? session.id : null}
+          thumbnail={post.thumbnail.length !== 0 ? post.thumbnail : null}
         />
         <PostBody body={post.body} />
         <PostToolBar

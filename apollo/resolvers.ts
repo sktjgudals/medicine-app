@@ -13,6 +13,7 @@ import {
 } from "./resolverFunc/oauth";
 import {
   postDataCreateFunc,
+  postDeleteFunc,
   postGetDataFunc,
   postLikeFunc,
   postTagCreateFunc,
@@ -65,8 +66,14 @@ export const resolvers = {
         nickname,
         cursor,
         limit,
-      }: { nickname: string; cursor: string; limit: number }
-    ) => getProfileDataFunc(nickname, cursor, limit),
+        postUserId,
+      }: {
+        nickname: string;
+        cursor: string;
+        limit: number;
+        postUserId: string | null;
+      }
+    ) => getProfileDataFunc(nickname, cursor, limit, postUserId),
   },
   Mutation: {
     createLocalUser: (
@@ -120,5 +127,9 @@ export const resolvers = {
         isLike,
       }: { postId: string; userId: string; likeCount: number; isLike: boolean }
     ) => postLikeFunc(postId, userId, likeCount, isLike),
+    postDelete: (
+      _: any,
+      { postId, thumbnail }: { postId: string; thumbnail: string | null }
+    ) => postDeleteFunc(postId, thumbnail),
   },
 };

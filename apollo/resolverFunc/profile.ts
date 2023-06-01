@@ -3,7 +3,8 @@ import prisma from "prisma/prisma";
 const getProfileDataFunc = async (
   nickname: string,
   cursor: string,
-  limit: number
+  limit: number,
+  postUserId: string | null
 ) => {
   try {
     const pageInfo = {
@@ -11,12 +12,13 @@ const getProfileDataFunc = async (
       hasNextPage: false,
     };
 
-    if (cursor) {
+    if (cursor && postUserId) {
       const res = await prisma.post.findMany({
         skip: 1,
         take: limit,
         orderBy: { createdAt: "desc" },
         cursor: { id: cursor },
+        where: { userId: postUserId },
       });
       if (res.length > limit - 1) {
         pageInfo["hasNextPage"] = true;
@@ -25,7 +27,7 @@ const getProfileDataFunc = async (
     }
 
     const res = await prisma.user.findFirst({
-      where: { nickname },
+      where: { nickname: nickname },
       include: {
         posts: {
           take: limit,

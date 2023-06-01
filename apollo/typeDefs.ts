@@ -145,6 +145,7 @@ export const typeDefs = gql`
       nickname: String!
       cursor: String
       limit: Int!
+      postUserId: String
     ): ProfileDataResponse
   }
 
@@ -163,7 +164,7 @@ export const typeDefs = gql`
     oauthKakaoUserLink: UserResponse
     oauthNaverLink: UserResponse
     postTagCreate(postTag: String!): PostTag
-    postDataCreate(postData: JSON!, token: String!): PostCreateResoponse
+    postDataCreate(postData: JSON!, token: String!): Post
     postViewUpsert(postId: String!, views: Int!): Post
     postLike(
       postId: String!
@@ -171,6 +172,7 @@ export const typeDefs = gql`
       likeCount: Int!
       isLike: Boolean!
     ): Post
+    postDelete(postId: String!, thumbnail: String): Post
   }
 `;
 
