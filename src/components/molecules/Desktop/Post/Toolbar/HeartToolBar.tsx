@@ -73,9 +73,3 @@ const HeartToolBarContainer = styled.div`
   width: 30px;
   height: 30px;
 `;
-
-const MainContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

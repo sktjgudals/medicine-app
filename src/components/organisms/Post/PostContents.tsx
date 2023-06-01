@@ -36,6 +36,7 @@ const PostContents: FC<Props> = ({ post, session }) => {
           user={post.user}
           views={post.views}
           createdAt={post.createdAt}
+          userId={session ? session.id : null}
         />
         <PostBody body={post.body} />
         <PostToolBar
@@ -43,7 +44,6 @@ const PostContents: FC<Props> = ({ post, session }) => {
           isLike={post.isLike}
           likeCount={post.likeCount}
           userId={session ? session.id : null}
-          postUserId={post.user.id}
         />
       </PostContainer>
     </MainContainer>

@@ -5,15 +5,18 @@ import { User_TYPE } from "@/types/user";
 import Link from "next/link";
 import PostView from "@/components/atoms/post/PostView";
 import PostListDate from "./List/PostListDate";
+import ReEditToolBar from "./Toolbar/ReEditToolBar";
+import DeleteToolBar from "./Toolbar/DeleteToolBar";
 
 interface Props {
   title: string;
   user: User_TYPE;
   views: number;
   createdAt: number;
+  userId: string | null;
 }
 
-const PostHeader: FC<Props> = ({ title, user, views, createdAt }) => {
+const PostHeader: FC<Props> = ({ title, user, views, createdAt, userId }) => {
   return (
     <MainContainer>
       <Title>{title}</Title>
@@ -28,6 +31,12 @@ const PostHeader: FC<Props> = ({ title, user, views, createdAt }) => {
           <PostListDate createdAt={createdAt} />
         </DateContainer>
       </SecondContainer>
+      {userId === user.id && (
+        <SessionToolBar>
+          <ReEditToolBar />
+          <DeleteToolBar />
+        </SessionToolBar>
+      )}
     </MainContainer>
   );
 };
@@ -71,4 +80,13 @@ const SecondContainer = styled.div`
 const DateContainer = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const SessionToolBar = styled.div`
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 10px;
 `;

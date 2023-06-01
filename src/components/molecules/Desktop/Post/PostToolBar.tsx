@@ -10,17 +10,10 @@ interface Props {
   isLike: boolean;
   likeCount: number;
   userId: string | null;
-  postUserId: string;
   postId: string;
 }
 
-const PostToolBar: FC<Props> = ({
-  isLike,
-  likeCount,
-  userId,
-  postUserId,
-  postId,
-}) => {
+const PostToolBar: FC<Props> = ({ isLike, likeCount, userId, postId }) => {
   return (
     <MainContainer>
       <HeartToolBar
@@ -30,12 +23,6 @@ const PostToolBar: FC<Props> = ({
         userId={userId}
       />
       <LinkToolBar />
-      {userId === postUserId && (
-        <>
-          <ReEditToolBar />
-          <DeleteToolBar />
-        </>
-      )}
     </MainContainer>
   );
 };
@@ -44,7 +31,16 @@ export default PostToolBar;
 
 const MainContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100px;
+  gap: 10px;
+`;
+
+const SessionToolBar = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
   gap: 10px;
 `;
