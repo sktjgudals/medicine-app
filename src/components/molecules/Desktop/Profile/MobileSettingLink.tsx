@@ -39,7 +39,7 @@ const MainContainer = styled.div`
 
 const SettingsContainer = styled.div`
   background: var(--color-background-radius-button);
-  height: 60px;
+  height: 40px;
   width: 200px;
   max-width: 500px;
   display: flex;
