@@ -3,13 +3,18 @@ import {
   ToolBarContainer,
 } from "@/components/atoms/ToolBar";
 import PenIcon from "@/components/atoms/icons/PenIcon";
+import { useRouter } from "next/router";
 import { FC } from "react";
 import styled from "styled-components";
 
 const ReEditToolBar: FC = () => {
+  const router = useRouter();
+  const editHandler = () => {
+    return router.push(`${router.asPath}/edit`);
+  };
   return (
     <ToolBarContainer>
-      <ToolBarButtonContainer>
+      <ToolBarButtonContainer onClick={editHandler}>
         <IconContainer>
           <PenIcon />
         </IconContainer>

@@ -17,6 +17,23 @@ const PostDataMutation = gql`
   }
 `;
 
+const PostUpdateMutation = gql`
+  mutation data($postData: JSON!, $token: String!) {
+    postUpdate(postData: $postData, token: $token) {
+      id
+      title
+      num
+      thumbnail
+      body
+      views
+      createdAt
+      updatedAt
+      isLike
+      likeCount
+    }
+  }
+`;
+
 const PostViewMutation = gql`
   mutation data($postId: String!, $views: Int!) {
     postViewUpsert(postId: $postId, views: $views) {
