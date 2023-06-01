@@ -9,7 +9,6 @@ interface Props {
 }
 
 const QuillLeader: FC<Props> = ({ body }) => {
-  console.info(body);
   return (
     <>
       <ReactQuill

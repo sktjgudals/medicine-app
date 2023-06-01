@@ -6,6 +6,7 @@ import PostListTitle from "../Post/List/PostListTitle";
 import PostListDate from "../Post/List/PostListDate";
 import PostListView from "../Post/List/PostListView";
 import Link from "next/link";
+import PostListThumbnail from "../Post/List/PostListThumbnail";
 
 const ProfilePost: FC<POST_TYPE> = ({
   id,
@@ -15,11 +16,13 @@ const ProfilePost: FC<POST_TYPE> = ({
   likeCount,
   num,
   user,
+  thumbnail,
 }) => {
   return (
     <Link href={`/post/${num}`}>
       <MainContainer>
         <FirstRawContainer>
+          <PostListThumbnail thumbnail={thumbnail} />
           <PostListView views={views} />
           <PostListTitle title={title} />
         </FirstRawContainer>
@@ -38,6 +41,7 @@ export default ProfilePost;
 
 const MainContainer = styled.li`
   display: flex;
+  align-items: center;
   width: 100%;
   height: 100%;
   border-bottom: 1px solid var(--color-hinted-grey-9);

@@ -47,4 +47,18 @@ const customTime = (getedValue: Date | number | string) => {
   }
 };
 
-export { arrCompare, debounceFunc, dateFunc, customTime };
+const customView = (view: number) => {
+  if (view > 1000000) {
+    return `${String(view / 10000).slice(0, 3)}만회`;
+  } else if (view > 100000) {
+    return `${String(view / 10000).slice(0, 2)}만회`;
+  } else if (view > 10000) {
+    return `${String(view / 10000).slice(0, 3)}만회`;
+  } else if (view > 1000) {
+    return `${String(view / 1000).slice(0, 3)}천회`;
+  } else {
+    return `${view}회`;
+  }
+};
+
+export { arrCompare, debounceFunc, dateFunc, customTime, customView };
