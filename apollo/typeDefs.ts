@@ -164,6 +164,7 @@ export const typeDefs = gql`
     oauthNaverLink: UserResponse
     postTagCreate(postTag: String!): PostTag
     postDataCreate(postData: JSON!, token: String!): PostCreateResoponse
+    postViewUpsert(postId: String!, views: Int!): Post
   }
 `;
 

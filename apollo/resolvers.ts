@@ -15,6 +15,7 @@ import {
   postDataCreateFunc,
   postGetDataFunc,
   postTagCreateFunc,
+  postViewUpsertFunc,
 } from "./resolverFunc/post";
 import {
   changePasswordFunc,
@@ -105,5 +106,9 @@ export const resolvers = {
     ) => changePasswordFunc(userId, password),
     deleteUser: (_: any, { userId }: { userId: string }) =>
       deleteUserFunc(userId),
+    postViewUpsert: (
+      _: any,
+      { postId, views }: { postId: string; views: number }
+    ) => postViewUpsertFunc(postId, views),
   },
 };

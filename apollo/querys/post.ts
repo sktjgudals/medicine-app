@@ -18,13 +18,11 @@ const PostDataMutation = gql`
 const PostViewMutation = gql`
   mutation data($postId: String!, $views: Int!) {
     postViewUpsert(postId: $postId, views: $views) {
-      post {
-        id
-        title
-        views
-        createdAt
-        num
-      }
+      id
+      title
+      views
+      createdAt
+      num
     }
   }
 `;
@@ -66,4 +64,4 @@ const PostGetData = gql`
   }
 `;
 
-export { PostDataMutation, PostGetData, PostTagMutation };
+export { PostDataMutation, PostGetData, PostTagMutation, PostViewMutation };

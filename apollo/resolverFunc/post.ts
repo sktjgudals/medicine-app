@@ -66,4 +66,20 @@ const postTagCreateFunc = async (postTag: string) => {
   }
 };
 
-export { postDataCreateFunc, postGetDataFunc, postTagCreateFunc };
+const postViewUpsertFunc = async (postId: string, views: number) => {
+  try {
+    return await prisma.post.update({
+      where: { id: postId },
+      data: { views: views + 1 },
+    });
+  } catch (e) {
+    return null;
+  }
+};
+
+export {
+  postDataCreateFunc,
+  postGetDataFunc,
+  postTagCreateFunc,
+  postViewUpsertFunc,
+};
