@@ -7,20 +7,19 @@ import { POST_TYPE } from "@/types/post";
 import { useMutation } from "@apollo/client";
 import { PostViewMutation } from "apollo/querys/post";
 import { debounceFunc } from "@/utils/func/common";
+import PostToolBar from "@/components/molecules/Desktop/Post/PostToolBar";
+import { SESSIONTYPE } from "@/types/session";
 
-const PostContents: FC<POST_TYPE> = ({
-  id,
-  title,
-  body,
-  user,
-  views,
-  createdAt,
-}) => {
+interface Props {
+  post: POST_TYPE;
+  session: SESSIONTYPE | null;
+}
+
+const PostContents: FC<Props> = ({ post, session }) => {
   const [mutateFunc, { loading, error }] = useMutation(PostViewMutation);
-
   const viewUpsert = useCallback(
     debounceFunc(
-      () => mutateFunc({ variables: { postId: id, views: views } }),
+      () => mutateFunc({ variables: { postId: post.id, views: post.views } }),
       2000
     ),
     []
@@ -33,12 +32,19 @@ const PostContents: FC<POST_TYPE> = ({
     <MainContainer>
       <PostContainer>
         <PostHeader
-          title={title}
-          user={user}
-          views={views}
-          createdAt={createdAt}
+          title={post.title}
+          user={post.user}
+          views={post.views}
+          createdAt={post.createdAt}
         />
-        <PostBody body={body} />
+        <PostBody body={post.body} />
+        <PostToolBar
+          postId={post.id}
+          isLike={post.isLike}
+          likeCount={post.likeCount}
+          userId={session ? session.id : null}
+          postUserId={post.user.id}
+        />
       </PostContainer>
     </MainContainer>
   );

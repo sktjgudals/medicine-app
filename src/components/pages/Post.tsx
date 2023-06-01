@@ -49,7 +49,7 @@ const Post: FC<Props> = ({ session, num }) => {
         title={`${res.post.title} - 약정`}
         content={"약을 찾아주는 요정"}
       />
-      <PostContents {...res.post} />
+      <PostContents post={res.post} session={session} />
       <PostComment />
     </MainContainer>
   );

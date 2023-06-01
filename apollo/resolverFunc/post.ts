@@ -1,6 +1,7 @@
 import prisma from "prisma/prisma";
 import { tokenVerify } from "@/utils/token";
 import { tagDBFunc } from "@/utils/func/tag";
+import { likeCountFunc, postLikeDBFunc } from "@/utils/func/post";
 
 const postDataCreateFunc = async (data: JSON, token: string) => {
   try {
@@ -35,6 +36,7 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
 };
 
 const postGetDataFunc = async (userId: string, num: number) => {
+  let isLike = false;
   const post = await prisma.post.findFirst({
     where: { num: num },
     include: {
@@ -46,9 +48,14 @@ const postGetDataFunc = async (userId: string, num: number) => {
 
   if (post) {
     if (userId) {
+      for (let i = 0; i < post.like.length; i++) {
+        if (post.like[i].userId === userId) {
+          isLike = true;
+        }
+      }
     }
 
-    return { post: post };
+    return { post: { ...post, isLike } };
   }
   return { error: "post Not Found" };
 };
@@ -77,9 +84,52 @@ const postViewUpsertFunc = async (postId: string, views: number) => {
   }
 };
 
+const postLikeFunc = async (
+  postId: string,
+  userId: string,
+  likeCount: number,
+  isLike: boolean
+) => {
+  try {
+    if (isLike) {
+      const res = await Promise.all([
+        likeCountFunc(postId, likeCount - 1),
+        postLikeDBFunc(postId, userId, "del"),
+      ]);
+      if (res[0] === null || res[1] === null) {
+        return null;
+      }
+
+      let post = {
+        isLike: !isLike,
+        ...res[0],
+      };
+      return post;
+    } else {
+      const res = await Promise.all([
+        likeCountFunc(postId, likeCount + 1),
+        postLikeDBFunc(postId, userId, "cre"),
+      ]);
+
+      if (res[0] === null || res[1] === null) {
+        return null;
+      }
+
+      let post = {
+        isLike: !isLike,
+        ...res[0],
+      };
+      return post;
+    }
+  } catch (e) {
+    return null;
+  }
+};
+
 export {
   postDataCreateFunc,
   postGetDataFunc,
   postTagCreateFunc,
   postViewUpsertFunc,
+  postLikeFunc,
 };

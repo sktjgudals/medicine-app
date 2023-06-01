@@ -14,6 +14,7 @@ import {
 import {
   postDataCreateFunc,
   postGetDataFunc,
+  postLikeFunc,
   postTagCreateFunc,
   postViewUpsertFunc,
 } from "./resolverFunc/post";
@@ -110,5 +111,14 @@ export const resolvers = {
       _: any,
       { postId, views }: { postId: string; views: number }
     ) => postViewUpsertFunc(postId, views),
+    postLike: (
+      _: any,
+      {
+        postId,
+        userId,
+        likeCount,
+        isLike,
+      }: { postId: string; userId: string; likeCount: number; isLike: boolean }
+    ) => postLikeFunc(postId, userId, likeCount, isLike),
   },
 };

@@ -21,8 +21,6 @@ const PostViewMutation = gql`
       id
       title
       views
-      createdAt
-      num
     }
   }
 `;
@@ -49,6 +47,7 @@ const PostGetData = gql`
         createdAt
         updatedAt
         isLike
+        likeCount
         tag {
           id
           name
@@ -58,10 +57,45 @@ const PostGetData = gql`
           nickname
           image
         }
+        like {
+          id
+          userId
+          postId
+        }
       }
       error
     }
   }
 `;
 
-export { PostDataMutation, PostGetData, PostTagMutation, PostViewMutation };
+const PostLikeMutation = gql`
+  mutation data(
+    $postId: String!
+    $userId: String!
+    $likeCount: Int!
+    $isLike: Boolean!
+  ) {
+    postLike(
+      postId: $postId
+      userId: $userId
+      likeCount: $likeCount
+      isLike: $isLike
+    ) {
+      id
+      title
+      views
+      isLike
+      likeCount
+      createdAt
+      num
+    }
+  }
+`;
+
+export {
+  PostDataMutation,
+  PostGetData,
+  PostTagMutation,
+  PostViewMutation,
+  PostLikeMutation,
+};
