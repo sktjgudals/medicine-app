@@ -10,6 +10,7 @@ const getProfileDataFunc = async (
       cursor: cursor,
       hasNextPage: false,
     };
+
     if (cursor) {
       const res = await prisma.post.findMany({
         skip: 1,
@@ -29,7 +30,6 @@ const getProfileDataFunc = async (
         posts: {
           take: limit,
           orderBy: { createdAt: "desc" },
-          include: { tag: true },
         },
       },
     });
@@ -38,10 +38,10 @@ const getProfileDataFunc = async (
       if (res.posts.length > limit - 1) {
         pageInfo["hasNextPage"] = true;
       }
-
       return { user: res, posts: res.posts, pageInfo };
+    } else {
+      return null;
     }
-    return { user: null, posts: null };
   } catch (e) {
     return null;
   }

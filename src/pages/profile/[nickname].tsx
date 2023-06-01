@@ -27,6 +27,7 @@ const Profile: FC<Props> = ({ nickname }) => {
   const { data, loading, error, fetchMore } = useQuery(GetProfileData, {
     variables: { nickname, limit: 5 },
   });
+
   if (loading) return <></>;
   if (error)
     return (
@@ -41,7 +42,7 @@ const Profile: FC<Props> = ({ nickname }) => {
         />
       </>
     );
-  if (!data.getProfileData.user) {
+  if (!data.getProfileData) {
     return (
       <>
         <Title

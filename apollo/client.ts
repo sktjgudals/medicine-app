@@ -33,7 +33,8 @@ const createApolloClient = () => {
           fields: {
             getProfileData: {
               keyArgs: ["nickname"],
-              merge(existing = { posts: [] }, incoming, { mergeObjects }) {
+              merge(existing = { posts: [] }, incoming) {
+                if (!incoming) return null;
                 return {
                   __typename: "ProfileDataResponse",
                   user: existing.user ? existing.user : incoming.user,
