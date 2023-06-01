@@ -25,8 +25,21 @@ const MainContainer = styled.div`
 const PostCotainer = styled.div`
   border-radius: 10px;
   background: var(--color-modal-default-background);
-  padding: 200px;
+  padding: 400px;
   width: 100%;
   height: 100%;
   max-width: 1000px;
+  @keyframes skeleton-gradient {
+    0% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+    50% {
+      background-color: rgba(165, 165, 165, 0.3);
+    }
+    100% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+  }
+
+  animation: skeleton-gradient 1.5s infinite ease-in-out;
 `;

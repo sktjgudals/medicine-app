@@ -10,12 +10,12 @@ import styled from "styled-components";
 import { imageState } from "apollo/cache";
 import { ReactiveVar, useReactiveVar } from "@apollo/client";
 import ImageUploading from "react-images-uploading";
+import Image from "next/image";
 
 import ModalCloseButton from "../Modal/ModalCloseButton";
 import { Modal } from "@/components/atoms/Modal";
 import { ColorButton } from "@/components/atoms/Button";
 import UploadIcon from "@/components/atoms/icons/UploadIcon";
-import Image from "next/image";
 import Loading from "@/components/atoms/Loading";
 
 interface Props {

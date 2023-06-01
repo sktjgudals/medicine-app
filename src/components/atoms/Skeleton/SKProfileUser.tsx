@@ -10,6 +10,7 @@ const SKProfileUser: FC = () => {
 };
 
 export default SKProfileUser;
+
 const MainContents = styled.div`
   display: flex;
   width: 100%;
@@ -18,6 +19,19 @@ const MainContents = styled.div`
   margin: 8px;
   background: var(--color-modal-default-background);
   border-radius: 20px;
+  @keyframes skeleton-gradient {
+    0% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+    50% {
+      background-color: rgba(165, 165, 165, 0.3);
+    }
+    100% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+  }
+
+  animation: skeleton-gradient 1.5s infinite ease-in-out;
 `;
 
 const MainContainer = styled.div`
