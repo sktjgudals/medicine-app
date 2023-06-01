@@ -16,10 +16,10 @@ const LinkToolBar: FC = () => {
       navigator
         .share({
           title: `약정 - ${router.asPath.split("/")[2]}번째 글`,
-          url: "https://naver.com",
+          url: window.location.href,
         })
         .then(() => toast.success("공유 성공"))
-        .catch((error) => toast.error("공유 실패"));
+        .catch((e) => toast.error("공유 실패"));
     } else {
       navigator.clipboard.writeText(window.location.href);
       toast.success("링크를 복사하였습니다.");

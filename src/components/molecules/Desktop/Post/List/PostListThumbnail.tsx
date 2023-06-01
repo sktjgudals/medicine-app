@@ -1,7 +1,6 @@
-import ImageIcon from "@/components/atoms/icons/imageIcon";
-import Image from "next/image";
 import { FC } from "react";
 import styled from "styled-components";
+import ImageIcon from "@/components/atoms/icons/imageIcon";
 
 interface Props {
   thumbnail: string;
@@ -15,7 +14,9 @@ const PostListThumbnail: FC<Props> = ({ thumbnail }) => {
           <ImageIcon />
         </ImageContainer>
       ) : (
-        <Image src={thumbnail} width={50} height={50} alt="thumbnail_image" />
+        <ImageContainer>
+          <img src={thumbnail} alt="thumbnail_image" />
+        </ImageContainer>
       )}
     </MainContainer>
   );
@@ -30,6 +31,11 @@ const MainContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
+  display: flex;
   width: 50px;
   height: 50px;
+  @media screen and (max-width: 700px) {
+    width: 30px;
+    height: 30px;
+  }
 `;

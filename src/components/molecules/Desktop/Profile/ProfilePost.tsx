@@ -56,6 +56,9 @@ const LastRawContainer = styled.div`
 
 const UserContainer = styled.div`
   display: flex;
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const FirstRawContainer = styled.div`
