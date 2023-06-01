@@ -29,7 +29,6 @@ const MainEditor: FC = () => {
   const [editor, setEditor] = useState<string>("");
   const [done, setDone] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const submitOk = error.title.length === 0 && error.content.length === 0;
   const [mutateFunc, post] = useMutation(PostDataMutation);
   const router = useRouter();
 
@@ -46,14 +45,15 @@ const MainEditor: FC = () => {
       });
     }
   }, [editor]);
+
   useEffect(() => {
     editorTagState([]);
-    editorErrorMessage({ title: "", content: "" });
     editorTitleState("");
     editorThumbnail("");
     setLoading(false);
   }, [done]);
 
+  const submitOk = error.title.length === 0 && error.content.length === 0;
   const submitHandler = async (e: any) => {
     setLoading(true);
     let newTag = [];
@@ -138,12 +138,15 @@ const SubmitContainer = styled.div`
   padding-right: 20px;
   padding-bottom: 20px;
   padding-top: 20px;
+  @media screen and (max-width: 500px) {
+    padding-top: 50px;
+  }
 `;
 
 const ErrorContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 0.5rem 0rem 0rem rem;
+  height: 30px;
   color: red;
-  font-size: var(--font-size-8);
+  font-size: var(--font-size-7);
 `;

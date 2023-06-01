@@ -34,7 +34,10 @@ const editorThumbnail = makeVar<string>("");
 
 const profileImageState = makeVar<string>("");
 
-const editorErrorMessage = makeVar<EditorError>({ title: "", content: "" });
+const editorErrorMessage = makeVar<EditorError>({
+  title: "제목이 비어있습니다.",
+  content: "본문이 비어있습니다.",
+});
 
 export {
   modalState,
