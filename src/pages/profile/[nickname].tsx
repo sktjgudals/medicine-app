@@ -8,6 +8,8 @@ import { GetProfileData } from "apollo/querys/profile";
 import ApolloError from "@/components/atoms/ApolloError";
 import NotFound from "@/components/pages/404";
 
+import SKProfile from "@/components/molecules/Desktop/Skeleton/SKProfile";
+
 interface Props {
   nickname: string;
 }
@@ -18,7 +20,7 @@ const Profile: FC<Props> = ({ nickname }) => {
       <>
         <Title
           title={`오류 - 약정`}
-          content={`약을 찾아주는 요정 ${nickname}님 프로필 페이지입니다.`}
+          content={`약을 찾아주는 요정  오류 페이지입니다.`}
         />
         <NotFound />
       </>
@@ -28,7 +30,16 @@ const Profile: FC<Props> = ({ nickname }) => {
     variables: { nickname, limit: 5 },
   });
 
-  if (loading) return <></>;
+  if (loading)
+    return (
+      <>
+        <Title
+          title={`${nickname} - 약정`}
+          content={`약을 찾아주는 요정 ${nickname}님 프로필 페이지입니다.`}
+        />
+        <SKProfile />
+      </>
+    );
   if (error)
     return (
       <>
