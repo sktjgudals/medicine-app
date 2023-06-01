@@ -15,6 +15,20 @@ const PostDataMutation = gql`
   }
 `;
 
+const PostViewMutation = gql`
+  mutation data($postId: String!, $views: Int!) {
+    postViewUpsert(postId: $postId, views: $views) {
+      post {
+        id
+        title
+        views
+        createdAt
+        num
+      }
+    }
+  }
+`;
+
 const PostTagMutation = gql`
   mutation data($postTag: String!) {
     postTagCreate(postTag: $postTag) {

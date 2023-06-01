@@ -43,7 +43,6 @@ const Post: FC<Props> = ({ session, num }) => {
       </>
     );
   }
-  console.info(res.post);
   return (
     <MainContainer>
       <Title

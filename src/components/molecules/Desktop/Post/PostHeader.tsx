@@ -22,15 +22,24 @@ const PostHeader: FC<Props> = ({ title, user }) => {
 
 export default PostHeader;
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+`;
 
 const Title = styled.h1`
+  width: 100%;
+  margin-bottom: 25px;
+  display: -webkit-box;
   letter-spacing: -0.006em;
   font-size: var(--font-size-2);
   font-weight: var(--font-weight-bold);
-  margin-bottom: 25px;
   margin-top: 10px;
   padding-left: 10px;
-  word-break: keep-all;
-  background-color: red;
+  word-break: break-all;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;

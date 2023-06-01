@@ -1,13 +1,25 @@
-import { FC } from "react";
+import { FC, lazy, memo } from "react";
+
 import styled from "styled-components";
 
-const PostBody: FC = () => {
-  return <MainContainer></MainContainer>;
+const LazyQuill = memo(lazy(() => import("./QuillLeader")));
+
+interface Props {
+  body: string;
+}
+
+const PostBody: FC<Props> = ({ body }) => {
+  return (
+    <MainContainer>
+      <LazyQuill body={body} />
+    </MainContainer>
+  );
 };
 
 export default PostBody;
 
 const MainContainer = styled.div`
-  background-color: red;
-  padding: 200px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
 `;
