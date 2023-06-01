@@ -30,7 +30,6 @@ const GetProfileData = gql`
         num
         createdAt
         updatedAt
-        isLike
         tag {
           id
           name
