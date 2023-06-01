@@ -8,6 +8,7 @@ import ProfileUserImage from "@/components/molecules/Desktop/Profile/ProfileUser
 import ProfileUserNickname from "@/components/molecules/Desktop/Profile/ProfileUserNickname";
 import ProfileUserIntro from "@/components/molecules/Desktop/Profile/ProfileUserIntro";
 import ProfileSettingLink from "@/components/molecules/Desktop/Profile/ProfileSettingLink";
+import MobileSettingLink from "@/components/molecules/Desktop/Profile/MobileSettingLink";
 
 interface Props {
   user: User_TYPE;
@@ -30,6 +31,7 @@ const ProfileUserInfo: FC<Props> = ({ user, session }) => {
           <ProfileSettingLink sessionId={session.id} userId={user.id} />
         )}
       </MainContents>
+      {session && <MobileSettingLink sessionId={session.id} userId={user.id} />}
     </MainContainer>
   );
 };
@@ -39,6 +41,7 @@ export default ProfileUserInfo;
 const MainContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 8px;

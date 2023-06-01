@@ -8,7 +8,7 @@ interface Props {
   userId: string;
 }
 
-const ProfileSettingLink: FC<Props> = ({ sessionId, userId }) => {
+const MobileSettingLink: FC<Props> = ({ sessionId, userId }) => {
   if (sessionId === userId) {
     return (
       <MainContainer>
@@ -25,24 +25,26 @@ const ProfileSettingLink: FC<Props> = ({ sessionId, userId }) => {
   }
 };
 
-export default ProfileSettingLink;
+export default MobileSettingLink;
 
 const MainContainer = styled.div`
-  display: flex;
+  display: none;
   align-items: center;
+  justify-content: center;
+  padding: 10px;
   @media screen and (max-width: 500px) {
-    display: none;
+    display: flex;
   }
 `;
 
 const SettingsContainer = styled.div`
-  background: var(--color-default-background);
-  width: 100px;
+  background: var(--color-background-radius-button);
   height: 60px;
+  width: 200px;
+  max-width: 500px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   border-radius: 10px;
   gap: 5px;
-  text-align: center;
 `;
