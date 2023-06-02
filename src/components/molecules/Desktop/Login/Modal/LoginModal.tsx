@@ -15,8 +15,11 @@ import ModalOauth from "../../Modal/ModalOauth";
 import { OAUTH_TYPE } from "@/types/signup";
 import { OAUTH_KAKAO_USER_LINK, OAUTH_NAVER_LINK } from "apollo/querys/oauth";
 
+import { toast } from "react-toastify";
+
 const LoginModal: FC = () => {
   const router = useRouter();
+
   const ref = useRef<HTMLDivElement>(null);
   const [oauthKakaoFunc, kakao] = useMutation(OAUTH_KAKAO_USER_LINK);
   const [oauthNaverFunc, naver] = useMutation(OAUTH_NAVER_LINK);
@@ -35,6 +38,7 @@ const LoginModal: FC = () => {
     if (isOpenModal && current && !current.contains(e.target as Node))
       modalState(false);
   };
+
   const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
     localStorage.setItem("redirect_uri", router.asPath);
     if (type === "kakao") {
@@ -44,7 +48,7 @@ const LoginModal: FC = () => {
         if (url) {
           window.location.href = url;
         } else {
-          console.info("error");
+          toast.error("카카오 로그인에 실패하였습니다.");
         }
       }
     } else if (type === "naver") {
@@ -54,11 +58,19 @@ const LoginModal: FC = () => {
         if (url) {
           window.location.href = url;
         } else {
-          console.info("error");
+          toast.error("네이버 로그인에 실패하였습니다.");
         }
       } else {
-        console.info("error");
+        toast.error("네이버 로그인에 실패하였습니다.");
       }
+    }
+  };
+
+  const closeHandler = (e: any) => {
+    if (router.asPath === "/login") {
+      router.back();
+    } else {
+      modalState(false);
     }
   };
 
@@ -67,7 +79,7 @@ const LoginModal: FC = () => {
       <ModalContainer>
         <ModalLogo width={50} height={50} text={"로그인"} />
         <LoginInput />
-        <ModalCloseButton cb={modalState} />
+        <ModalCloseButton cb={closeHandler} />
         <ModalOauth
           text={"로그인"}
           cb={OauthClickHandler}

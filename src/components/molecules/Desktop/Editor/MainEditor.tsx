@@ -132,7 +132,8 @@ const MainContainer = styled.div`
 
 const EditorContainer = styled.div`
   display: flex;
-  min-height: 300px;
+  min-height: 500px;
+  padding-bottom: 50px;
 `;
 
 const SubmitContainer = styled.div`

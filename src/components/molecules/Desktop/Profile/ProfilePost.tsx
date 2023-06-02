@@ -13,7 +13,6 @@ const ProfilePost: FC<POST_TYPE> = ({
   createdAt,
   title,
   views,
-  likeCount,
   num,
   user,
   thumbnail,
