@@ -107,7 +107,6 @@ model Comment {
   body        String
   blind       Boolean @default(false)
   length      Int
-  update      Boolean @default(false)
   commentLike CommentLike[]
   subComments SubComment[]
   updatedAt   DateTime @updatedAt

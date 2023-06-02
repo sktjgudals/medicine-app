@@ -7,7 +7,11 @@ import { useRouter } from "next/router";
 
 const LazyEditor = memo(lazy(() => import("../Editor/CommentEditor")));
 
-const PostComment: FC = () => {
+interface Props {
+  postId: string;
+}
+
+const PostComment: FC<Props> = ({ postId }) => {
   const { session } = useSession();
   const router = useRouter();
   const loginHandler = () => {
@@ -16,7 +20,7 @@ const PostComment: FC = () => {
   return (
     <MainContainer>
       {session ? (
-        <LazyEditor session={session} />
+        <LazyEditor postId={postId} session={session} />
       ) : (
         <CommentTextContainer onClick={loginHandler}>
           <CommentNotSession>

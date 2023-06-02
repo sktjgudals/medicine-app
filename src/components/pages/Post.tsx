@@ -52,7 +52,7 @@ const Post: FC<Props> = ({ session, num }) => {
         content={"약을 찾아주는 요정"}
       />
       <PostContents post={res.post} session={session} />
-      <PostComment />
+      <PostComment postId={res.post.id} />
     </MainContainer>
   );
 };

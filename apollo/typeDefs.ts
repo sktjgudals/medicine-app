@@ -66,7 +66,6 @@ export const typeDefs = gql`
   }
 
   type Comment {
-    _id: String
     id: String
     post: Post
     postId: String
@@ -74,7 +73,6 @@ export const typeDefs = gql`
     isLike: Boolean
     likeCount: Int
     isReply: Boolean
-    update: Boolean
     replyCount: Int
     userId: String
     body: String
@@ -173,6 +171,12 @@ export const typeDefs = gql`
       isLike: Boolean!
     ): Post
     postDelete(postId: String!, thumbnail: String): Post
+    uploadComment(
+      postId: String!
+      value: String!
+      user: JSON!
+      length: Int!
+    ): Comment
   }
 `;
 

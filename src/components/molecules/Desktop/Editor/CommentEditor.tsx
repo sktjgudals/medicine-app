@@ -1,19 +1,24 @@
 import { FC, MouseEvent, useMemo, useState } from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
+import { toast } from "react-toastify";
 
 import "react-quill/dist/quill.snow.css";
 import styles from "#/styles/molecules/Desktop/Editor.module.scss";
+
 import { Button } from "@/components/atoms/Button";
-import { toast } from "react-toastify";
-import { useSession } from "@/hooks/useSession";
+
 import { SESSIONTYPE } from "@/types/session";
+import { useMutation } from "@apollo/client";
+import { CommentMutation } from "apollo/querys/comment";
 
 interface Props {
   session: SESSIONTYPE;
+  postId: string;
 }
 
-const CommentEditor: FC<Props> = ({ session }) => {
+const CommentEditor: FC<Props> = ({ session, postId }) => {
+  const [mutateFunc, { loading, error }] = useMutation(CommentMutation);
   const [value, setValue] = useState("");
 
   const modules = useMemo(
@@ -28,13 +33,27 @@ const CommentEditor: FC<Props> = ({ session }) => {
     []
   );
 
-  const submitHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const submitHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (session) {
       if (value.length === 0) {
         return toast.error("댓글을 입력해주세요.");
+      } else {
+        const user = {
+          id: session.id,
+          nickname: session.nickname,
+          image: session.image,
+        };
+        const { data } = await mutateFunc({
+          variables: {
+            postId: postId,
+            value: value,
+            user: user,
+            length: value.length,
+          },
+        });
+        console.info(data);
       }
-      console.info(value);
     } else {
       return toast.info("로그인이 필요합니다.");
     }
@@ -46,7 +65,6 @@ const CommentEditor: FC<Props> = ({ session }) => {
         <ReactQuill
           className={styles.comment_editor}
           modules={modules}
-          placeholder={"입력"}
           onChange={(value) => setValue(value === "<p><br></p>" ? "" : value)}
           scrollingContainer={styles.scrolling_container}
         />

@@ -28,6 +28,7 @@ import {
   getUserDataFunc,
 } from "./resolverFunc/setting";
 import { getProfileDataFunc } from "./resolverFunc/profile";
+import { uploadCommentFunc } from "./resolverFunc/comment";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -131,5 +132,14 @@ export const resolvers = {
       _: any,
       { postId, thumbnail }: { postId: string; thumbnail: string | null }
     ) => postDeleteFunc(postId, thumbnail),
+    uploadComment: (
+      _: any,
+      {
+        postId,
+        value,
+        user,
+        length,
+      }: { postId: string; value: string; user: JSON; length: number }
+    ) => uploadCommentFunc(postId, value, user, length),
   },
 };
