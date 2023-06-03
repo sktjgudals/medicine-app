@@ -27,9 +27,8 @@ interface Props {
   session: SESSIONTYPE;
 }
 
-let count = 0;
-
 const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
+  let count = 0;
   const [mutateFunc, { loading, error }] = useMutation(CommentReMutation);
   const [value, setValue] = useState(
     body.replace(/(<br>|<br\/>|<br \/>)/g, "\r\n")
@@ -56,6 +55,8 @@ const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
       if (row !== 1) {
         return setRow(count);
       }
+    } else {
+      return;
     }
   };
 

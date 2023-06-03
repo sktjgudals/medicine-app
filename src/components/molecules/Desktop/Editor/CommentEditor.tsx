@@ -20,9 +20,8 @@ interface Props {
   postId: string;
 }
 
-let count = 0;
-
 const CommentEditor: FC<Props> = ({ session, postId }) => {
+  let count = 0;
   const [mutateFunc, { loading, error }] = useMutation(CommentMutation, {
     update: (cache, { data }) => {
       const cacheId = cache.identify(data.uploadComment);
@@ -77,6 +76,8 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
       if (row !== 1) {
         return setRow(count);
       }
+    } else {
+      return;
     }
   };
 

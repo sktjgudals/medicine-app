@@ -23,7 +23,6 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
       }
     }
   }, [access_token, refresh_token]);
-
   return (
     <>
       <Title title={"카카오 로그인 - 약정"} content={"약을 찾아주는 요정"} />
