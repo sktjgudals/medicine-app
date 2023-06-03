@@ -1,6 +1,5 @@
 import prisma from "prisma/prisma";
 import { tokenVerify } from "@/utils/token";
-import { tagDBFunc } from "@/utils/func/tag";
 import { likeCountFunc, postLikeDBFunc } from "@/utils/func/post";
 import { deleteImageS3 } from "@/utils/api/image";
 
@@ -20,19 +19,27 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
           title: title,
           thumbnail: thumbnail,
           num: postCounted ? postCounted.num + 1 : 1,
+          tagId: tag,
         },
       });
-      if (tag.length === 0) {
-        return { ...postCreate };
-      } else {
-        tagDBFunc(tag, postCreate["id"]);
-        return { ...postCreate };
-      }
+      return postCreate;
     } else {
       return null;
     }
   } catch (e) {
-    console.info(e);
+    return null;
+  }
+};
+
+const postUpdateFunc = async (postId: string, postData: any) => {
+  try {
+    const { title, tag, thumbnail, body } = JSON.parse(postData);
+
+    return await prisma.post.update({
+      where: { id: postId },
+      data: { title, body: body, tagId: tag, thumbnail: thumbnail },
+    });
+  } catch (e) {
     return null;
   }
 };
@@ -147,4 +154,5 @@ export {
   postViewUpsertFunc,
   postLikeFunc,
   postDeleteFunc,
+  postUpdateFunc,
 };

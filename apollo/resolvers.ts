@@ -17,6 +17,7 @@ import {
   postGetDataFunc,
   postLikeFunc,
   postTagCreateFunc,
+  postUpdateFunc,
   postViewUpsertFunc,
 } from "./resolverFunc/post";
 import {
@@ -153,6 +154,10 @@ export const resolvers = {
       _: any,
       { postId, thumbnail }: { postId: string; thumbnail: string | null }
     ) => postDeleteFunc(postId, thumbnail),
+    postUpdate: (
+      _: any,
+      { postId, postData }: { postId: string; postData: JSON }
+    ) => postUpdateFunc(postId, postData),
     uploadComment: (
       _: any,
       {

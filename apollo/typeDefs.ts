@@ -194,6 +194,7 @@ export const typeDefs = gql`
       length: Int!
     ): Comment
     commentDelete(commentId: String!, userId: String!): Comment
+    postUpdate(postId: String!, postData: JSON!): Post
   }
 `;
 

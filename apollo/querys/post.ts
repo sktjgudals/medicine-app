@@ -10,7 +10,6 @@ const PostDataMutation = gql`
       body
       views
       createdAt
-      updatedAt
       isLike
       likeCount
     }
@@ -18,8 +17,8 @@ const PostDataMutation = gql`
 `;
 
 const PostUpdateMutation = gql`
-  mutation data($postData: JSON!, $token: String!) {
-    postUpdate(postData: $postData, token: $token) {
+  mutation data($postId: String!, $postData: JSON!) {
+    postUpdate(postId: $postId, postData: $postData) {
       id
       title
       num
@@ -27,7 +26,6 @@ const PostUpdateMutation = gql`
       body
       views
       createdAt
-      updatedAt
       isLike
       likeCount
     }
@@ -126,4 +124,5 @@ export {
   PostViewMutation,
   PostLikeMutation,
   PostDeleteMutation,
+  PostUpdateMutation,
 };

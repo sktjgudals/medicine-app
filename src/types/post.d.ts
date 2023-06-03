@@ -10,8 +10,7 @@ export interface POST_TYPE {
   user: User_TYPE;
   isLike: boolean;
   thumbnail: string;
-  postTag: [POST_TAG_TYPE];
-  updatedAt: Date | number;
+  tag: [POST_TAG_TYPE];
   createdAt: number;
 }
 

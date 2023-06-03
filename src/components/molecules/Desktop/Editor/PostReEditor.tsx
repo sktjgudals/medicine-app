@@ -14,25 +14,30 @@ import {
   editorThumbnail,
   editorTitleState,
 } from "apollo/cache";
-import { PostDataMutation } from "apollo/querys/post";
+import { PostUpdateMutation } from "apollo/querys/post";
 import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { tokenCall } from "@/utils/varible";
 import { modules } from "@/utils/editor";
 
 export let quillObj: any;
 
-const MainEditor: FC = () => {
+interface Props {
+  body: string;
+  postId: string;
+  tagArr: any[];
+}
+
+const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
   const title = useReactiveVar(editorTitleState);
-  const tag = useReactiveVar(editorTagState);
   const thumbnail = useReactiveVar(editorThumbnail);
   const error = useReactiveVar(editorErrorMessage);
-  const [editor, setEditor] = useState<string>("");
+  const [editor, setEditor] = useState<string>(body);
   const [done, setDone] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [mutateFunc, post] = useMutation(PostDataMutation, {
+  const [mutateFunc, post] = useMutation(PostUpdateMutation, {
     update: (cache, { data }) => {
-      cache.modify({ fields: { getProfileData: () => {} } });
-      cache.evict({ fieldName: "postGetData" });
+      //   cache.modify({ fields: { getProfileData: () => {} } });
+      //   cache.evict({ fieldName: "postGetData" });
     },
   });
   const router = useRouter();
@@ -58,18 +63,14 @@ const MainEditor: FC = () => {
     setLoading(false);
   }, [done]);
 
-  const submitOk = title.length !== 0 && error.content.length === 0;
+  const submitOk = title.length !== 0 && editor.length !== 0;
 
   const submitHandler = async (e: any) => {
     setLoading(true);
     let newTag = [];
-    for (let i = 0; i < tag.length; i++) {
-      if (tag[i].name.length === 0) {
-      } else {
-        newTag.push(tag[i].id);
-      }
+    for (let i = 0; i < tagArr.length; i++) {
+      newTag.push(tagArr[i].id);
     }
-
     const res = {
       title,
       tag: newTag,
@@ -80,15 +81,15 @@ const MainEditor: FC = () => {
     const { access } = tokenCall();
     if (access) {
       mutateFunc({
-        variables: { postData: JSON.stringify(res), token: access },
+        variables: { postData: JSON.stringify(res), postId },
       })
         .then(({ data }) => {
-          if (data.postDataCreate) {
-            const { id, num } = data.postDataCreate;
+          if (data.postUpdate) {
+            const { id, num } = data.postUpdate;
             setDone(true);
             return router.push(`/post/${num}`);
           } else {
-            toast.error("글 작성후 오류가 발생하였습니다.");
+            toast.error("글 작성중 오류가 발생하였습니다.");
           }
         })
         .catch((e) => {
@@ -110,6 +111,7 @@ const MainEditor: FC = () => {
           }}
           onChange={(value) => setEditor(value === "<p><br></p>" ? "" : value)}
           modules={modules}
+          value={editor}
           className={styles.editor}
         />
       </EditorContainer>
@@ -118,7 +120,7 @@ const MainEditor: FC = () => {
         <ModalSubmitButton
           cb={submitHandler}
           loading={loading}
-          text={"작성하기"}
+          text={"변경하기"}
           submitOk={submitOk}
         />
       </SubmitContainer>
