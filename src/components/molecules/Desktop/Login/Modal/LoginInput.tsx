@@ -11,7 +11,8 @@ import ExclamationIcon from "@/components/atoms/icons/ExclamationIcon";
 import { emailVerify } from "@/utils/refexp";
 import { useMutation } from "@apollo/client";
 import { SIGNIN_LOCAL_USER } from "apollo/querys/signin";
-import { signInSetToken } from "@/utils/func/signIn";
+
+import { tokenSet } from "@/utils/varible";
 
 const LoginInput: FC = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const LoginInput: FC = () => {
             `서비스 오류입니다. 다시 시도해주시거나 문의해주시기 바랍니다.`
           );
         }
-        signInSetToken(
+        tokenSet(
           data["signinLocalUser"]["access_token"],
           data["signinLocalUser"]["refresh_token"]
         );
@@ -82,12 +83,14 @@ const LoginInput: FC = () => {
             onChangeValue={onChangePassword}
             cb={signinHandler}
           />
-          <LoginSubmitButton
-            cb={signinHandler}
-            text={"로그인"}
-            submitOk={submitOk}
-            loading={loading}
-          />
+          <ButtonContainer>
+            <LoginSubmitButton
+              cb={signinHandler}
+              text={"로그인"}
+              submitOk={submitOk}
+              loading={loading}
+            />
+          </ButtonContainer>
         </InputContainer>
       </FormContainer>
     </>
@@ -124,4 +127,8 @@ const ErrorMessage = styled.div`
 const ErrorIcon = styled.div`
   align-items: center;
   padding-right: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  padding-top: 20px;
 `;

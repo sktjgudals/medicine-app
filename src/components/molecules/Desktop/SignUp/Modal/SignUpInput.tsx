@@ -17,7 +17,8 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { CREATE_LOCAL_USER } from "apollo/querys/signup";
 import { useRouter } from "next/router";
 import { emailLoadingCheck, emailSubmitCheck } from "apollo/cache";
-import { signInSetToken } from "@/utils/func/signIn";
+
+import { tokenSet } from "@/utils/varible";
 
 const CHECK_INITIAL_STATE = {
   email: false,
@@ -73,7 +74,7 @@ const SignUpInput: FC = () => {
         variables: { email, nickname: nickName, password },
       });
       if (data["createLocalUser"]) {
-        signInSetToken(
+        tokenSet(
           data["createLocalUser"]["access_token"],
           data["createLocalUser"]["refresh_token"]
         );
@@ -100,6 +101,7 @@ const SignUpInput: FC = () => {
           text={"닉네임"}
           id={"nickName_id"}
           nicknameCheck={check["nickName"]}
+          setMessage={setMessage}
         />
         <ErrorContainer>{message["nickName"]}</ErrorContainer>
         <ModalPassword
@@ -109,12 +111,14 @@ const SignUpInput: FC = () => {
           pwdCheck={check["password"]}
         />
         <ErrorContainer>{message["password"]}</ErrorContainer>
-        <ModalSubmitButton
-          cb={signUpHandler}
-          submitOk={submitOk}
-          text={"회원가입"}
-          loading={loading}
-        />
+        <ButtonContainer>
+          <ModalSubmitButton
+            cb={signUpHandler}
+            submitOk={submitOk}
+            text={"회원가입"}
+            loading={loading}
+          />
+        </ButtonContainer>
         <ErrorContainer>{error && "회원 생성에 실패했습니다."}</ErrorContainer>
       </InputContainer>
     </FormContainer>
@@ -136,4 +140,8 @@ const ErrorContainer = styled.div`
   padding-top: 0.5rem !important;
   font-size: var(--font-size-9) !important;
   color: var(--color-text-error) !important;
+`;
+
+const ButtonContainer = styled.div`
+  padding-top: 20px;
 `;

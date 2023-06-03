@@ -51,19 +51,20 @@ class MyDocument extends Document {
     const { redirectIEToEdge } = this;
     return (
       <Html lang="ko">
+        <title>약정</title>
         <Head>
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <meta name="theme-color" content="#ffffff" />
           {redirectIEToEdge()}
           <meta property="og:type" content="website" />
-          {/* <meta property="og:url" content="https://staku.net/" /> */}
-          {/* <meta property="og:site_name" content="Staku" /> */}
           <meta property="og:locale" content="ko-KR" />
-          {/* <meta name="twitter:card" content="summary_large_image" /> */}
-          {/* <meta name="twitter:site" content="@staku" /> */}
-          {/* <meta name="twitter:site:id" content="@staku" /> */}
-          {/* <meta name="twitter:creator" content="@staku" /> */}
-          {/* <meta name="twitter:creator:id" content="@staku" /> */}
+          {/* <meta property="og:url" content="https://staku.net/" /> */}
+          <meta property="og:site_name" content="Yakjung" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@yakjung" />
+          <meta name="twitter:site:id" content="@yakjung" />
+          <meta name="twitter:creator" content="@yakjung" />
+          <meta name="twitter:creator:id" content="@yakjung" />
         </Head>
         <body>
           <Main />

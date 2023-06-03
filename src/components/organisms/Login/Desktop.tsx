@@ -3,8 +3,17 @@ import styled from "styled-components";
 
 import { ModalWrapper } from "../../atoms/Modal";
 import LoginModal from "../../molecules/Desktop/Login/Modal/LoginModal";
+import { useSession } from "@/hooks/useSession";
+import { useRouter } from "next/router";
 
 const DesktopLogin: FC = () => {
+  const router = useRouter();
+  const { loading, session } = useSession();
+  if (loading) return <></>;
+  if (session) {
+    router.back();
+    return <></>;
+  }
   return (
     <StyledLoginModalWrapper>
       <LoginModal />

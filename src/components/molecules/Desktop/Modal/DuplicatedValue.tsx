@@ -10,7 +10,7 @@ interface Props {
 
 const DuplicatedValue: FC<Props> = ({ loading, check }) => {
   return (
-    <EmailLoadingContainer>
+    <LoadingContainer>
       {loading ? (
         <Loading
           width={20}
@@ -24,13 +24,13 @@ const DuplicatedValue: FC<Props> = ({ loading, check }) => {
       ) : (
         <SubmitCheck check={check} />
       )}
-    </EmailLoadingContainer>
+    </LoadingContainer>
   );
 };
 
 export default DuplicatedValue;
 
-const EmailLoadingContainer = styled.div`
+const LoadingContainer = styled.div`
   position: absolute;
   right: 0;
   padding-right: 40px;

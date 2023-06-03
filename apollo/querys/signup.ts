@@ -27,14 +27,12 @@ const findUserEmail = (email: string) => {
 }`;
   return initializeApollo().query({
     query: data,
-    // fetchPolicy: "network-only",
   });
 };
 
-const findUserName = (nickname: string) => {
+const findUserNickname = (nickname: string) => {
   const reg = /[`~!#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gim;
   const newNickname = nickname.replace(reg, "");
-
   const data = gql`
     query data{
         findUserNickname(nickname:"${newNickname}"){
@@ -44,8 +42,7 @@ const findUserName = (nickname: string) => {
   const apolloClient = initializeApollo();
   return apolloClient.query({
     query: data,
-    // fetchPolicy: "network-only"
   });
 };
 
-export { CREATE_LOCAL_USER, findUserEmail, findUserName };
+export { CREATE_LOCAL_USER, findUserEmail, findUserNickname };

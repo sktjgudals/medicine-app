@@ -5,7 +5,6 @@ import { useSession } from "@/hooks/useSession";
 const Main: FC = () => {
   const { session, loading } = useSession();
   if (loading) return <></>;
-
   return (
     <div>
       {session ? (

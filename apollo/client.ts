@@ -27,7 +27,47 @@ const createApolloClient = () => {
     connectToDevTools: true,
     ssrMode: typeof window === "undefined",
     link: createIsomorphLink(),
-    cache: new InMemoryCache({}),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            getProfileData: {
+              keyArgs: ["nickname"],
+              merge(existing = { posts: [] }, incoming) {
+                if (!incoming) return null;
+                return {
+                  __typename: "ProfileDataResponse",
+                  user: existing.user ? existing.user : incoming.user,
+                  posts: [...existing.posts, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+            getComments: {
+              keyArgs: ["postId", "sort"],
+              merge(existing = { comments: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.comments.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "GetComment",
+                  comments: [...arr, ...incoming.comments],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 };
 

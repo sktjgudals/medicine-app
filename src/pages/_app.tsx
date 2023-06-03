@@ -4,11 +4,13 @@ import { useApollo } from "apollo/client";
 import { Inter } from "@next/font/google";
 
 import { ThemeProvider } from "@/context/ThemeProvider";
-import Header from "@/components/organisms/Header";
+import Header from "@/components/organisms/Header/Desktop";
 
-import { GlobalStyle } from "#/styles/global";
-import "#/styles/common.scss";
 import { SessionProvider } from "@/hooks/useSession";
+import { GlobalStyle } from "#/styles/global";
+import "react-toastify/dist/ReactToastify.css";
+import "#/styles/common.scss";
+import { ToastProvider } from "@/context/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +22,12 @@ const App = ({ Component, pageProps }: AppProps) => {
       <SessionProvider>
         <ThemeProvider>
           <GlobalStyle />
-          <main className={inter.className}>
-            <Header />
-            <Component {...pageProps} />
-          </main>
+          <ToastProvider>
+            <main className={inter.className}>
+              <Header />
+              <Component {...pageProps} />
+            </main>
+          </ToastProvider>
         </ThemeProvider>
       </SessionProvider>
     </ApolloProvider>

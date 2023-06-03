@@ -9,6 +9,7 @@ import { emailVerify } from "@/utils/refexp";
 import DuplicatedValue from "./DuplicatedValue";
 import { useReactiveVar } from "@apollo/client";
 import { ERROR_PROPS } from "@/types/signup";
+import { debounceFunc } from "@/utils/func/common";
 
 interface Props {
   value: string;
@@ -29,65 +30,51 @@ const ModalEmail: FC<Props> = ({
 }) => {
   const loading = useReactiveVar(emailLoadingCheck);
   const checkEmail = useReactiveVar(emailSubmitCheck);
-  // 이거 훅으로 만들수있을거같음
-  const debounceFunction = (callback: any, delay: any) => {
-    let timer: NodeJS.Timeout;
-    return (...args: any) => {
-      if (args[0].length > 0) {
-        emailLoadingCheck(true);
-        // 실행한 함수(setTimeout())를 취소
-        clearTimeout(timer);
-        // delay가 지나면 callback 함수를 실행
-        timer = setTimeout(() => callback(...args), delay);
-      } else {
-        emailLoadingCheck(false);
-      }
-    };
-  };
 
   const checkDuplicateValue = useCallback(
-    debounceFunction((value: any) => apiCall(value), 500),
+    debounceFunc((value: any) => apiCall(value), 200),
     []
   );
 
   const apiCall = async (value: string) => {
-    const res = await emailVerify(value);
-    if (res) {
-      const { data } = await findUserEmail(value);
-      if (data.findUserEmail === null) {
-        emailSubmitCheck(true);
-        emailLoadingCheck(false);
-        if (setMessage) {
-          setMessage((prev) => {
-            return {
-              ...prev,
-              email: "",
-            };
-          });
+    if (checkDuplicate) {
+      const res = await emailVerify(value);
+      if (res) {
+        const { data } = await findUserEmail(value);
+        if (data.findUserEmail === null) {
+          emailSubmitCheck(true);
+          emailLoadingCheck(false);
+          if (setMessage) {
+            setMessage((prev) => {
+              return {
+                ...prev,
+                email: "",
+              };
+            });
+          }
+        } else {
+          if (setMessage) {
+            setMessage((prev) => {
+              return {
+                ...prev,
+                email: "중복된 이메일이 있습니다.",
+              };
+            });
+          }
+          emailSubmitCheck(false);
+          emailLoadingCheck(false);
         }
       } else {
-        if (setMessage) {
-          setMessage((prev) => {
-            return {
-              ...prev,
-              email: "중복된 이메일이 있습니다.",
-            };
-          });
-        }
         emailSubmitCheck(false);
         emailLoadingCheck(false);
       }
-    } else {
-      emailSubmitCheck(false);
-      emailLoadingCheck(false);
     }
   };
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeValue(e);
-    if (checkDuplicate) {
-      checkDuplicateValue(e.target.value);
-    }
+    emailLoadingCheck(true);
+    checkDuplicateValue(e.target.value);
   };
 
   return (
@@ -156,7 +143,6 @@ const EmailInput = styled(Input)`
   border-color: var(--color-border-input);
   color: var(--color-text-input);
   background-color: var(--color-background-input);
-  //   border-color: red;
   &:hover {
     border-color: var(--color-border-input-focus);
     background-color: var(--color-background-input-focus);

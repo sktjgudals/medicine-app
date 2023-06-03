@@ -12,7 +12,7 @@ const findUserEmailFunc = async (email: string) => {
     }
     return res;
   } catch (e) {
-    return null;
+    throw new Error("이메일 조회에 실패했습니다.");
   }
 };
 
@@ -26,7 +26,7 @@ const findUserNicknameFunc = async (nickname: string) => {
     }
     return res;
   } catch (e) {
-    return null;
+    throw new Error("닉네임 조회에 실패했습니다.");
   }
 };
 
@@ -51,6 +51,7 @@ const createLocalUserFunc = async (
       const hashedPassword = await bcryptHash(password, salt);
       const createdUser = await prisma.user.create({
         data: {
+          type: "local",
           email: email.toLowerCase(),
           nickname,
           password: hashedPassword,
@@ -58,14 +59,18 @@ const createLocalUserFunc = async (
       });
       if (createdUser) {
         const access_token = (await generateAccessToken(
-          createdUser.id,
+          createdUser["id"],
+          nickname,
           email,
-          nickname
+          createdUser.image
         )) as string;
-        const refresh_token = await generateRefreshToken(access_token, "local");
+        const refresh_token = await generateRefreshToken(
+          createdUser["id"],
+          "local"
+        );
         res["access_token"] = access_token;
         res["refresh_token"] = refresh_token;
-        res["id"] = createdUser.id;
+        res["id"] = createdUser["id"];
         return res;
       } else {
         throw new Error("아이디 생성에 실패했습니다.");

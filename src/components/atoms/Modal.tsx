@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface StyledModalProps {
-  width: number;
+  width?: number;
   height?: number;
 }
 

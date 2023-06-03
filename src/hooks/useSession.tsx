@@ -1,17 +1,20 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { localTokenVerify } from "@/utils/token";
-
-type StateSession = {
-  id: string;
-  email: string;
-  nickname: string;
-  iat: number;
-  exp: number;
-};
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+} from "react";
+import { localTokenVerify, serverTokenVerify } from "@/utils/token";
+import { SESSIONTYPE } from "@/types/session";
+import { tokenCall, tokenDelete } from "@/utils/varible";
 
 export type Session = {
-  session: StateSession | null;
+  session: SESSIONTYPE | null;
   loading: boolean;
+  setReset: Dispatch<SetStateAction<boolean>>;
 };
 
 const INITIAL = {
@@ -21,28 +24,41 @@ const INITIAL = {
 
 export const SessionContext = createContext(INITIAL as Session);
 
-export function useSession() {
+export const useSession = () => {
   return useContext(SessionContext);
-}
+};
 
 export const SessionProvider = ({ children }: { children: JSX.Element }) => {
-  const [session, setSession] = useState<StateSession | null>(null);
+  const [session, setSession] = useState<SESSIONTYPE | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const access_token = localStorage.getItem("access_token");
-    const refresh_token = localStorage.getItem("refresh_token");
-    if (access_token !== "undefined" && access_token) {
-      const user = localTokenVerify(access_token) as StateSession;
-      setSession(user);
-      setLoading(false);
+  const [reset, setReset] = useState<boolean>(false);
+  const tokenCallback = useCallback(() => {
+    const { access, refresh } = tokenCall();
+    if (access && refresh) {
+      serverTokenVerify(access, refresh).then((result) => {
+        if (result) {
+          setSession(result);
+          setLoading(false);
+          setReset(false);
+        } else {
+          setSession(null);
+          setLoading(false);
+          setReset(false);
+        }
+      });
     } else {
+      setReset(false);
       setSession(null);
       setLoading(false);
     }
-  }, []);
+  }, [reset]);
+
+  useEffect(() => {
+    tokenCallback();
+  }, [tokenCallback]);
 
   return (
-    <SessionContext.Provider value={{ session, loading }}>
+    <SessionContext.Provider value={{ session, loading, setReset }}>
       {children}
     </SessionContext.Provider>
   );

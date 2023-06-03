@@ -7,7 +7,8 @@ const emailVerify = (email: string) => {
 
 const passwordVerify = (password: string) => {
   // 최소 8 자, 숫자와 문자 포함
-  const regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const regExp =
+    /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{8,}$/;
   return regExp.test(password);
 };
 

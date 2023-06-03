@@ -1,9 +1,9 @@
 import { FC } from "react";
-import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import LogoutIcon from "@/components/atoms/icons/LogoutIcon";
 import { localTokenVerify } from "@/utils/token";
-import { useRouter } from "next/router";
+import { NavButton, NavContainer, NavText } from "@/components/atoms/Nav";
 
 const Logout: FC = () => {
   const router = useRouter();
@@ -23,37 +23,13 @@ const Logout: FC = () => {
   };
 
   return (
-    <LogoutContainer>
-      <LogoutButton onClick={logoutHandler}>
+    <NavContainer style={{ paddingTop: "15px" }}>
+      <NavButton onClick={logoutHandler}>
         <LogoutIcon width={19} height={19} />
-        <LogoutText>로그아웃</LogoutText>
-      </LogoutButton>
-    </LogoutContainer>
+        <NavText>로그아웃</NavText>
+      </NavButton>
+    </NavContainer>
   );
 };
 
 export default Logout;
-
-const LogoutContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  padding: 5px 0px 5px 0px;
-`;
-
-const LogoutButton = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding-right: 25px;
-  gap: 5px;
-`;
-
-const LogoutText = styled.p`
-  font-size: var(--font-size-8);
-  font-weight: var(--font-weight-semibold);
-`;

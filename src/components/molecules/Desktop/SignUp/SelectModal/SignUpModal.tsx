@@ -31,8 +31,9 @@ const SignUpModal: FC = () => {
 
   const handleOutsideClick = (e: Event) => {
     const current = ref.current;
-    if (isOpenModal && current && !current.contains(e.target as Node))
+    if (isOpenModal && current && !current.contains(e.target as Node)) {
       signUpModalState(false);
+    }
   };
 
   const OauthClickHandler = async (e: MouseEvent, type: OAUTH_TYPE) => {
@@ -62,6 +63,14 @@ const SignUpModal: FC = () => {
     }
   };
 
+  const closeHandler = (e: any) => {
+    if (router.asPath === "/signup") {
+      router.back();
+    } else {
+      signUpModalState(false);
+    }
+  };
+
   return (
     <StyledModal width={500} ref={ref}>
       <ModalContainer>
@@ -81,7 +90,7 @@ const SignUpModal: FC = () => {
             naverLoading={naver.loading}
             naverError={naver.error}
           />
-          <ModalCloseButton cb={signUpModalState} />
+          <ModalCloseButton cb={closeHandler} />
         </SecondStage>
       </ModalContainer>
     </StyledModal>

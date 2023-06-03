@@ -1,10 +1,10 @@
 import { FC, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { signInSetToken } from "@/utils/func/signIn";
 import { oauthKakaoUserCode } from "@/utils/func/oauth";
 
 import Title from "@/components/atoms/Title";
+import { tokenSet } from "@/utils/varible";
 
 interface Props {
   access_token: string | null;
@@ -15,7 +15,7 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
   const router = useRouter();
   useEffect(() => {
     if (access_token && refresh_token) {
-      signInSetToken(access_token, refresh_token);
+      tokenSet(access_token, refresh_token);
       const redirect_uri = localStorage.getItem("redirect_uri");
       if (redirect_uri) {
         router.push(redirect_uri as string);
@@ -23,7 +23,6 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
       }
     }
   }, [access_token, refresh_token]);
-
   return (
     <>
       <Title title={"카카오 로그인 - 약정"} content={"약을 찾아주는 요정"} />
