@@ -127,31 +127,10 @@ const localTokenVerify = (token: string) => {
   return jwt_decode(token) as SESSIONTYPE;
 };
 
-const getValidTokenFromOauth = async (url: string) => {
-  // get new token from server with refresh token
-  try {
-    const request = await fetch(`${url}`, {
-      method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-    });
-    const resultToken = await request.json();
-    console.info(resultToken);
-    // if (resultToken) {
-    //   localStorage.setItem("access_token", resultToken.access_token);
-    //   window.location.href = "/";
-    // }
-  } catch (error) {
-    throw new Error("Issue getting new token");
-  }
-};
-
 export {
   tokenVerify,
   localTokenVerify,
   generateAccessToken,
-  getValidTokenFromOauth,
   generateAccessOauthToken,
   generateRefreshToken,
   serverTokenVerify,

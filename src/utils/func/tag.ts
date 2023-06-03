@@ -1,4 +1,3 @@
-import { arrCompare } from "./common";
 import prisma from "prisma/prisma";
 
 const tagPush = async (tagId: string, postId: string) => {
