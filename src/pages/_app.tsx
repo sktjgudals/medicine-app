@@ -4,7 +4,7 @@ import { useApollo } from "apollo/client";
 import { Inter } from "@next/font/google";
 
 import { ThemeProvider } from "@/context/ThemeProvider";
-import Header from "@/components/organisms/Header";
+import Header from "@/components/organisms/Header/Desktop";
 
 import { SessionProvider } from "@/hooks/useSession";
 import { GlobalStyle } from "#/styles/global";

@@ -3,7 +3,7 @@ import useSignUpModal from "@/hooks/useSignUpModal";
 
 import SignUpIcon from "@/components/atoms/icons/SignUpIcon";
 import Portal from "@/components/atoms/Portal";
-import SignUp from "@/components/organisms/SignUp";
+import SignUp from "@/components/organisms/SignUp/Desktop";
 import { NavButton, NavContainer, NavText } from "@/components/atoms/Nav";
 
 interface Props {

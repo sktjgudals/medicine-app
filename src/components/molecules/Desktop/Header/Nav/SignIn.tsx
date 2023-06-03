@@ -4,7 +4,7 @@ import SignInIcon from "@/components/atoms/icons/SignInIcon";
 
 import useModal from "@/hooks/useModal";
 import Portal from "@/components/atoms/Portal";
-import Login from "@/components/organisms/Login";
+import Login from "@/components/organisms/Login/Desktop";
 import { NavButton, NavContainer, NavText } from "@/components/atoms/Nav";
 
 interface Props {
