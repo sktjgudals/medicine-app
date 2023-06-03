@@ -13,7 +13,7 @@ interface Props {
 const Title: FC<Props> = ({ edit, postTitle }) => {
   const error = useReactiveVar(editorErrorMessage);
   const varTitle = useReactiveVar(editorTitleState);
-  const [title, setTitle] = useState(edit && postTitle ? postTitle : varTitle);
+  const [title, setTitle] = useState(edit && postTitle ? postTitle : "");
 
   useEffect(() => {
     if (title.length === 0) {
