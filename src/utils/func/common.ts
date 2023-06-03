@@ -1,5 +1,3 @@
-import { DATE_TYPE } from "@/types/common";
-
 const arrCompare = (targetArr: any, compareArr: any, target: string) => {
   return targetArr.reduce(
     (acc: any, curr: any) => {
@@ -61,4 +59,16 @@ const customView = (view: number) => {
   }
 };
 
-export { arrCompare, debounceFunc, dateFunc, customTime, customView };
+const countRaw = (countNum: number, value: string, searchChar: string) => {
+  let count = countNum;
+  return (num: number) => {
+    let pos = value.indexOf(searchChar); //pos는 0의 값을 가집니다.
+    while (pos !== -1) {
+      count++;
+      pos = value.indexOf(searchChar, pos + 1); // 첫 번째 a 이후의 인덱스부터 a를 찾습니다.
+    }
+    return count;
+  };
+};
+
+export { arrCompare, debounceFunc, dateFunc, customTime, customView, countRaw };

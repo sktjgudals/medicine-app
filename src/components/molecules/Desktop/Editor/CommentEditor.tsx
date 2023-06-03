@@ -61,18 +61,19 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
     setSubmitValue(newValue);
     setValue(e.target.value);
   };
-
+  let count = 0;
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       return setRow(row + 1);
     } else if (e.key === "Backspace") {
-      const last = value.charAt(value.length - 1).trim().length === 0;
-      if (last) {
-        if (row !== 1) {
-          return setRow(row - 1);
-        } else {
-          return setRow(1);
-        }
+      let searchChar = "<br/>"; // 찾으려는 문자
+      let pos = submitValue.indexOf(searchChar); //pos는 0의 값을 가집니다.
+      while (pos !== -1) {
+        count++;
+        pos = submitValue.indexOf(searchChar, pos + 1); // 첫 번째 a 이후의 인덱스부터 a를 찾습니다.
+      }
+      if (row !== 1) {
+        return setRow(count);
       }
     }
   };
