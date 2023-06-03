@@ -1,11 +1,15 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 import PostCommentList from "./PostCommentList";
 import { useSession } from "@/hooks/useSession";
-import { useRouter } from "next/router";
 
-import CommentEditor from "../../Editor/CommentEditor";
+const CommentEditor = dynamic(() => import("../../Editor/CommentEditor"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface Props {
   postId: string;
@@ -20,7 +24,8 @@ const PostComment: FC<Props> = ({ postId }) => {
   return (
     <MainContainer>
       {session ? (
-        <CommentEditor postId={postId} session={session} />
+        // <CommentEditor postId={postId} session={session} />
+        <></>
       ) : (
         <CommentTextContainer onClick={loginHandler}>
           <CommentNotSession>
@@ -31,7 +36,7 @@ const PostComment: FC<Props> = ({ postId }) => {
           </CommentNotSession>
         </CommentTextContainer>
       )}
-      <PostCommentList postId={postId} userId={session?.id} />
+      {/* <PostCommentList postId={postId} userId={session?.id} /> */}
     </MainContainer>
   );
 };

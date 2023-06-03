@@ -9,7 +9,13 @@ import CommentToolBar from "./Toolbar/CommentToolBar";
 import { useSession } from "@/hooks/useSession";
 import { useReactiveVar } from "@apollo/client";
 import { commentEditMode } from "apollo/cache";
-import CommentReEditor from "../../Editor/CommentReEditor";
+
+import dynamic from "next/dynamic";
+
+const CommentReEditor = dynamic(() => import("../../Editor/CommentReEditor"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const CommentContent: FC<Comment_Type> = ({
   id,
