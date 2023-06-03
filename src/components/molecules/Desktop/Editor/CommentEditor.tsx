@@ -20,6 +20,8 @@ interface Props {
   postId: string;
 }
 
+let count = 0;
+
 const CommentEditor: FC<Props> = ({ session, postId }) => {
   const [mutateFunc, { loading, error }] = useMutation(CommentMutation, {
     update: (cache, { data }) => {
@@ -61,7 +63,7 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
     setSubmitValue(newValue);
     setValue(e.target.value);
   };
-  let count = 0;
+
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       return setRow(row + 1);

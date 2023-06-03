@@ -27,6 +27,8 @@ interface Props {
   session: SESSIONTYPE;
 }
 
+let count = 0;
+
 const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
   const [mutateFunc, { loading, error }] = useMutation(CommentReMutation);
   const [value, setValue] = useState(
@@ -41,7 +43,6 @@ const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
     setValue(e.target.value);
   };
 
-  let count = 0;
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       return setRow(row + 1);
