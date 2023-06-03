@@ -1,6 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
-import DOMPurify from "dompurify";
+
+import SimpleReadOnlyComment from "./SimpleReadOnlyComment";
+import ReadOnlyComment from "./ReadOnlyComment";
 
 interface Props {
   body: string;
@@ -8,12 +10,13 @@ interface Props {
 }
 
 const CommentBody: FC<Props> = ({ body, length }) => {
-  console.info(length);
   return (
     <MainContainer>
-      <BodyContent
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
-      />
+      {length > 3 ? (
+        <SimpleReadOnlyComment body={body} />
+      ) : (
+        <ReadOnlyComment body={body} />
+      )}
     </MainContainer>
   );
 };
@@ -22,10 +25,6 @@ export default CommentBody;
 
 const MainContainer = styled.div`
   display: flex;
-  margin: 10px 0px 0px 15px;
-  overflow: hidden;
-`;
-
-const BodyContent = styled.span`
-  // font-size: var;
+  flex-direction: column;
+  margin: 5px 0px 0px 15px;
 `;

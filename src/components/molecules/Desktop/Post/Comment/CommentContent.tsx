@@ -34,7 +34,7 @@ export default CommentContent;
 const MainContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 80px;
+  min-height: 100px;
   margin: 10px auto;
   background: var(--color-background-radius-button);
   border-radius: 5px;
@@ -42,6 +42,7 @@ const MainContainer = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 `;
 

@@ -49,29 +49,21 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
   const [value, setValue] = useState("");
   const [row, setRow] = useState(1);
   const [submitValue, setSubmitValue] = useState("");
-  let prev = null as any;
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value.replaceAll("\n", "<br/>");
     setSubmitValue(newValue);
     setValue(e.target.value);
   };
-
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Shift") {
-      prev = e.key;
-    }
     if (e.key === "Enter") {
-      if (prev === "Shift") {
-        return setRow(row + 1);
-      }
-      prev = null;
       return setRow(row + 1);
-    }
-    if (e.key === "Backspace") {
+    } else if (e.key === "Backspace") {
       const last = value.charAt(value.length - 1).trim().length === 0;
       if (last) {
         if (row !== 1) {
           return setRow(row - 1);
+        } else {
+          return setRow(1);
         }
       }
     }
@@ -88,13 +80,21 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
           nickname: session.nickname,
           image: session.image,
         };
-        console.info(value.length);
+        const submitApollo = {
+          postId: postId,
+          value: submitValue,
+          user: user,
+          length: row,
+        };
+
+        if (row < 3) {
+          if (value.length >= 140) {
+            submitApollo["length"] = 4;
+          }
+        }
         const { data } = await mutateFunc({
           variables: {
-            postId: postId,
-            value: submitValue,
-            user: user,
-            length: value.length,
+            ...submitApollo,
           },
         });
         if (data.uploadComment) {
