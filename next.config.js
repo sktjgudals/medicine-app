@@ -15,6 +15,9 @@ const nextConfig = {
       "www.youtube.com",
     ],
   },
+  experimental: {
+    outputFileTracingIgnores: ["**canvas**"],
+  },
 };
 
 module.exports = nextConfig;
