@@ -10,7 +10,7 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "yakjung.s3.ap-northeast-2.amazonaws.com",
+      "yakjungs.s3.ap-northeast-2.amazonaws.com",
       "yakjung.site",
       "www.youtube.com",
     ],
