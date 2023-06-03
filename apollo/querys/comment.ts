@@ -29,4 +29,41 @@ const CommentMutation = gql`
   }
 `;
 
-export { CommentMutation };
+const CommentsQuery = gql`
+  query data(
+    $postId: String!
+    $userId: String
+    $cursor: String
+    $limit: Int!
+    $sort: String!
+  ) {
+    getComments(
+      postId: $postId
+      userId: $userId
+      cursor: $cursor
+      limit: $limit
+      sort: $sort
+    ) {
+      comments {
+        id
+        body
+        length
+        postId
+        isLike
+        likeCount
+        createdAt
+        user {
+          id
+          nickname
+          image
+        }
+      }
+      pageInfo {
+        cursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
+export { CommentMutation, CommentsQuery };

@@ -7,7 +7,7 @@ import { SESSIONTYPE } from "@/types/session";
 
 import Title from "../atoms/Title";
 import ApolloError from "../atoms/ApolloError";
-import PostComment from "../molecules/Desktop/Post/PostComment";
+import PostComment from "../molecules/Desktop/Post/Comment/PostComment";
 import NotFound from "./404";
 import PostContents from "../organisms/Post/PostContents";
 

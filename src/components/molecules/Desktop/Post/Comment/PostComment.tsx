@@ -1,11 +1,11 @@
-import { FC, lazy, memo } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 
 import PostCommentList from "./PostCommentList";
 import { useSession } from "@/hooks/useSession";
 import { useRouter } from "next/router";
 
-const LazyEditor = memo(lazy(() => import("../Editor/CommentEditor")));
+import CommentEditor from "../../Editor/CommentEditor";
 
 interface Props {
   postId: string;
@@ -20,7 +20,7 @@ const PostComment: FC<Props> = ({ postId }) => {
   return (
     <MainContainer>
       {session ? (
-        <LazyEditor postId={postId} session={session} />
+        <CommentEditor postId={postId} session={session} />
       ) : (
         <CommentTextContainer onClick={loginHandler}>
           <CommentNotSession>
@@ -31,7 +31,7 @@ const PostComment: FC<Props> = ({ postId }) => {
           </CommentNotSession>
         </CommentTextContainer>
       )}
-      <PostCommentList />
+      <PostCommentList postId={postId} userId={session?.id} />
     </MainContainer>
   );
 };
@@ -40,6 +40,7 @@ export default PostComment;
 
 const MainContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;

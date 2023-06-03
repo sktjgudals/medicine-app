@@ -28,7 +28,7 @@ import {
   getUserDataFunc,
 } from "./resolverFunc/setting";
 import { getProfileDataFunc } from "./resolverFunc/profile";
-import { uploadCommentFunc } from "./resolverFunc/comment";
+import { getCommentsFunc, uploadCommentFunc } from "./resolverFunc/comment";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -75,6 +75,22 @@ export const resolvers = {
         postUserId: string | null;
       }
     ) => getProfileDataFunc(nickname, cursor, limit, postUserId),
+    getComments: (
+      _: any,
+      {
+        postId,
+        userId,
+        cursor,
+        limit,
+        sort,
+      }: {
+        postId: string;
+        userId: string;
+        cursor: string;
+        limit: number;
+        sort: string;
+      }
+    ) => getCommentsFunc(postId, userId, cursor, limit, sort),
   },
   Mutation: {
     createLocalUser: (

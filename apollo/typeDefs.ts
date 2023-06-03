@@ -84,7 +84,6 @@ export const typeDefs = gql`
   }
 
   type CommentLike {
-    _id: String
     id: String
     user: User
     userId: String
@@ -133,6 +132,10 @@ export const typeDefs = gql`
     posts: [Post]
     pageInfo: PageInfo
   }
+  type CommentsResponse {
+    comments: [Comment]
+    pageInfo: PageInfo
+  }
 
   type Query {
     findUserEmail(email: String): User
@@ -145,6 +148,13 @@ export const typeDefs = gql`
       limit: Int!
       postUserId: String
     ): ProfileDataResponse
+    getComments(
+      postId: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): CommentsResponse
   }
 
   type Mutation {

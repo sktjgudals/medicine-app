@@ -34,11 +34,3 @@ const MainContainer = styled.div`
   height: 100px;
   gap: 10px;
 `;
-
-const SessionToolBar = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: flex-end;
-  gap: 10px;
-`;
