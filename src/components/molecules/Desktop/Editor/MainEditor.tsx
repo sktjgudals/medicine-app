@@ -100,7 +100,6 @@ const MainEditor: FC = () => {
       toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
     }
   };
-
   return (
     <MainContainer>
       <EditorContainer>
