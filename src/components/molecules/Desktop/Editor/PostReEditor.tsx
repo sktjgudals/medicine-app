@@ -102,6 +102,10 @@ const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
     }
   };
 
+  const cancelHandler = (e: any) => {
+    router.push(`${router.asPath.split("/edit")[0]}`);
+  };
+
   return (
     <MainContainer>
       <EditorContainer>
@@ -117,12 +121,21 @@ const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
       </EditorContainer>
       <SubmitContainer>
         <ErrorContainer>{error.content}</ErrorContainer>
-        <ModalSubmitButton
-          cb={submitHandler}
-          loading={loading}
-          text={"변경하기"}
-          submitOk={submitOk}
-        />
+        <ButtonContainer>
+          <ModalSubmitButton
+            cb={cancelHandler}
+            loading={false}
+            text={"취소하기"}
+            submitOk={submitOk}
+            color="var(--color-background-radius-button)"
+          />
+          <ModalSubmitButton
+            cb={submitHandler}
+            loading={loading}
+            text={"변경하기"}
+            submitOk={submitOk}
+          />
+        </ButtonContainer>
       </SubmitContainer>
     </MainContainer>
   );
@@ -143,6 +156,7 @@ const EditorContainer = styled.div`
 `;
 
 const SubmitContainer = styled.div`
+  width: 100%;
   padding-right: 20px;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -157,4 +171,11 @@ const ErrorContainer = styled.div`
   height: 30px;
   color: red;
   font-size: var(--font-size-7);
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 10px;
 `;
