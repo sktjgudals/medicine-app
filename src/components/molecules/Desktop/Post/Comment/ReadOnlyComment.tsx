@@ -14,5 +14,6 @@ export default ReadOnlyComment;
 
 const CommentContent = styled.div`
   height: 100%;
+  padding: 5px;
   word-break: break-all;
 `;

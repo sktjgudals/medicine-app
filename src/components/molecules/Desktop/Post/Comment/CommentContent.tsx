@@ -5,15 +5,22 @@ import CommentHeader from "./CommentHeader";
 import CommentBody from "./CommentBody";
 import CircleImage from "@/components/atoms/CircleImage";
 import Link from "next/link";
+import CommentToolBar from "./Toolbar/CommentToolBar";
+import { useSession } from "@/hooks/useSession";
+import { useReactiveVar } from "@apollo/client";
+import { commentEditMode } from "apollo/cache";
+import CommentReEditor from "../../Editor/CommentReEditor";
 
 const CommentContent: FC<Comment_Type> = ({
   id,
   body,
-  postId,
   user,
   createdAt,
   length,
 }) => {
+  const { loading, session } = useSession();
+  const editModeId = useReactiveVar(commentEditMode);
+
   return (
     <MainContainer>
       <ImageContainer>
@@ -23,7 +30,27 @@ const CommentContent: FC<Comment_Type> = ({
       </ImageContainer>
       <InfoContainer>
         <CommentHeader createdAt={createdAt} nickname={user.nickname} />
-        <CommentBody body={body} length={length} />
+        {editModeId === id ? (
+          <>
+            {session && (
+              <CommentReEditor
+                commentId={id}
+                session={session}
+                body={body}
+                length={length}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <CommentBody body={body} length={length} />
+            <CommentToolBar
+              commentId={id}
+              commentUserId={user.id}
+              userId={session ? session.id : null}
+            />
+          </>
+        )}
       </InfoContainer>
     </MainContainer>
   );

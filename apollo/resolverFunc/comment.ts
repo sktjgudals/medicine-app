@@ -1,4 +1,5 @@
 import prisma from "prisma/prisma";
+
 const uploadCommentFunc = async (
   postId: string,
   value: string,
@@ -6,11 +7,27 @@ const uploadCommentFunc = async (
   length: number
 ) => {
   try {
-    let isLike = false;
     const comment = await prisma.comment.create({
       data: { postId: postId, body: value, userId: user.id, length: length },
     });
-    return { ...comment, isLike, user };
+    return { ...comment, user };
+  } catch (e) {
+    return null;
+  }
+};
+
+const updateCommentFunc = async (
+  commentId: string,
+  value: string,
+  user: any,
+  length: number
+) => {
+  try {
+    const comment = await prisma.comment.update({
+      where: { id: commentId },
+      data: { body: value, length: length },
+    });
+    return { ...comment, user };
   } catch (e) {
     return null;
   }
@@ -66,4 +83,20 @@ const getCommentsFunc = async (
   }
 };
 
-export { uploadCommentFunc, getCommentsFunc };
+const commentDeleteFunc = async (commentId: string, userId: string) => {
+  try {
+    return await prisma.comment.delete({
+      where: { id: commentId },
+      select: { id: true },
+    });
+  } catch (e) {
+    return null;
+  }
+};
+
+export {
+  uploadCommentFunc,
+  getCommentsFunc,
+  commentDeleteFunc,
+  updateCommentFunc,
+};

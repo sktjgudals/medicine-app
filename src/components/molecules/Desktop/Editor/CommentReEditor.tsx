@@ -1,67 +1,38 @@
-import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from "react";
-import styled from "styled-components";
 import { toast } from "react-toastify";
-
-import { Button } from "@/components/atoms/Button";
-
-import { SESSIONTYPE } from "@/types/session";
+import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CommentMutation } from "apollo/querys/comment";
-import Loading from "@/components/atoms/Loading";
+import { SESSIONTYPE } from "@/types/session";
+import { CommentReMutation } from "apollo/querys/comment";
 import {
   ButtonContainer,
   EditorContainer,
   InputArea,
   SubmitButton,
 } from "@/components/atoms/Comment";
+import Loading from "@/components/atoms/Loading";
+import styled from "styled-components";
+import { commentEditMode } from "apollo/cache";
 
 interface Props {
+  commentId: string;
+  body: string;
+  length: number;
   session: SESSIONTYPE;
-  postId: string;
 }
 
-const CommentEditor: FC<Props> = ({ session, postId }) => {
-  const [mutateFunc, { loading, error }] = useMutation(CommentMutation, {
-    update: (cache, { data }) => {
-      const cacheId = cache.identify(data.uploadComment);
-      cache.modify({
-        fields: {
-          getComments: (
-            existing,
-            { fieldName, storeFieldName, toReference }
-          ) => {
-            if (cacheId) {
-              const args = JSON.parse(
-                storeFieldName.replace(`${fieldName}:`, "")
-              );
-              if (postId === args.postId) {
-                return {
-                  __typename: "GetComment",
-                  comments: [toReference(cacheId), ...existing.comments],
-                  pageInfo: {
-                    __typename: "PageInfo",
-                    cursor: existing.pageInfo.cursor,
-                    hasNextPage: existing.pageInfo.hasNextPage,
-                  },
-                };
-              }
-            }
-            return existing;
-          },
-        },
-      });
-    },
-  });
-  const [value, setValue] = useState("");
-  const [row, setRow] = useState(1);
-  const [submitValue, setSubmitValue] = useState("");
+const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
+  const [mutateFunc, { loading, error }] = useMutation(CommentReMutation, {});
+  const [value, setValue] = useState(
+    body.replace(/(<br>|<br\/>|<br \/>)/g, "\r\n")
+  );
+  const [row, setRow] = useState(length);
+  const [submitValue, setSubmitValue] = useState(body);
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value.replaceAll("\n", "<br/>");
     setSubmitValue(newValue);
     setValue(e.target.value);
   };
-
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       return setRow(row + 1);
@@ -77,6 +48,10 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
     }
   };
 
+  const cancelHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    return commentEditMode("");
+  };
+
   const submitHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (session) {
@@ -90,7 +65,7 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
         };
 
         const submitApollo = {
-          postId: postId,
+          commentId: commentId,
           value: submitValue,
           user: user,
           length: row,
@@ -107,12 +82,10 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
             ...submitApollo,
           },
         });
-        if (data.uploadComment) {
-          setValue("");
-          setSubmitValue("");
-          setRow(1);
+        if (data.updateComment) {
+          return commentEditMode("");
         } else {
-          return toast.error("댓글 등록에 실패하였습니다.");
+          return toast.error("댓글 수정에 실패하였습니다.");
         }
       }
     } else {
@@ -126,12 +99,12 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
         <InputArea
           onChange={onChange}
           value={value}
-          placeholder="댓글 추가"
           rows={row}
           onKeyDown={onKeyDown}
         />
       </EditorContainer>
       <ButtonContainer>
+        <SubmitButton onClick={cancelHandler}>취소</SubmitButton>
         <SubmitButton onClick={submitHandler}>
           {loading ? (
             <Loading
@@ -152,13 +125,12 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
   );
 };
 
-export default CommentEditor;
+export default CommentReEditor;
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  max-width: 1024px;
   padding: 10px;
 `;

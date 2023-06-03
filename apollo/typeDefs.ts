@@ -187,6 +187,13 @@ export const typeDefs = gql`
       user: JSON!
       length: Int!
     ): Comment
+    updateComment(
+      commentId: String!
+      value: String!
+      user: JSON!
+      length: Int!
+    ): Comment
+    commentDelete(commentId: String!, userId: String!): Comment
   }
 `;
 

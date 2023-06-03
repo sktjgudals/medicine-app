@@ -30,13 +30,15 @@ const SimpleReadOnlyComment: FC<{ body: string }> = ({ body }) => {
 export default SimpleReadOnlyComment;
 
 const MoreButton = styled(Button)`
+  display: flex;
   width: 100px;
   height: 20px;
   font-size: 14px;
   line-height: 18px;
   margin-top: 6px;
+  font-weight: bold;
   background-color: transparent;
-  color: var(--color-green-12);
+  color: var(--color-green-10);
 `;
 
 const SimpleContainer = styled.div`

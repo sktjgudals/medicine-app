@@ -17,8 +17,6 @@ const CommentMutation = gql`
       postId
       body
       length
-      isLike
-      likeCount
       createdAt
       user {
         id
@@ -49,8 +47,6 @@ const CommentsQuery = gql`
         body
         length
         postId
-        isLike
-        likeCount
         createdAt
         user {
           id
@@ -66,4 +62,59 @@ const CommentsQuery = gql`
   }
 `;
 
-export { CommentMutation, CommentsQuery };
+const CommentReMutation = gql`
+  mutation data(
+    $commentId: String!
+    $value: String!
+    $user: JSON!
+    $length: Int!
+  ) {
+    updateComment(
+      commentId: $commentId
+      value: $value
+      user: $user
+      length: $length
+    ) {
+      id
+      body
+      length
+      createdAt
+    }
+  }
+`;
+
+const CommentDelMutation = gql`
+  mutation data($commentId: String!, $userId: String!) {
+    commentDelete(commentId: $commentId, userId: $userId) {
+      id
+    }
+  }
+`;
+
+const CommentLikeMutation = gql`
+  mutation data(
+    $commentId: String!
+    $userId: String!
+    $likeCount: Int!
+    $isLike: Boolean!
+  ) {
+    commentLike(
+      commentId: $commentId
+      userId: $userId
+      likeCount: $likeCount
+      isLike: $isLike
+    ) {
+      id
+      isLike
+      likeCount
+      createdAt
+    }
+  }
+`;
+export {
+  CommentMutation,
+  CommentsQuery,
+  CommentDelMutation,
+  CommentLikeMutation,
+  CommentReMutation,
+};

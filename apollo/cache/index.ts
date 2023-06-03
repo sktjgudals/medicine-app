@@ -39,6 +39,8 @@ const editorErrorMessage = makeVar<EditorError>({
   content: "본문이 비어있습니다.",
 });
 
+const commentEditMode = makeVar<string>("");
+
 export {
   modalState,
   dropdownState,
@@ -53,4 +55,5 @@ export {
   nickNameLoadingCheck,
   nickNameSubmitCheck,
   profileImageState,
+  commentEditMode,
 };
