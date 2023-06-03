@@ -1,9 +1,14 @@
 import { FC } from "react";
 import Title from "@/components/atoms/Title";
-import Post from "@/components/pages/Post";
 import { useSession } from "@/hooks/useSession";
 import { GetServerSideProps } from "next";
 import NotFoundPage from "@/pages/404";
+import dynamic from "next/dynamic";
+
+const Post = dynamic(() => import("@/components/pages/Post"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface Props {
   num: string;

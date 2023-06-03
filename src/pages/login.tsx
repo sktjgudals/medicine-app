@@ -1,7 +1,12 @@
 import { FC } from "react";
+import dynamic from "next/dynamic";
 
 import Title from "@/components/atoms/Title";
-import Login from "@/components/pages/LoginPage";
+
+const Login = dynamic(() => import("@/components/pages/LoginPage"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const login: FC = () => {
   return (

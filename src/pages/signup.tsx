@@ -1,6 +1,12 @@
-import Title from "@/components/atoms/Title";
-import Desktop from "@/components/organisms/SignUp/Desktop";
+import dynamic from "next/dynamic";
 import { FC } from "react";
+
+import Title from "@/components/atoms/Title";
+
+const Desktop = dynamic(() => import("@/components/organisms/SignUp/Desktop"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const signup: FC = () => {
   return (

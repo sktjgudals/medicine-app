@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
+
 import Title from "@/components/atoms/Title";
-import ProfilePage from "@/components/pages/ProfilePage";
 
 import { useQuery } from "@apollo/client";
 import { GetProfileData } from "apollo/querys/profile";
@@ -9,6 +10,11 @@ import ApolloError from "@/components/atoms/ApolloError";
 import NotFound from "@/components/pages/404";
 
 import SKProfile from "@/components/molecules/Desktop/Skeleton/SKProfile";
+
+const ProfilePage = dynamic(() => import("@/components/pages/ProfilePage"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface Props {
   nickname: string;

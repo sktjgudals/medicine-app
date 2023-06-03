@@ -1,9 +1,17 @@
 import { FC } from "react";
+import dynamic from "next/dynamic";
 import ProfileUserInfo from "../organisms/Profile/ProfileUserInfo";
-import ProfilePostInfo from "../organisms/Profile/ProfilePostInfo";
 import styled from "styled-components";
 import { useSession } from "@/hooks/useSession";
 import { PROFILE_DATA } from "@/types/profile";
+
+const ProfilePostInfo = dynamic(
+  () => import("../organisms/Profile/ProfilePostInfo"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 interface Props {
   profile: PROFILE_DATA;

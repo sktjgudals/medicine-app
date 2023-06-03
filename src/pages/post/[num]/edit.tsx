@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { GetServerSideProps } from "next";
 import prisma from "prisma/prisma";
+import { GetServerSideProps } from "next";
+
 import { useSession } from "@/hooks/useSession";
 
 interface Props {}

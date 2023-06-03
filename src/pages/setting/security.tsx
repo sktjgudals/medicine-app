@@ -1,9 +1,18 @@
+import { FC } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+
+import { useSession } from "@/hooks/useSession";
 import Title from "@/components/atoms/Title";
 import NotFound from "@/components/pages/404";
-import SecurityPage from "@/components/pages/Setting/SecurityPage";
-import { useSession } from "@/hooks/useSession";
-import { useRouter } from "next/router";
-import { FC } from "react";
+
+const SecurityPage = dynamic(
+  () => import("@/components/pages/Setting/SecurityPage"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 const security: FC = () => {
   const router = useRouter();
