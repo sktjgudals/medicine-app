@@ -36,7 +36,7 @@ const CommentContent: FC<Comment_Type> = ({
               <CommentReEditor
                 commentId={id}
                 session={session}
-                body={body}
+                body={body.replace(/(<br>|<br\/>|<br \/>)/g, "\r\n")}
                 length={length}
               />
             )}

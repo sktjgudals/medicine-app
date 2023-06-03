@@ -4,6 +4,7 @@ import {
   FC,
   KeyboardEvent,
   MouseEvent,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -30,17 +31,18 @@ interface Props {
 const CommentReEditor: FC<Props> = ({ commentId, session, body, length }) => {
   let count = 0;
   const [mutateFunc, { loading, error }] = useMutation(CommentReMutation);
-  const [value, setValue] = useState(
-    body.replace(/(<br>|<br\/>|<br \/>)/g, "\r\n")
-  );
+  const [value, setValue] = useState(body);
   const [row, setRow] = useState(length);
   const [submitValue, setSubmitValue] = useState(body);
 
-  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value.replaceAll("\n", "<br/>");
-    setSubmitValue(newValue);
-    setValue(e.target.value);
-  };
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      const newValue = e.target.value.replaceAll("\n", "<br/>");
+      setSubmitValue(newValue);
+      setValue(e.target.value);
+    },
+    [value]
+  );
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {

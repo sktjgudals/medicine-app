@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -57,11 +64,14 @@ const CommentEditor: FC<Props> = ({ session, postId }) => {
   const [row, setRow] = useState(1);
   const [submitValue, setSubmitValue] = useState("");
 
-  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value.replaceAll("\n", "<br/>");
-    setSubmitValue(newValue);
-    setValue(e.target.value);
-  };
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      const newValue = e.target.value.replaceAll("\n", "<br/>");
+      setSubmitValue(newValue);
+      setValue(e.target.value);
+    },
+    [value]
+  );
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
