@@ -28,6 +28,10 @@ const PostUpdateMutation = gql`
       createdAt
       isLike
       likeCount
+      tag {
+        id
+        name
+      }
     }
   }
 `;
@@ -68,6 +72,10 @@ const PostGetData = gql`
           id
           nickname
           image
+        }
+        tag {
+          id
+          name
         }
       }
       error

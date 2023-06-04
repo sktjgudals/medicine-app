@@ -38,6 +38,7 @@ const postUpdateFunc = async (postId: string, postData: any) => {
     return await prisma.post.update({
       where: { id: postId },
       data: { title, body: body, tagId: tag, thumbnail: thumbnail },
+      include: { tag: { select: { id: true, name: true } } },
     });
   } catch (e) {
     return null;

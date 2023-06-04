@@ -32,6 +32,7 @@ const imageHandler = async () => {
         if (url) {
           const range = quill.getEditorSelection();
           quill.getEditor().insertEmbed(range.index, "image", url);
+          editorThumbnail(url);
         } else {
           toast.error("이미지를 등록하는 도중 에러가 발생하였습니다.");
         }
