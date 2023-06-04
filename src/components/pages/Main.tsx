@@ -36,25 +36,35 @@ const Main: FC<Props> = ({ session }) => {
   const [ref, setRef] = useInfiniteScroll(handlerFetchMore);
 
   if (loading) return <></>;
-  if (error) return <>error</>;
+  if (error)
+    return (
+      <div onClick={() => refetch()}>
+        <ApolloError
+          title="글 불러오기 오류"
+          body="새로고침을 시도해주시거나 여기를 다시 클릭해주세요."
+        />
+      </div>
+    );
 
   const { posts, pageInfo } = data.postGetList;
   return (
     <MainContainer>
-      {posts.length > 0 ? (
-        <PostCotainer>
-          {posts.map((el: POST_TYPE) => {
-            return <PostMainList key={el.id} posts={el} session={session} />;
-          })}
-        </PostCotainer>
-      ) : (
-        <div onClick={() => refetch()}>
-          <ApolloError
-            title="글 불러오기 오류"
-            body="새로고침을 시도해주시거나 여기를 다시 클릭해주세요."
-          />
-        </div>
-      )}
+      <MainContentContainer>
+        {posts.length > 0 ? (
+          <PostCotainer>
+            {posts.map((el: POST_TYPE) => {
+              return <PostMainList key={el.id} posts={el} session={session} />;
+            })}
+          </PostCotainer>
+        ) : (
+          <div onClick={() => refetch()}>
+            <ApolloError
+              title="글 불러오기 오류"
+              body="새로고침을 시도해주시거나 여기를 다시 클릭해주세요."
+            />
+          </div>
+        )}
+      </MainContentContainer>
       {pageInfo.hasNextPage && (
         <LoadingContainer ref={setRef}>
           <Loading
@@ -77,6 +87,7 @@ export default Main;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   justify-content: center;
   width: 100%;
   padding: 20px;
@@ -96,4 +107,9 @@ const PostCotainer = styled.ul`
   width: 100%;
   height: 100%;
   max-width: 1024px;
+`;
+
+const MainContentContainer = styled.main`
+  display: flex;
+  justify-content: center;
 `;
