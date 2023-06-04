@@ -21,8 +21,8 @@ const ProfilePost: FC<POST_TYPE> = ({
     <Link href={`/post/${num}`}>
       <MainContainer>
         <FirstRawContainer>
-          <PostListThumbnail thumbnail={thumbnail} />
           <PostListView views={views} />
+          <PostListThumbnail thumbnail={thumbnail} />
           <PostListTitle title={title} />
         </FirstRawContainer>
         <LastRawContainer>

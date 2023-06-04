@@ -19,15 +19,14 @@ import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { tokenCall } from "@/utils/varible";
 import { modules } from "@/utils/editor";
 
-export let quillObj: any;
-
 interface Props {
   body: string;
   postId: string;
   tagArr: any[];
 }
+export let editQuillObj = null as any;
 
-const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
+const MainReEditor: FC<Props> = ({ body, postId, tagArr }) => {
   const title = useReactiveVar(editorTitleState);
   const thumbnail = useReactiveVar(editorThumbnail);
   const error = useReactiveVar(editorErrorMessage);
@@ -111,7 +110,7 @@ const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
       <EditorContainer>
         <ReactQuill
           ref={(el) => {
-            quillObj = el;
+            editQuillObj = el;
           }}
           onChange={(value) => setEditor(value === "<p><br></p>" ? "" : value)}
           modules={modules}
@@ -141,7 +140,7 @@ const MainEditor: FC<Props> = ({ body, postId, tagArr }) => {
   );
 };
 
-export default MainEditor;
+export default MainReEditor;
 
 const MainContainer = styled.div`
   margin 0 auto;

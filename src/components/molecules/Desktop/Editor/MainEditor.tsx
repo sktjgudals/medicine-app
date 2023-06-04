@@ -19,7 +19,7 @@ import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { tokenCall } from "@/utils/varible";
 import { modules } from "@/utils/editor";
 
-export let quillObj: any;
+export let quillObj = null as any;
 
 const MainEditor: FC = () => {
   const title = useReactiveVar(editorTitleState);

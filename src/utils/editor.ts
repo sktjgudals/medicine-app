@@ -1,9 +1,12 @@
 import { toast } from "react-toastify";
 import { imageBase64Func } from "./api/image";
 import { quillObj } from "@/components/molecules/Desktop/Editor/MainEditor";
-import Sources from "react-quill";
+import { editQuillObj } from "@/components/molecules/Desktop/Editor/PostReEditor";
+
+import { editorThumbnail } from "apollo/cache";
 
 const imageHandler = async () => {
+  let quill = editQuillObj ? editQuillObj : quillObj;
   const input = document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("accept", "image/*");
@@ -27,8 +30,8 @@ const imageHandler = async () => {
             console.info(e);
           });
         if (url) {
-          const range = quillObj.getEditorSelection();
-          quillObj.getEditor().insertEmbed(range.index, "image", url);
+          const range = quill.getEditorSelection();
+          quill.getEditor().insertEmbed(range.index, "image", url);
         } else {
           toast.error("이미지를 등록하는 도중 에러가 발생하였습니다.");
         }
@@ -42,13 +45,14 @@ const imageHandler = async () => {
 };
 
 function videoHandler() {
+  let quill = editQuillObj ? editQuillObj : quillObj;
   let url = prompt("비디오 url를 입력해주세요.");
   url = getVideoUrl(url) as any;
 
-  const range = quillObj.getEditorSelection();
+  const range = quill.getEditorSelection();
 
   if (url !== null) {
-    quillObj.getEditor().insertEmbed(range, "video", url);
+    quill.getEditor().insertEmbed(range, "video", url);
   } else {
     return;
   }
@@ -65,6 +69,7 @@ function getVideoUrl(url: any) {
       ) ||
       url.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
     if (match && match[2].length === 11) {
+      editorThumbnail(`https://i1.ytimg.com/vi/${match[2]}/sddefault.jpg`);
       return "https" + "://www.youtube-nocookie.com/embed/" + match[2];
     }
     if ((match = url.match(/^(?:(https?):\/\/)?(?:www\.)?vimeo\.com\/(\d+)/))) {

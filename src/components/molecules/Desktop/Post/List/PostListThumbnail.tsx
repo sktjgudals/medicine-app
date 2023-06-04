@@ -27,15 +27,15 @@ export default PostListThumbnail;
 const MainContainer = styled.div`
   display: flex;
   align-items: center;
-  padding-right: 20px;
+  padding-right: 10px;
 `;
 
 const ImageContainer = styled.div`
   display: flex;
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100px;
   @media screen and (max-width: 700px) {
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 80px;
   }
 `;
