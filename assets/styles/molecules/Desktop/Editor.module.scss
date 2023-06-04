@@ -43,7 +43,7 @@
     margin-top: 20px;
     margin-bottom: 50px;
     width: 854px;
-    height: 480px;
+    min-height: 480px;
   }
   p {
     font-size: var(--font-size-8);

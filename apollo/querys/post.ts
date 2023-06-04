@@ -62,22 +62,12 @@ const PostGetData = gql`
         body
         views
         createdAt
-        updatedAt
         isLike
         likeCount
-        tag {
-          id
-          name
-        }
         user {
           id
           nickname
           image
-        }
-        like {
-          id
-          userId
-          postId
         }
       }
       error
@@ -96,22 +86,12 @@ const PostGetList = gql`
         body
         views
         createdAt
-        updatedAt
         isLike
         likeCount
-        tag {
-          id
-          name
-        }
         user {
           id
           nickname
           image
-        }
-        like {
-          id
-          userId
-          postId
         }
       }
       pageInfo {

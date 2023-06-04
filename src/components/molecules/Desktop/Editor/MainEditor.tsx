@@ -31,6 +31,29 @@ const MainEditor: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [mutateFunc, post] = useMutation(PostDataMutation, {
     update: (cache, { data }) => {
+      const cacheId = cache.identify(data.postDataCreate);
+      cache.modify({
+        fields: {
+          postGetList: (
+            existing,
+            { fieldName, storeFieldName, toReference }
+          ) => {
+            if (cacheId) {
+              return {
+                __typename: "PostGetList",
+                posts: [toReference(cacheId), ...existing.posts],
+                pageInfo: {
+                  __typename: "PageInfo",
+                  cursor: existing.pageInfo.cursor,
+                  hasNextPage: existing.pageInfo.hasNextPage,
+                },
+              };
+            }
+            return existing;
+          },
+        },
+      });
+
       cache.modify({ fields: { getProfileData: () => {} } });
       cache.evict({ fieldName: "postGetData" });
     },

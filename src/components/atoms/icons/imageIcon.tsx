@@ -4,10 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
   color?: string;
+  width?: number;
+  height?: number;
 }
 
-const ImageIcon: FC<Props> = ({ color }) => {
-  return <FontAwesomeIcon icon={faImage} color={color} />;
+const ImageIcon: FC<Props> = ({ color, width, height }) => {
+  return (
+    <FontAwesomeIcon
+      icon={faImage}
+      color={color}
+      width={width}
+      height={height}
+    />
+  );
 };
 
 export default ImageIcon;

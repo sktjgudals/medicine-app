@@ -21,4 +21,7 @@ const tokenDelete = () => {
   localStorage.removeItem("refresh_token");
 };
 
-export { tokenCall, tokenSet, tokenDelete };
+const blurDataUrl =
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=";
+
+export { tokenCall, tokenSet, tokenDelete, blurDataUrl };

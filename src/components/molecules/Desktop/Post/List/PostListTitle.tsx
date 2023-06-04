@@ -1,30 +1,54 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-const PostListTitle: FC<{ title: string }> = ({ title }) => {
+interface Props {
+  title: string;
+  height: number;
+  fontSize: number;
+  paddingTop: number;
+  lineClamp: number;
+}
+
+const PostListTitle: FC<Props> = ({
+  title,
+  height,
+  fontSize,
+  paddingTop,
+  lineClamp,
+}) => {
   return (
-    <MainContainer>
-      <TitleContainer>{title}</TitleContainer>
+    <MainContainer height={height} fontSize={fontSize} paddingTop={paddingTop}>
+      <TitleContainer lineClamp={lineClamp}>{title}</TitleContainer>
     </MainContainer>
   );
 };
 
 export default PostListTitle;
 
-const MainContainer = styled.div`
+interface ContainerProps {
+  height: number;
+  fontSize: number;
+  paddingTop: number;
+}
+
+export interface TitleProps {
+  lineClamp: number;
+}
+
+const MainContainer = styled.div<ContainerProps>`
   width: 100%;
   display: flex;
-  height: 60px;
-  align-items: center;
+  height: ${(props) => props.height}px;
   padding-left: 10px;
-  font-size: var(--font-size-5);
+  padding-top: ${(props) => props.paddingTop}px;
+  font-size: var(--font-size-${(props) => props.fontSize});
   font-weight: var(--font-weight-bold);
 `;
 
-const TitleContainer = styled.p`
+const TitleContainer = styled.p<TitleProps>`
   display: -webkit-box;
   word-break: break-all;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: ${(props) => props.lineClamp};
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;

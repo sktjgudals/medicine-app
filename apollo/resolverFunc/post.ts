@@ -86,7 +86,10 @@ const postGetListFunc = async (
       skip: 1,
       take: limit,
       cursor: { id: cursor },
-      include: { like: { select: { userId: true } } },
+      include: {
+        like: { select: { userId: true } },
+        user: { select: { id: true, nickname: true, image: true } },
+      },
     });
     if (userId) {
       if (posts.length !== 0) {
@@ -109,7 +112,10 @@ const postGetListFunc = async (
     const posts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
       take: limit,
-      include: { like: { select: { userId: true } } },
+      include: {
+        like: { select: { userId: true } },
+        user: { select: { id: true, nickname: true, image: true } },
+      },
     });
     if (userId) {
       if (posts.length !== 0) {
