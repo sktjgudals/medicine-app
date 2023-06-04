@@ -85,6 +85,43 @@ const PostGetData = gql`
   }
 `;
 
+const PostGetList = gql`
+  query data($userId: String, $cursor: String, $limit: Int!, $sort: String!) {
+    postGetList(userId: $userId, cursor: $cursor, limit: $limit, sort: $sort) {
+      posts {
+        id
+        title
+        num
+        thumbnail
+        body
+        views
+        createdAt
+        updatedAt
+        isLike
+        likeCount
+        tag {
+          id
+          name
+        }
+        user {
+          id
+          nickname
+          image
+        }
+        like {
+          id
+          userId
+          postId
+        }
+      }
+      pageInfo {
+        hasNextPage
+        cursor
+      }
+    }
+  }
+`;
+
 const PostLikeMutation = gql`
   mutation data(
     $postId: String!
@@ -125,4 +162,5 @@ export {
   PostLikeMutation,
   PostDeleteMutation,
   PostUpdateMutation,
+  PostGetList,
 };

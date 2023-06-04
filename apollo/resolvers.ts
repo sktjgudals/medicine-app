@@ -15,6 +15,7 @@ import {
   postDataCreateFunc,
   postDeleteFunc,
   postGetDataFunc,
+  postGetListFunc,
   postLikeFunc,
   postTagCreateFunc,
   postUpdateFunc,
@@ -65,6 +66,15 @@ export const resolvers = {
       _: any,
       { userId, num }: { userId: string; num: number }
     ) => postGetDataFunc(userId, num),
+    postGetList: (
+      _: any,
+      {
+        userId,
+        cursor,
+        limit,
+        sort,
+      }: { userId: string; cursor: string; limit: number; sort: string }
+    ) => postGetListFunc(userId, cursor, limit, sort),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
     getProfileData: async (

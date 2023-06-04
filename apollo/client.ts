@@ -64,6 +64,23 @@ const createApolloClient = () => {
                 };
               },
             },
+            postGetList: {
+              keyArgs: ["sort"],
+              merge(existing = { posts: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.posts.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "PostGetList",
+                  posts: [...arr, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
           },
         },
       },

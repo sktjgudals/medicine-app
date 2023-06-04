@@ -136,12 +136,22 @@ export const typeDefs = gql`
     comments: [Comment]
     pageInfo: PageInfo
   }
+  type PostListResponse {
+    posts: [Post]
+    pageInfo: PageInfo
+  }
 
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
     postGetData(userId: String, num: Int!): PostResoponse
+    postGetList(
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): PostListResponse
     getProfileData(
       nickname: String!
       cursor: String
