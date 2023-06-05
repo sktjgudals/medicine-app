@@ -10,7 +10,7 @@ interface Props {
 const PostTagBar: FC<Props> = ({ tag }) => {
   const router = useRouter();
   const tagClickHandler = (name: string) => {
-    router.push(`/search?keyword=#${name}`);
+    router.push(`/search?keyword=${name}&sort=created_at&type=tag`);
   };
   return (
     <MainContainer>

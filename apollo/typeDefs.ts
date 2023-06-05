@@ -140,6 +140,11 @@ export const typeDefs = gql`
     posts: [Post]
     pageInfo: PageInfo
   }
+  type SearchListResponse {
+    posts: [Post]
+    users: [User]
+    pageInfo: PageInfo
+  }
 
   type Query {
     findUserEmail(email: String): User
@@ -165,6 +170,27 @@ export const typeDefs = gql`
       limit: Int!
       sort: String!
     ): CommentsResponse
+    getSearchPost(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
+    getSearchTag(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
+    getSearchUser(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
   }
 
   type Mutation {

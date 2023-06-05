@@ -19,6 +19,24 @@ const Search: FC = () => {
     }
   };
 
+  const typeSelector = (): string => {
+    if (value.charAt(0) === "#") {
+      return "tag";
+    } else if (value.charAt(0) === "@") {
+      return "user";
+    } else {
+      return "body";
+    }
+  };
+
+  const keywordSubmit = (): string => {
+    if (value.charAt(0) === "#" || value.charAt(0) === "@") {
+      return value.substr(1);
+    } else {
+      return value;
+    }
+  };
+
   return (
     <form
       action={`/search`}
@@ -40,10 +58,9 @@ const Search: FC = () => {
               onChange={onChangeValue}
               ref={searchInput}
             />
-            <input type="hidden" name="keyword" value={value} />
-            <input type="hidden" name="sort" value={"like_count"} />
-            <input type="hidden" name="order" value={"ascending"} />
-            <input type="hidden" name="page" value={"1"} />
+            <input type="hidden" name="keyword" value={keywordSubmit()} />
+            <input type="hidden" name="sort" value={"created_at"} />
+            <input type="hidden" name="type" value={typeSelector()} />
           </div>
         </div>
       </div>

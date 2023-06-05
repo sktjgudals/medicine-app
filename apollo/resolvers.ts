@@ -36,6 +36,12 @@ import {
   updateCommentFunc,
   uploadCommentFunc,
 } from "./resolverFunc/comment";
+import { SearchArgs } from "@/types/apollo/search";
+import {
+  getSearchPostFunc,
+  getSearchTagFunc,
+  getSearchUserFunc,
+} from "./resolverFunc/search";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -107,6 +113,18 @@ export const resolvers = {
         sort: string;
       }
     ) => getCommentsFunc(postId, userId, cursor, limit, sort),
+    getSearchPost: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchPostFunc(keyword, userId, cursor, limit, sort),
+    getSearchTag: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchTagFunc(keyword, userId, cursor, limit, sort),
+    getSearchUser: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchUserFunc(keyword, userId, cursor, limit, sort),
   },
   Mutation: {
     createLocalUser: (
