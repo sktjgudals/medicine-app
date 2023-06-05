@@ -72,6 +72,9 @@ const LastRowContainer = styled.div`
 
 const UserContainer = styled.div`
   display: flex;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
   @media screen and (max-width: 700px) {
     display: none;
   }

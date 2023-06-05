@@ -53,6 +53,7 @@ const MainContainer = styled.div`
 const FirstContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
   padding-left: 10px;
 `;
 

@@ -123,6 +123,16 @@ const MainEditor: FC = () => {
       toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
     }
   };
+  const onChangeHandler = (
+    value: string,
+    delta: any,
+    source: any,
+    editor: any
+  ) => {
+    setEditor(value);
+    // setEditor(value === "<p><br></p>" ? "" : value);
+  };
+
   return (
     <MainContainer>
       <EditorContainer>
@@ -130,7 +140,7 @@ const MainEditor: FC = () => {
           ref={(el) => {
             quillObj = el;
           }}
-          onChange={(value) => setEditor(value === "<p><br></p>" ? "" : value)}
+          onChange={onChangeHandler}
           modules={modules}
           className={styles.editor}
         />
