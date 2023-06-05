@@ -1,19 +1,34 @@
-import { FC, useEffect, useState } from "react";
+import { FC, memo } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Tabs from "./Tabs";
-import { Tabs_TYPE } from "@/types/apollo/search";
 
-const SearchTab: FC = () => {
+import Tabs from "./Tabs";
+import { QueryProps } from "@/types/apollo/search";
+import { useSession } from "@/hooks/useSession";
+
+const MemorizationTab = memo(Tabs);
+const Section = dynamic(() => import("./Section"), { ssr: false });
+
+interface Props {
+  query: QueryProps;
+}
+
+const SearchTab: FC<Props> = ({ query }) => {
+  const { loading, session } = useSession();
   const router = useRouter();
-  const { type = "body" } = router.query as any;
-  const [tabs, setTabs] = useState<Tabs_TYPE>(type);
+  if (loading) return <></>;
+  const {
+    type = query["type"],
+    keyword = query["keyword"],
+    sort = query["sort"],
+  } = router.query as any;
   return (
     <MainContainer>
       <ContentContainer>
         <TitleContainer>검색결과</TitleContainer>
-        <Tabs setTabs={setTabs} tabs={tabs} />
+        <MemorizationTab type={type} />
+        <Section tabs={type} keyword={keyword} sort={sort} session={session} />
       </ContentContainer>
     </MainContainer>
   );
@@ -39,41 +54,6 @@ const ContentContainer = styled.div`
   height: 100%;
   // background: red;
 `;
-
-// import styles from "./styles/index.module.css";
-
-// import { useState, useEffect } from "react";
-
-// const Komyu = dynamic(() => import("./komyu"));
-// const User = dynamic(() => import("./user"));
-// const Post = dynamic(() => import("./post"));
-
-// import { useSession } from "next-auth/react";
-
-// const TABS = ["post", "komyu", "user"];
-
-// export default function Index() {
-//
-//   useEffect(() => {
-//     if (TABS.includes(tab as string)) {
-//       setTabs(tab as "post" | "komyu" | "user");
-//     } else {
-//       setTabs("post");
-//     }
-//   }, [tab]);
-//   const { data: session, status } = useSession();
-//   if (status === "loading") return null;
-//   return (
-//     <div>
-//       <div className={styles.title}>検索結果</div>
-//       <Tabs
-//         tabs={tabs}
-//         setTabs={(value: "post" | "komyu" | "user") => setTabs(value)}
-//       />
-//       <Section tabs={tabs} userId={session?.user.id} />
-//     </div>
-//   );
-// }
 
 // function Section({
 //   tabs,
