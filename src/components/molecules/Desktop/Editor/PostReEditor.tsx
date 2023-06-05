@@ -105,6 +105,16 @@ const MainReEditor: FC<Props> = ({ body, postId, tagArr }) => {
     router.push(`${router.asPath.split("/edit")[0]}`);
   };
 
+  const onChangeHandler = (
+    value: string,
+    delta: any,
+    source: any,
+    editor: any
+  ) => {
+    setEditor(value);
+    // setEditor(value === "<p><br></p>" ? "" : value);
+  };
+
   return (
     <MainContainer>
       <EditorContainer>
@@ -112,7 +122,7 @@ const MainReEditor: FC<Props> = ({ body, postId, tagArr }) => {
           ref={(el) => {
             editQuillObj = el;
           }}
-          onChange={(value) => setEditor(value === "<p><br></p>" ? "" : value)}
+          onChange={onChangeHandler}
           modules={modules}
           value={editor}
           className={styles.editor}

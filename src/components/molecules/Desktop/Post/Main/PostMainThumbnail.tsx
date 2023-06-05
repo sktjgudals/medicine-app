@@ -26,7 +26,7 @@ const PostMainThumbnail: FC<Props> = ({
           responsiveWidth={responsiveWidth}
           responsiveHeight={responsiveHeight}
         >
-          <ImageIcon width={width} height={height} />
+          <ImageIcon width={width} height={height} color="grey" />
         </IconContainer>
       ) : (
         <ImageContainer

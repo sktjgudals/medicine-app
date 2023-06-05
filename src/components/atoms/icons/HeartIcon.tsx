@@ -6,8 +6,8 @@ interface Props {
   color?: string;
 }
 
-const HeartIcon: FC<Props> = () => {
-  return <FontAwesomeIcon icon={faHeart} />;
+const HeartIcon: FC<Props> = ({ color }) => {
+  return <FontAwesomeIcon icon={faHeart} color={color} />;
 };
 
 export default HeartIcon;

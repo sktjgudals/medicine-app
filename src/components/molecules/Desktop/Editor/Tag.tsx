@@ -193,7 +193,7 @@ const TagButtonContainer = styled.div`
   color: var(--color-green-9);
   margin-right: 0.75rem;
   margin-bottom: 0.75rem;
-  border: none;
+  border: 1px solid var(--color-green-9);
   cursor: pointer;
 `;
 

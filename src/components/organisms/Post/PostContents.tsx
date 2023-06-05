@@ -28,7 +28,7 @@ const PostContents: FC<Props> = ({ post, session }) => {
   useEffect(() => {
     viewUpsert();
   }, [viewUpsert]);
-  console.info(post.tag);
+
   return (
     <MainContainer>
       <PostContainer>
@@ -42,7 +42,7 @@ const PostContents: FC<Props> = ({ post, session }) => {
           thumbnail={post.thumbnail.length !== 0 ? post.thumbnail : null}
         />
         <PostBody body={post.body} />
-        <PostTagBar />
+        <PostTagBar tag={post.tag} />
         <PostToolBar
           postId={post.id}
           isLike={post.isLike}

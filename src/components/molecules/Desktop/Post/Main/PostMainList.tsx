@@ -79,5 +79,5 @@ const ContentContainer = styled.div`
   display: flex;
   height: 180px;
   width: 100%;
-  border-bottom: 2px solid grey;
+  border-bottom: 1px solid var(--color-opac-w-14);
 `;
