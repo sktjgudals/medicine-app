@@ -8,6 +8,7 @@ import PostMainList from "../molecules/Desktop/Post/Main/PostMainList";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Loading from "../atoms/Loading";
 import ApolloError from "../atoms/ApolloError";
+import SKPostList from "../atoms/Skeleton/SKPostList";
 
 interface Props {
   session: SESSIONTYPE | null;
@@ -35,7 +36,12 @@ const Main: FC<Props> = ({ session }) => {
 
   const [ref, setRef] = useInfiniteScroll(handlerFetchMore);
 
-  if (loading) return <></>;
+  if (loading)
+    return (
+      <>
+        <SKPostList />;
+      </>
+    );
   if (error)
     return (
       <div onClick={() => refetch()}>

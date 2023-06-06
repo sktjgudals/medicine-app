@@ -18,6 +18,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { SearchTabProps } from "@/types/apollo/search";
 import { POST_TYPE } from "@/types/post";
 import { SESSIONTYPE } from "@/types/session";
+import SKPostList from "@/components/atoms/Skeleton/SKPostList";
 
 interface Props extends SearchTabProps {
   session: SESSIONTYPE | null;
@@ -44,7 +45,7 @@ const SearchPost: FC<Props> = ({ keyword, sort, session }) => {
   };
 
   const [ref, setRef] = useInfiniteScroll(handlerFetchMore);
-  if (loading) return <></>;
+  if (loading) return <SKPostList />;
   if (error)
     return (
       <ApolloError

@@ -79,11 +79,11 @@ const TabButton = styled(Button)<StyledProps>`
   align-items: center;
   padding: 0 15px;
   background-color: var(--color-background-radius-button);
-  ${(props) => (props.active ? "" : "")}
   border-bottom: 3px solid
     ${(props) =>
-    props.active
-      ? "var(--color-green-10)"
-      : "var(--color-background-radius-button)"};
+      props.active
+        ? "var(--color-green-10)"
+        : "var(--color-background-radius-button)"};
+  color: var(--color-font-radius-color);
   transition: border-color 0.5s ease-in-out;
 `;
