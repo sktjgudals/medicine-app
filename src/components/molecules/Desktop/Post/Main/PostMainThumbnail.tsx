@@ -78,6 +78,10 @@ const ImageContainer = styled.div<ImageProps>`
     width: ${(props) => props.responsiveWidth}px;
     height: ${(props) => props.responsiveHeight}px;
   }
+  @media screen and (max-width: 550px) {
+    width: ${(props) => props.responsiveWidth - 20}px;
+    height: ${(props) => props.responsiveHeight - 10}px;
+  }
 `;
 
 const StyledImg = styled(Image)`
@@ -93,7 +97,11 @@ const IconContainer = styled.div<IconProps>`
   align-items: center;
   position: relative;
   @media screen and (max-width: 650px) {
-    width: ${(props) => props.responsiveWidth}px;
-    height: ${(props) => props.responsiveHeight}px;
+    width: ${(props) => props.responsiveWidth - 30}px;
+    height: ${(props) => props.responsiveHeight - 20}px;
+  }
+  @media screen and (max-width: 550px) {
+    width: ${(props) => props.responsiveWidth - 40}px;
+    height: ${(props) => props.responsiveHeight - 30}px;
   }
 `;
