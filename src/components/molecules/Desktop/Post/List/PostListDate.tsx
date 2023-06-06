@@ -10,5 +10,8 @@ export default PostListDate;
 
 const MainContainer = styled.div`
   display: flex;
-  width: 70px;
+  white-space: pre-wrap;
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 `;

@@ -10,7 +10,6 @@ const PostDataMutation = gql`
       body
       views
       createdAt
-      updatedAt
       isLike
       likeCount
     }
@@ -18,8 +17,8 @@ const PostDataMutation = gql`
 `;
 
 const PostUpdateMutation = gql`
-  mutation data($postData: JSON!, $token: String!) {
-    postUpdate(postData: $postData, token: $token) {
+  mutation data($postId: String!, $postData: JSON!) {
+    postUpdate(postId: $postId, postData: $postData) {
       id
       title
       num
@@ -27,9 +26,12 @@ const PostUpdateMutation = gql`
       body
       views
       createdAt
-      updatedAt
       isLike
       likeCount
+      tag {
+        id
+        name
+      }
     }
   }
 `;
@@ -64,25 +66,46 @@ const PostGetData = gql`
         body
         views
         createdAt
-        updatedAt
         isLike
         likeCount
-        tag {
-          id
-          name
-        }
         user {
           id
           nickname
           image
         }
-        like {
+        tag {
           id
-          userId
-          postId
+          name
         }
       }
       error
+    }
+  }
+`;
+
+const PostGetList = gql`
+  query data($userId: String, $cursor: String, $limit: Int!, $sort: String!) {
+    postGetList(userId: $userId, cursor: $cursor, limit: $limit, sort: $sort) {
+      posts {
+        id
+        title
+        num
+        thumbnail
+        body
+        views
+        createdAt
+        isLike
+        likeCount
+        user {
+          id
+          nickname
+          image
+        }
+      }
+      pageInfo {
+        hasNextPage
+        cursor
+      }
     }
   }
 `;
@@ -126,4 +149,6 @@ export {
   PostViewMutation,
   PostLikeMutation,
   PostDeleteMutation,
+  PostUpdateMutation,
+  PostGetList,
 };

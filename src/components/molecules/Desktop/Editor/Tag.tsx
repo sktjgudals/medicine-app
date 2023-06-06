@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, MouseEvent, useState } from "react";
+import { FC, KeyboardEvent, MouseEvent, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import styled from "styled-components";
@@ -9,11 +9,18 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import { editorTagState } from "apollo/cache";
 import { PostTagMutation } from "apollo/querys/post";
 import Loading from "@/components/atoms/Loading";
+import { POST_TAG_TYPE } from "@/types/post";
 
-const Tag: FC = () => {
+interface Props {
+  edit: boolean;
+  tagArr?: [POST_TAG_TYPE];
+}
+
+const Tag: FC<Props> = ({ edit, tagArr }) => {
   const reactiveTag = useReactiveVar(editorTagState);
   const [mutateFunc, { loading, error }] = useMutation(PostTagMutation);
   const [tag, setTag] = useState<string>("");
+
   const { control } = useForm({
     defaultValues: {
       tag: [{ name: "" }],
@@ -25,8 +32,25 @@ const Tag: FC = () => {
     name: "tag",
   });
 
+  useEffect(() => {
+    return () => {
+      if (edit) {
+        if (tagArr) {
+          for (let i = 0; i < tagArr.length; i++) {
+            append(tagArr[i]);
+          }
+        }
+      } else {
+        editorTagState([]);
+      }
+    };
+  }, [tagArr]);
+
   const subColorQuanaity = (idx: number) => (e: any) => {
     e.preventDefault();
+    if (edit && tagArr) {
+      tagArr.splice(idx - 1, 1);
+    }
     remove(idx);
   };
 
@@ -39,8 +63,12 @@ const Tag: FC = () => {
         }
         const { data } = await mutateFunc({ variables: { postTag: tag } });
         if (data.postTagCreate) {
-          reactiveTag.push(data.postTagCreate);
           append(data.postTagCreate);
+          if (edit) {
+            tagArr?.push(data.postTagCreate);
+          } else {
+            reactiveTag.push(data.postTagCreate);
+          }
           return setTag("");
         }
       }
@@ -55,8 +83,12 @@ const Tag: FC = () => {
       }
       const { data } = await mutateFunc({ variables: { postTag: tag } });
       if (data.postTagCreate) {
-        reactiveTag.push(data.postTagCreate);
         append(data.postTagCreate);
+        if (edit) {
+          tagArr?.push(data.postTagCreate);
+        } else {
+          reactiveTag.push(data.postTagCreate);
+        }
         return setTag("");
       }
     }
@@ -161,7 +193,7 @@ const TagButtonContainer = styled.div`
   color: var(--color-green-9);
   margin-right: 0.75rem;
   margin-bottom: 0.75rem;
-  border: none;
+  border: 1px solid var(--color-green-9);
   cursor: pointer;
 `;
 

@@ -9,6 +9,7 @@ import { PostViewMutation } from "apollo/querys/post";
 import { debounceFunc } from "@/utils/func/common";
 import PostToolBar from "@/components/molecules/Desktop/Post/PostToolBar";
 import { SESSIONTYPE } from "@/types/session";
+import PostTagBar from "@/components/molecules/Desktop/Post/PostTagBar";
 
 interface Props {
   post: POST_TYPE;
@@ -41,6 +42,7 @@ const PostContents: FC<Props> = ({ post, session }) => {
           thumbnail={post.thumbnail.length !== 0 ? post.thumbnail : null}
         />
         <PostBody body={post.body} />
+        <PostTagBar tag={post.tag} />
         <PostToolBar
           postId={post.id}
           isLike={post.isLike}

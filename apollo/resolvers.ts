@@ -15,8 +15,10 @@ import {
   postDataCreateFunc,
   postDeleteFunc,
   postGetDataFunc,
+  postGetListFunc,
   postLikeFunc,
   postTagCreateFunc,
+  postUpdateFunc,
   postViewUpsertFunc,
 } from "./resolverFunc/post";
 import {
@@ -34,6 +36,12 @@ import {
   updateCommentFunc,
   uploadCommentFunc,
 } from "./resolverFunc/comment";
+import { SearchArgs } from "@/types/apollo/search";
+import {
+  getSearchPostFunc,
+  getSearchTagFunc,
+  getSearchUserFunc,
+} from "./resolverFunc/search";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -64,6 +72,15 @@ export const resolvers = {
       _: any,
       { userId, num }: { userId: string; num: number }
     ) => postGetDataFunc(userId, num),
+    postGetList: (
+      _: any,
+      {
+        userId,
+        cursor,
+        limit,
+        sort,
+      }: { userId: string; cursor: string; limit: number; sort: string }
+    ) => postGetListFunc(userId, cursor, limit, sort),
     getUserData: async (_: any, { userId }: { userId: string }) =>
       getUserDataFunc(userId),
     getProfileData: async (
@@ -96,6 +113,18 @@ export const resolvers = {
         sort: string;
       }
     ) => getCommentsFunc(postId, userId, cursor, limit, sort),
+    getSearchPost: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchPostFunc(keyword, userId, cursor, limit, sort),
+    getSearchTag: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchTagFunc(keyword, userId, cursor, limit, sort),
+    getSearchUser: (
+      _: any,
+      { keyword, userId, cursor, limit, sort }: SearchArgs
+    ) => getSearchUserFunc(keyword, userId, cursor, limit, sort),
   },
   Mutation: {
     createLocalUser: (
@@ -153,6 +182,10 @@ export const resolvers = {
       _: any,
       { postId, thumbnail }: { postId: string; thumbnail: string | null }
     ) => postDeleteFunc(postId, thumbnail),
+    postUpdate: (
+      _: any,
+      { postId, postData }: { postId: string; postData: JSON }
+    ) => postUpdateFunc(postId, postData),
     uploadComment: (
       _: any,
       {

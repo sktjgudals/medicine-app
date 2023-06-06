@@ -9,6 +9,7 @@ import { useMutation } from "@apollo/client";
 import { PostDeleteMutation } from "apollo/querys/post";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Loading from "@/components/atoms/Loading";
 
 interface Props {
   postUserId: string;
@@ -34,7 +35,7 @@ const DeleteToolBar: FC<Props> = ({
           cache.evict({ id: cacheId });
         },
       });
-      toast.info("삭제에 성공하였습니다.");
+      toast.info("게시글을 삭제하였습니다.");
       router.back();
     } else {
       toast.error("권한이 없습니다.");
@@ -47,7 +48,19 @@ const DeleteToolBar: FC<Props> = ({
         <IconContainer>
           <TrashCanIcon />
         </IconContainer>
-        삭제
+        {loading ? (
+          <Loading
+            width={20}
+            height={20}
+            strokeWidth={10}
+            top={0}
+            bottom={0}
+            right={0}
+            left={0}
+          />
+        ) : (
+          "삭제"
+        )}
       </ToolBarButtonContainer>
     </ToolBarContainer>
   );

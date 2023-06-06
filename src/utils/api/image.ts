@@ -35,7 +35,7 @@ export const imageUploadFunc = async (
 ) => {
   try {
     const params = {
-      Bucket: `yakjung/images`,
+      Bucket: `yakjungs/images`,
       Key: `${id}${Date.now()}.${type}`,
       Body: buffer,
       ACL: "public-read",
@@ -44,6 +44,7 @@ export const imageUploadFunc = async (
     };
     return { data: (await s3.upload(params).promise()) as any, error: false };
   } catch (e) {
+    console.info(e);
     return { error: e };
   }
 };
@@ -64,7 +65,7 @@ export const imageBase64Func = async (file: any) => {
 
 export const deleteImageS3 = async (url: string) => {
   const params = {
-    Bucket: `yakjung`,
+    Bucket: `yakjungs`,
     Key: `images/${url.split("/images/")[1]}`,
   };
   await s3

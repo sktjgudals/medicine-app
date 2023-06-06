@@ -7,9 +7,11 @@ import { Button } from "@/components/atoms/Button";
 import SearchIcon from "@/components/atoms/icons/SearchIcon";
 
 import styles from "#/styles/molecules/Desktop/Header/Search.module.scss";
+import SearchTray from "./SearchTray";
 
 const Search: FC = () => {
   const [value, onChangeValue] = useInput("");
+
   const searchInput = useRef<any>();
 
   const onSubmitHandler = (e: React.FormEvent) => {
@@ -19,40 +21,60 @@ const Search: FC = () => {
     }
   };
 
+  const typeSelector = (): string => {
+    if (value.charAt(0) === "#") {
+      return "tag";
+    } else if (value.charAt(0) === "@") {
+      return "user";
+    } else {
+      return "body";
+    }
+  };
+
+  const keywordSubmit = (): string => {
+    if (value.charAt(0) === "#" || value.charAt(0) === "@") {
+      return value.substr(1);
+    } else {
+      return value;
+    }
+  };
+
   return (
-    <form
-      action={`/search`}
-      role="search"
-      method="GET"
-      className={styles.top_nav_search_container}
-      onSubmit={onSubmitHandler}
-    >
-      <div className={styles.search_box}>
-        <div
-          className={styles.input_box}
-          data-target="tray-search-input"
-          aria-haspopup="grid"
-        >
-          <div className={styles.search_input}>
-            <SearchInput
-              placeholder={"검색"}
-              value={value}
-              onChange={onChangeValue}
-              ref={searchInput}
-            />
-            <input type="hidden" name="keyword" value={value} />
-            <input type="hidden" name="sort" value={"like_count"} />
-            <input type="hidden" name="order" value={"ascending"} />
-            <input type="hidden" name="page" value={"1"} />
+    <>
+      <form
+        action={`/search`}
+        role="search"
+        method="GET"
+        className={styles.top_nav_search_container}
+        onSubmit={onSubmitHandler}
+      >
+        <div className={styles.search_box}>
+          <div
+            className={styles.input_box}
+            data-target="tray-search-input"
+            aria-haspopup="grid"
+          >
+            <div className={styles.search_input}>
+              <SearchInput
+                placeholder={"검색"}
+                value={value}
+                onChange={onChangeValue}
+                ref={searchInput}
+              />
+              <input type="hidden" name="keyword" value={keywordSubmit()} />
+              <input type="hidden" name="sort" value={"created_at"} />
+              <input type="hidden" name="type" value={typeSelector()} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.search_icon}>
-        <SearchButton width={40} height={40}>
-          <SearchIcon width={14} height={14} />
-        </SearchButton>
-      </div>
-    </form>
+        <div className={styles.search_icon}>
+          <SearchButton width={40} height={40}>
+            <SearchIcon width={14} height={14} />
+          </SearchButton>
+        </div>
+      </form>
+      {value.length > 0 && <SearchTray />}
+    </>
   );
 };
 

@@ -1,12 +1,15 @@
-import { POST_TYPE } from "@/types/post";
 import { FC } from "react";
 import styled from "styled-components";
+import Link from "next/link";
+
+import { POST_TYPE } from "@/types/post";
+
 import PostHeaderUser from "../Post/PostHeaderUser";
 import PostListTitle from "../Post/List/PostListTitle";
 import PostListDate from "../Post/List/PostListDate";
 import PostListView from "../Post/List/PostListView";
-import Link from "next/link";
-import PostListThumbnail from "../Post/List/PostListThumbnail";
+
+import PostMainThumbnail from "../Post/Main/PostMainThumbnail";
 
 const ProfilePost: FC<POST_TYPE> = ({
   id,
@@ -20,17 +23,31 @@ const ProfilePost: FC<POST_TYPE> = ({
   return (
     <Link href={`/post/${num}`}>
       <MainContainer>
-        <FirstRawContainer>
-          <PostListThumbnail thumbnail={thumbnail} />
+        <FirstRowContainer>
           <PostListView views={views} />
-          <PostListTitle title={title} />
-        </FirstRawContainer>
-        <LastRawContainer>
+          <PostMainThumbnail
+            thumbnail={thumbnail}
+            width={220}
+            height={120}
+            responsiveWidth={150}
+            responsiveHeight={90}
+          />
+          <PostListTitle
+            title={title}
+            height={110}
+            fontSize={5}
+            lineClamp={5}
+            paddingTop={0}
+          />
+        </FirstRowContainer>
+        <LastRowContainer>
           <UserContainer>
             <PostHeaderUser {...user} />
           </UserContainer>
-          <PostListDate createdAt={createdAt} />
-        </LastRawContainer>
+          <DateContainer>
+            <PostListDate createdAt={createdAt} />
+          </DateContainer>
+        </LastRowContainer>
       </MainContainer>
     </Link>
   );
@@ -47,7 +64,7 @@ const MainContainer = styled.li`
   padding: 30px;
 `;
 
-const LastRawContainer = styled.div`
+const LastRowContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
@@ -55,12 +72,22 @@ const LastRawContainer = styled.div`
 
 const UserContainer = styled.div`
   display: flex;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
   @media screen and (max-width: 700px) {
     display: none;
   }
 `;
 
-const FirstRawContainer = styled.div`
+const FirstRowContainer = styled.div`
   width: 100%;
   display: flex;
+`;
+
+const DateContainer = styled.div`
+  width: 70px;
+  @media screen and (max-width: 490px) {
+    width: 30px;
+  }
 `;

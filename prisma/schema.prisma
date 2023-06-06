@@ -5,7 +5,7 @@ datasource db {
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextIndex"]
+  previewFeatures = ["fullTextSearch","fullTextIndex"]
 }
 
 model Account {
@@ -80,6 +80,8 @@ model Post {
   like        PostLikes[]
   tag         Tag[]  @relation(fields: [tagId], references: [id])
   tagId      String[] @db.ObjectId
+
+  @@fulltext([title,body])
 }
 
 

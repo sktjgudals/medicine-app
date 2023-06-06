@@ -1,37 +1,115 @@
+import { POST_TYPE } from "@/types/post";
+import { SESSIONTYPE } from "@/types/session";
+import { useQuery } from "@apollo/client";
+import { PostGetList } from "apollo/querys/post";
 import { FC } from "react";
 import styled from "styled-components";
-import { useSession } from "@/hooks/useSession";
+import PostMainList from "../molecules/Desktop/Post/Main/PostMainList";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import Loading from "../atoms/Loading";
+import ApolloError from "../atoms/ApolloError";
 
-const Main: FC = () => {
-  const { session, loading } = useSession();
+interface Props {
+  session: SESSIONTYPE | null;
+}
+
+const Main: FC<Props> = ({ session }) => {
+  const { loading, data, error, fetchMore, refetch } = useQuery(PostGetList, {
+    variables: {
+      userId: session ? session.id : null,
+      limit: 20,
+      sort: "new",
+    },
+  });
+
+  const handlerFetchMore = () => {
+    if (data && pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          limit: 20,
+          cursor: posts[posts.length - 1].id,
+        },
+      });
+    }
+  };
+
+  const [ref, setRef] = useInfiniteScroll(handlerFetchMore);
+
   if (loading) return <></>;
+  if (error)
+    return (
+      <div onClick={() => refetch()}>
+        <ApolloError
+          title="글 불러오기 오류"
+          body="새로고침을 시도해주시거나 여기를 다시 클릭해주세요."
+        />
+      </div>
+    );
+
+  const { posts, pageInfo } = data.postGetList;
   return (
-    <div>
-      {session ? (
-        <LoginContainer>
-          <MainLogin>
-            <p>고유 아이디: {session.id} </p>
-            <p>이메일: {session.email}</p>
-            <p>닉네임: {session.nickname} </p>
-          </MainLogin>
-        </LoginContainer>
-      ) : (
-        <div></div>
+    <MainContainer>
+      <MainContentContainer>
+        {posts.length > 0 ? (
+          <PostCotainer>
+            {posts.map((el: POST_TYPE) => {
+              return <PostMainList key={el.id} posts={el} session={session} />;
+            })}
+          </PostCotainer>
+        ) : (
+          <div onClick={() => refetch()}>
+            <ApolloError
+              title="글 불러오기 오류"
+              body="새로고침을 시도해주시거나 여기를 다시 클릭해주세요."
+            />
+          </div>
+        )}
+      </MainContentContainer>
+      {pageInfo.hasNextPage && (
+        <LoadingContainer ref={setRef}>
+          <Loading
+            width={40}
+            height={40}
+            strokeWidth={10}
+            top={0}
+            bottom={0}
+            right={0}
+            left={0}
+          />
+        </LoadingContainer>
       )}
-    </div>
+    </MainContainer>
   );
 };
 
 export default Main;
-const MainLogin = styled.div`
-  font-size: var(--font-size-8);
-  font-weight: var(--font-weight-semibold);
-`;
 
-const LoginContainer = styled.div`
+const MainContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  padding: 20px;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px;
+`;
+
+const PostCotainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  max-width: 1024px;
+`;
+
+const MainContentContainer = styled.main`
+  display: flex;
+  justify-content: center;
 `;

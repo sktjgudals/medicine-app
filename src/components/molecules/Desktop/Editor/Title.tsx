@@ -1,13 +1,18 @@
-import { ChangeEvent, FC, useEffect } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { editorTitleState, editorErrorMessage } from "apollo/cache";
 
 import styled from "styled-components";
 import { Input } from "@/components/atoms/Input";
 import { useReactiveVar } from "@apollo/client";
 
-const Title: FC = () => {
+interface Props {
+  edit: boolean;
+  postTitle?: string;
+}
+
+const Title: FC<Props> = ({ edit, postTitle }) => {
   const error = useReactiveVar(editorErrorMessage);
-  const title = useReactiveVar(editorTitleState);
+  const [title, setTitle] = useState(edit && postTitle ? postTitle : "");
 
   useEffect(() => {
     if (title.length === 0) {
@@ -25,6 +30,7 @@ const Title: FC = () => {
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setTitle(e.target.value);
     editorTitleState(e.target.value);
   };
 
@@ -35,6 +41,7 @@ const Title: FC = () => {
           type="text"
           placeholder="제목을 입력하세요"
           id="title"
+          value={title}
           onChange={onChangeHandler}
         />
       </InputContainer>

@@ -16,7 +16,7 @@ const QuillLeader: FC<Props> = ({ body }) => {
         readOnly={true}
         theme={"bubble"}
         preserveWhitespace={true}
-        className={styles.editor}
+        className={styles.quill_reader}
       />
     </>
   );

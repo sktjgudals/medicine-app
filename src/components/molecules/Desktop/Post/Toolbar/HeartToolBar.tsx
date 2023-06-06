@@ -47,7 +47,11 @@ const HeartToolBar: FC<Props> = ({ isLike, likeCount, userId, postId }) => {
     <ToolBarContainer>
       <ToolBarButtonContainer onClick={buttonHandler}>
         <HeartToolBarContainer>
-          {isLike ? <HeartIcon /> : <EmptyHeartIcon />}
+          {isLike ? (
+            <HeartIcon color={"red"} />
+          ) : (
+            <EmptyHeartIcon color={"red"} />
+          )}
         </HeartToolBarContainer>
         {!loading ? (
           likeCount

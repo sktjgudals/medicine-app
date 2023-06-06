@@ -1,8 +1,14 @@
 import prisma from "prisma/prisma";
 import { tokenVerify } from "@/utils/token";
-import { tagDBFunc } from "@/utils/func/tag";
-import { likeCountFunc, postLikeDBFunc } from "@/utils/func/post";
+import {
+  likeCountFunc,
+  postLikeCheck,
+  postLikeDBFunc,
+  postResponse,
+  postsNotLike,
+} from "@/utils/func/post";
 import { deleteImageS3 } from "@/utils/api/image";
+import { Prisma } from "@prisma/client";
 
 const postDataCreateFunc = async (data: JSON, token: string) => {
   try {
@@ -20,19 +26,28 @@ const postDataCreateFunc = async (data: JSON, token: string) => {
           title: title,
           thumbnail: thumbnail,
           num: postCounted ? postCounted.num + 1 : 1,
+          tagId: tag,
         },
       });
-      if (tag.length === 0) {
-        return { ...postCreate };
-      } else {
-        tagDBFunc(tag, postCreate["id"]);
-        return { ...postCreate };
-      }
+      return postCreate;
     } else {
       return null;
     }
   } catch (e) {
-    console.info(e);
+    return null;
+  }
+};
+
+const postUpdateFunc = async (postId: string, postData: any) => {
+  try {
+    const { title, tag, thumbnail, body } = JSON.parse(postData);
+
+    return await prisma.post.update({
+      where: { id: postId },
+      data: { title, body: body, tagId: tag, thumbnail: thumbnail },
+      include: { tag: { select: { id: true, name: true } } },
+    });
+  } catch (e) {
     return null;
   }
 };
@@ -60,6 +75,37 @@ const postGetDataFunc = async (userId: string, num: number) => {
     return { post: { ...post, isLike } };
   }
   return { error: "post Not Found" };
+};
+
+const postGetListFunc = async (
+  userId: string,
+  cursor: string,
+  limit: number,
+  sort: string
+) => {
+  try {
+    const pageInfo = {
+      hasNextPage: false,
+      cursor,
+    };
+
+    const query: Prisma.PostFindManyArgs = {
+      orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+      take: limit,
+    };
+
+    const posts = await postResponse(query, cursor, userId);
+
+    const newPosts = postLikeCheck(posts, userId);
+
+    if (posts.length > limit - 1) {
+      pageInfo["hasNextPage"] = true;
+    }
+
+    return { posts: newPosts, pageInfo };
+  } catch (e) {
+    return null;
+  }
 };
 
 const postTagCreateFunc = async (postTag: string) => {
@@ -143,8 +189,10 @@ const postDeleteFunc = async (postId: string, thumbnail: string | null) => {
 export {
   postDataCreateFunc,
   postGetDataFunc,
+  postGetListFunc,
   postTagCreateFunc,
   postViewUpsertFunc,
   postLikeFunc,
   postDeleteFunc,
+  postUpdateFunc,
 };

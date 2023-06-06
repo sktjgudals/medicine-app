@@ -64,6 +64,74 @@ const createApolloClient = () => {
                 };
               },
             },
+            postGetList: {
+              keyArgs: ["sort"],
+              merge(existing = { posts: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.posts.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "PostGetList",
+                  posts: [...arr, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+            getSearchPost: {
+              keyArgs: ["sort", "keyword"],
+              merge(existing = { posts: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.posts.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "GetSearchList",
+                  posts: [...arr, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+            getSearchTag: {
+              keyArgs: ["sort", "keyword"],
+              merge(existing = { posts: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.posts.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "GetSearchTag",
+                  posts: [...arr, ...incoming.posts],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
+            getSearchUser: {
+              keyArgs: ["sort", "keyword"],
+              merge(existing = { users: [] }, incoming) {
+                const arr = Array.from(
+                  new Set(existing.users.map(JSON.stringify))
+                ).map(JSON.parse as any);
+                return {
+                  __typename: "GetSearchUser",
+                  users: [...arr, ...incoming.users],
+                  pageInfo: {
+                    __typename: "PageInfo",
+                    cursor: incoming.pageInfo.cursor,
+                    hasNextPage: incoming.pageInfo.hasNextPage,
+                  },
+                };
+              },
+            },
           },
         },
       },

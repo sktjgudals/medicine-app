@@ -19,7 +19,7 @@ import ModalSubmitButton from "../Modal/ModalSubmitButton";
 import { tokenCall } from "@/utils/varible";
 import { modules } from "@/utils/editor";
 
-export let quillObj: any;
+export let quillObj = null as any;
 
 const MainEditor: FC = () => {
   const title = useReactiveVar(editorTitleState);
@@ -31,6 +31,29 @@ const MainEditor: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [mutateFunc, post] = useMutation(PostDataMutation, {
     update: (cache, { data }) => {
+      const cacheId = cache.identify(data.postDataCreate);
+      cache.modify({
+        fields: {
+          postGetList: (
+            existing,
+            { fieldName, storeFieldName, toReference }
+          ) => {
+            if (cacheId) {
+              return {
+                __typename: "PostGetList",
+                posts: [toReference(cacheId), ...existing.posts],
+                pageInfo: {
+                  __typename: "PageInfo",
+                  cursor: existing.pageInfo.cursor,
+                  hasNextPage: existing.pageInfo.hasNextPage,
+                },
+              };
+            }
+            return existing;
+          },
+        },
+      });
+
       cache.modify({ fields: { getProfileData: () => {} } });
       cache.evict({ fieldName: "postGetData" });
     },
@@ -58,15 +81,15 @@ const MainEditor: FC = () => {
     setLoading(false);
   }, [done]);
 
-  const submitOk = error.title.length === 0 && error.content.length === 0;
+  const submitOk = title.length !== 0 && error.content.length === 0;
+
   const submitHandler = async (e: any) => {
     setLoading(true);
     let newTag = [];
     for (let i = 0; i < tag.length; i++) {
       if (tag[i].name.length === 0) {
       } else {
-        const tagContent = { id: tag[i].id, name: tag[i].name };
-        newTag.push(tagContent);
+        newTag.push(tag[i].id);
       }
     }
 
@@ -83,9 +106,13 @@ const MainEditor: FC = () => {
         variables: { postData: JSON.stringify(res), token: access },
       })
         .then(({ data }) => {
-          const { id, num } = data.postDataCreate;
-          setDone(true);
-          return router.push(`/post/${num}`);
+          if (data.postDataCreate) {
+            const { id, num } = data.postDataCreate;
+            setDone(true);
+            return router.push(`/post/${num}`);
+          } else {
+            toast.error("글 작성후 오류가 발생하였습니다.");
+          }
         })
         .catch((e) => {
           toast.error("새로고침후, 다시 시도해주시길 바랍니다.");
@@ -96,6 +123,15 @@ const MainEditor: FC = () => {
       toast.error("로그아웃후, 로그인을 다시 시도하시길 바랍니다.");
     }
   };
+  const onChangeHandler = (
+    value: string,
+    delta: any,
+    source: any,
+    editor: any
+  ) => {
+    setEditor(value);
+    // setEditor(value === "<p><br></p>" ? "" : value);
+  };
 
   return (
     <MainContainer>
@@ -104,7 +140,7 @@ const MainEditor: FC = () => {
           ref={(el) => {
             quillObj = el;
           }}
-          onChange={(value) => setEditor(value === "<p><br></p>" ? "" : value)}
+          onChange={onChangeHandler}
           modules={modules}
           className={styles.editor}
         />

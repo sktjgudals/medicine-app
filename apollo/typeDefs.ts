@@ -136,12 +136,27 @@ export const typeDefs = gql`
     comments: [Comment]
     pageInfo: PageInfo
   }
+  type PostListResponse {
+    posts: [Post]
+    pageInfo: PageInfo
+  }
+  type SearchListResponse {
+    posts: [Post]
+    users: [User]
+    pageInfo: PageInfo
+  }
 
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
     postGetData(userId: String, num: Int!): PostResoponse
+    postGetList(
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): PostListResponse
     getProfileData(
       nickname: String!
       cursor: String
@@ -155,6 +170,27 @@ export const typeDefs = gql`
       limit: Int!
       sort: String!
     ): CommentsResponse
+    getSearchPost(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
+    getSearchTag(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
+    getSearchUser(
+      keyword: String!
+      userId: String
+      cursor: String
+      limit: Int!
+      sort: String!
+    ): SearchListResponse
   }
 
   type Mutation {
@@ -194,6 +230,7 @@ export const typeDefs = gql`
       length: Int!
     ): Comment
     commentDelete(commentId: String!, userId: String!): Comment
+    postUpdate(postId: String!, postData: JSON!): Post
   }
 `;
 
