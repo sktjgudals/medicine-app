@@ -10,6 +10,8 @@ import PostNav from "./Nav/PostNav";
 import Profile from "./Nav/Profile";
 
 import { SESSIONTYPE } from "@/types/session";
+import Term from "./Nav/Term";
+import styled from "styled-components";
 
 interface Props {
   toggleDropDown: () => void;
@@ -27,6 +29,7 @@ const DropDown: FC<Props> = ({
       {!session ? (
         <>
           <Darkmode />
+          <Term toggleDropDown={toggleDropDown} />
           <SignUpNav toggleDropDown={toggleDropDown} />
           <SignIn toggleDropDown={toggleDropDown} />
         </>
@@ -35,6 +38,7 @@ const DropDown: FC<Props> = ({
           <Profile session={session} toggleDropDown={toggleDropDown} />
           <Darkmode />
           <PostNav toggleDropDown={toggleDropDown} />
+          <Term toggleDropDown={toggleDropDown} />
           <Logout />
         </>
       )}
@@ -43,3 +47,8 @@ const DropDown: FC<Props> = ({
 };
 
 export default memo(DropDown);
+
+const TermWrapper = styled.div`
+  // padding-right: 30px;
+  width: 100%;
+`;

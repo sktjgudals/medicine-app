@@ -58,7 +58,7 @@ class MyDocument extends Document {
           {redirectIEToEdge()}
           <meta property="og:type" content="website" />
           <meta property="og:locale" content="ko-KR" />
-          {/* <meta property="og:url" content="https://staku.net/" /> */}
+          <meta property="og:url" content="https://yakjung.site/" />
           <meta property="og:site_name" content="Yakjung" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@yakjung" />

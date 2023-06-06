@@ -18,7 +18,7 @@ const SignIn: FC<Props> = ({ toggleDropDown }) => {
   };
 
   return (
-    <NavContainer style={{ marginTop: "10px" }}>
+    <NavContainer>
       <NavButton onClick={() => handleClick().then(toggleDropDown)}>
         <SignInIcon width={19} height={19} />
         <NavText>로그인</NavText>
