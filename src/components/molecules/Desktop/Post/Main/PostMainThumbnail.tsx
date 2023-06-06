@@ -45,7 +45,6 @@ const PostMainThumbnail: FC<Props> = ({
             alt="thumbnail_image"
             placeholder="blur"
             blurDataURL={blurDataUrl}
-            priority={true}
           />
         </ImageContainer>
       )}
