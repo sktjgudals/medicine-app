@@ -21,18 +21,16 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
   const [mutateFunc, { loading, error }] = useMutation(PostTagMutation);
   const [tag, setTag] = useState<string>("");
   useEffect(() => {
-    return () => {
-      if (edit) {
-        if (tagArr) {
-          for (let i = 0; i < tagArr.length; i++) {
-            append(tagArr[i]);
-          }
+    if (edit) {
+      if (tagArr) {
+        for (let i = 0; i < tagArr.length; i++) {
+          append(tagArr[i]);
         }
-      } else {
-        editorTagState([]);
       }
-    };
-  }, []);
+    } else {
+      editorTagState([]);
+    }
+  }, [tagArr]);
   const { control } = useForm({
     defaultValues: {
       tag: [{ name: "" }],
