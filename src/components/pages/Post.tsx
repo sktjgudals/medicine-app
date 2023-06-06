@@ -11,8 +11,6 @@ import PostComment from "../molecules/Desktop/Post/Comment/PostComment";
 import NotFound from "./404";
 import PostContents from "../organisms/Post/PostContents";
 
-import SKProfile from "../molecules/Desktop/Skeleton/SKProfile";
-
 interface Props {
   session: SESSIONTYPE | null;
   num: string;
@@ -23,7 +21,7 @@ const Post: FC<Props> = ({ session, num }) => {
     variables: { userId: session ? session.id : null, num: Number(num) },
   });
 
-  if (loading) return <SKProfile />;
+  if (loading) return <></>;
   if (error)
     return (
       <div onClick={() => refetch()}>
