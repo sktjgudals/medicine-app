@@ -1,6 +1,10 @@
-import { postLikeCheck, postsNotLike } from "@/utils/func/post";
-import { postSearchListFunc } from "@/utils/func/search";
 import prisma from "prisma/prisma";
+import { postLikeCheck } from "@/utils/func/post";
+import {
+  postSearchListFunc,
+  tagSearchListFunc,
+  userSearchListFunc,
+} from "@/utils/func/search";
 
 const getSearchPostFunc = async (
   keyword: string,
@@ -14,62 +18,12 @@ const getSearchPostFunc = async (
       hasNextPage: false,
       cursor,
     };
-    if (userId) {
-      if (cursor) {
-        const postList = await postSearchListFunc(
-          cursor,
-          keyword,
-          limit,
-          userId
-        );
-
-        const newPosts = postLikeCheck(postList, userId);
-        if (newPosts.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-
-        return { posts: newPosts, pageInfo };
-      } else {
-        const postList = await postSearchListFunc(
-          cursor,
-          keyword,
-          limit,
-          userId
-        );
-        const newPosts = postLikeCheck(postList, userId);
-        if (postList.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      }
-    } else {
-      if (cursor) {
-        const postList = await postSearchListFunc(
-          cursor,
-          keyword,
-          limit,
-          userId
-        );
-        const newPosts = postsNotLike(postList);
-        if (postList.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      } else {
-        const postList = await postSearchListFunc(
-          cursor,
-          keyword,
-          limit,
-          userId
-        );
-
-        const newPosts = postsNotLike(postList);
-        if (postList.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      }
+    const postList = await postSearchListFunc(cursor, keyword, limit, userId);
+    const newPosts = postLikeCheck(postList, userId);
+    if (postList.length > limit - 1) {
+      pageInfo["hasNextPage"] = true;
     }
+    return { posts: newPosts, pageInfo };
   } catch (e) {
     console.info(e);
     return null;
@@ -84,6 +38,16 @@ const getSearchTagFunc = async (
   sort: string
 ) => {
   try {
+    const pageInfo = {
+      hasNextPage: false,
+      cursor,
+    };
+    const postList = await tagSearchListFunc(cursor, keyword, limit, userId);
+
+    if (postList.length > limit - 1) {
+      pageInfo["hasNextPage"] = true;
+    }
+    return { posts: postList, pageInfo };
   } catch (e) {
     return null;
   }
@@ -97,6 +61,16 @@ const getSearchUserFunc = async (
   sort: string
 ) => {
   try {
+    const pageInfo = {
+      hasNextPage: false,
+      cursor,
+    };
+    const userList = await userSearchListFunc(cursor, keyword, limit, userId);
+
+    if (userList.length > limit - 1) {
+      pageInfo["hasNextPage"] = true;
+    }
+    return { users: userList, pageInfo };
   } catch (e) {
     return null;
   }

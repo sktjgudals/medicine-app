@@ -1,14 +1,24 @@
+import { FC } from "react";
+
+import { useQuery } from "@apollo/client";
+import { GetSearchPost } from "apollo/querys/search";
+
 import ApolloError from "@/components/atoms/ApolloError";
 import Loading from "@/components/atoms/Loading";
+import {
+  SearchLoadingContainer,
+  SearchMainContainer,
+  SearchNotFoundContainer,
+  SearchPostCotainer,
+} from "@/components/atoms/Search";
+import PostMainList from "../Post/Main/PostMainList";
+
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+
 import { SearchTabProps } from "@/types/apollo/search";
 import { POST_TYPE } from "@/types/post";
 import { SESSIONTYPE } from "@/types/session";
-import { useQuery } from "@apollo/client";
-import { GetSearchPost } from "apollo/querys/search";
-import { FC } from "react";
-import styled from "styled-components";
-import PostMainList from "../Post/Main/PostMainList";
+
 interface Props extends SearchTabProps {
   session: SESSIONTYPE | null;
 }
@@ -19,7 +29,7 @@ const SearchPost: FC<Props> = ({ keyword, sort, session }) => {
       keyword,
       userId: session ? session.id : null,
       limit: 1,
-      sort: "createdAt",
+      sort: sort,
     },
   });
   const handlerFetchMore = () => {
@@ -44,20 +54,22 @@ const SearchPost: FC<Props> = ({ keyword, sort, session }) => {
     );
 
   const { posts, pageInfo } = data.getSearchPost;
-  console.info(posts);
+
   return (
-    <MainContainer>
+    <SearchMainContainer>
       {posts.length > 0 ? (
-        <PostCotainer>
+        <SearchPostCotainer>
           {posts.map((el: POST_TYPE) => {
             return <PostMainList key={el.id} posts={el} session={session} />;
           })}
-        </PostCotainer>
+        </SearchPostCotainer>
       ) : (
-        <>검색결과없음</>
+        <SearchNotFoundContainer>
+          검색 결과가 발견되지 않았습니다.
+        </SearchNotFoundContainer>
       )}
       {pageInfo.hasNextPage && (
-        <LoadingContainer ref={setRef}>
+        <SearchLoadingContainer ref={setRef}>
           <Loading
             width={40}
             height={40}
@@ -67,35 +79,10 @@ const SearchPost: FC<Props> = ({ keyword, sort, session }) => {
             right={0}
             left={0}
           />
-        </LoadingContainer>
+        </SearchLoadingContainer>
       )}
-    </MainContainer>
+    </SearchMainContainer>
   );
 };
 
 export default SearchPost;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  justify-content: center;
-  width: 100%;
-  padding: 20px;
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px 0px;
-`;
-
-const PostCotainer = styled.ul`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  padding: 5px;
-  width: 100%;
-  height: 100%;
-  max-width: 1024px;
-`;
