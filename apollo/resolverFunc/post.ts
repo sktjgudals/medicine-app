@@ -4,9 +4,11 @@ import {
   likeCountFunc,
   postLikeCheck,
   postLikeDBFunc,
+  postResponse,
   postsNotLike,
 } from "@/utils/func/post";
 import { deleteImageS3 } from "@/utils/api/image";
+import { Prisma } from "@prisma/client";
 
 const postDataCreateFunc = async (data: JSON, token: string) => {
   try {
@@ -86,70 +88,21 @@ const postGetListFunc = async (
       hasNextPage: false,
       cursor,
     };
-    if (userId) {
-      if (cursor) {
-        const posts = await prisma.post.findMany({
-          orderBy: { createdAt: "desc" },
-          skip: 1,
-          take: limit,
-          cursor: { id: cursor },
-          include: {
-            like: { select: { userId: true } },
-            user: { select: { id: true, nickname: true, image: true } },
-          },
-        });
-        const newPosts = postLikeCheck(posts, userId);
-        if (posts.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      } else {
-        const posts = await prisma.post.findMany({
-          orderBy: { createdAt: "desc" },
-          take: limit,
-          include: {
-            like: { select: { userId: true } },
-            user: { select: { id: true, nickname: true, image: true } },
-          },
-        });
-        const newPosts = postLikeCheck(posts, userId);
-        if (posts.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      }
-    } else {
-      // postsNotLike;
-      if (cursor) {
-        const posts = await prisma.post.findMany({
-          orderBy: { createdAt: "desc" },
-          skip: 1,
-          take: limit,
-          cursor: { id: cursor },
-          include: {
-            user: { select: { id: true, nickname: true, image: true } },
-          },
-        });
-        const newPosts = postsNotLike(posts);
-        if (posts.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      } else {
-        const posts = await prisma.post.findMany({
-          orderBy: { createdAt: "desc" },
-          take: limit,
-          include: {
-            user: { select: { id: true, nickname: true, image: true } },
-          },
-        });
-        const newPosts = postsNotLike(posts);
-        if (posts.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { posts: newPosts, pageInfo };
-      }
+
+    const query: Prisma.PostFindManyArgs = {
+      orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+      take: limit,
+    };
+
+    const posts = await postResponse(query, cursor, userId);
+
+    const newPosts = postLikeCheck(posts, userId);
+
+    if (posts.length > limit - 1) {
+      pageInfo["hasNextPage"] = true;
     }
+
+    return { posts: newPosts, pageInfo };
   } catch (e) {
     return null;
   }

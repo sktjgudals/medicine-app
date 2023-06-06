@@ -1,3 +1,5 @@
+import { POST_TYPE } from "@/types/post";
+import { Prisma } from "@prisma/client";
 import prisma from "prisma/prisma";
 
 const likeCountFunc = async (postId: string, likeCount: number) => {
@@ -62,4 +64,44 @@ const postsNotLike = (posts: any[]) => {
   return newPost;
 };
 
-export { likeCountFunc, postLikeDBFunc, postLikeCheck, postsNotLike };
+const postResponse = async (
+  query: Prisma.PostFindManyArgs,
+  cursor: string | null,
+  userId: string | null
+) => {
+  try {
+    if (cursor) {
+      query.cursor = {
+        id: cursor,
+      };
+      query.skip = 1;
+    }
+
+    if (userId) {
+      query.include = {
+        like: { select: { userId: true } },
+        user: { select: { id: true, nickname: true, image: true } },
+      };
+    }
+
+    if (!userId) {
+      query.include = {
+        user: { select: { id: true, nickname: true, image: true } },
+      };
+    }
+
+    return await prisma.post.findMany({
+      ...query,
+    });
+  } catch (e) {
+    return [];
+  }
+};
+
+export {
+  likeCountFunc,
+  postLikeDBFunc,
+  postLikeCheck,
+  postsNotLike,
+  postResponse,
+};

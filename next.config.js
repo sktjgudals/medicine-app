@@ -17,6 +17,9 @@ const nextConfig = {
       "i1.ytimg.com",
     ],
   },
+  experimental: {
+    scrollRestoration: true,
+  },
 };
 
 module.exports = nextConfig;
