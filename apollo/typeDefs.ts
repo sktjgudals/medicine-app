@@ -199,7 +199,11 @@ export const typeDefs = gql`
       nickname: String!
       password: String!
     ): UserResponse
-    changeProfileImage(image: String!, userId: String!): UserResponse
+    changeProfileImage(
+      image: String
+      userId: String!
+      type: String!
+    ): UserResponse
     changeProfileNickname(nickname: String!, userId: String!): UserResponse
     changeProfileInfo(info: String!, userId: String!, type: String!): User
     changePassword(password: String!, userId: String!): User

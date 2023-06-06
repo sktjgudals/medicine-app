@@ -1,14 +1,19 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import ImageEditor from "../../Editor/ImageEditor";
-import { imageState, profileImageState } from "apollo/cache";
-import { useMutation, useReactiveVar } from "@apollo/client";
-import styled from "styled-components";
-import { imageUploadFetch } from "@/utils/api/image";
-import { ChangeProfileImage } from "apollo/querys/setting";
-import { useSession } from "@/hooks/useSession";
-import { tokenCall, tokenSet } from "@/utils/varible";
 import { toast } from "react-toastify";
+import styled from "styled-components";
+
+import { imageState, profileImageState } from "apollo/cache";
 import { initializeApollo } from "apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { ChangeProfileImage } from "apollo/querys/setting";
+
+import ImageEditor from "../../Editor/ImageEditor";
+import { imageUploadFetch } from "@/utils/api/image";
+import { tokenCall, tokenSet } from "@/utils/varible";
+
+import { useSession } from "@/hooks/useSession";
+
+import { DelButton, DelButtonContainer } from "@/components/atoms/post/Post";
 
 interface Props {
   userId: string;
@@ -19,6 +24,7 @@ const SettingImage: FC<Props> = ({ userId }) => {
   const [mutateFunc, { loading, error }] = useMutation(ChangeProfileImage);
 
   const image = useReactiveVar(profileImageState);
+  const apolloClient = initializeApollo();
 
   const imageSubmitHandler = async (
     base64: string,
@@ -30,7 +36,7 @@ const SettingImage: FC<Props> = ({ userId }) => {
       const res = await imageUploadFetch(base64, access);
       if (res["url"]) {
         const { data } = await mutateFunc({
-          variables: { userId: userId, image: res["url"] },
+          variables: { userId: userId, image: res["url"], type: "update" },
         });
         if (data.changeProfileImage) {
           tokenSet(
@@ -40,7 +46,6 @@ const SettingImage: FC<Props> = ({ userId }) => {
           profileImageState(res["url"]);
           setLoading(false);
           imageState(false);
-          const apolloClient = initializeApollo();
           apolloClient.cache.evict({ fieldName: "getUserData" });
           setReset(true);
           toast.success("프로필 이미지 변경을 완료하였습니다.");
@@ -55,6 +60,22 @@ const SettingImage: FC<Props> = ({ userId }) => {
     }
   };
 
+  const imageDelete = async () => {
+    const { data } = await mutateFunc({
+      variables: { userId: userId, image: image, type: "del" },
+    });
+    if (data.changeProfileImage) {
+      tokenSet(
+        data.changeProfileImage["access_token"],
+        data.changeProfileImage["refresh_token"]
+      );
+    }
+    profileImageState("");
+    setReset(true);
+    apolloClient.cache.evict({ fieldName: "getUserData" });
+    toast.success("프로필 이미지를 삭제했습니다.");
+  };
+
   return (
     <MainContainer>
       <TextContainer>
@@ -66,6 +87,11 @@ const SettingImage: FC<Props> = ({ userId }) => {
         reactiveVar={profileImageState}
         cb={imageSubmitHandler}
       />
+      {image.length > 0 && (
+        <DelButtonContainer style={{ paddingTop: "5px" }}>
+          <DelButton onClick={imageDelete}>삭제</DelButton>
+        </DelButtonContainer>
+      )}
     </MainContainer>
   );
 };

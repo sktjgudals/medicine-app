@@ -14,8 +14,8 @@ const GetUserData = gql`
 `;
 
 const ChangeProfileImage = gql`
-  mutation data($image: String!, $userId: String!) {
-    changeProfileImage(image: $image, userId: $userId) {
+  mutation data($image: String, $userId: String!, $type: String!) {
+    changeProfileImage(image: $image, userId: $userId, type: $type) {
       access_token
       refresh_token
       error

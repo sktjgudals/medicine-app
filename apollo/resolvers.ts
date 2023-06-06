@@ -149,8 +149,8 @@ export const resolvers = {
       postTagCreateFunc(postTag),
     changeProfileImage: (
       _: any,
-      { image, userId }: { image: string; userId: string }
-    ) => changeProfileImageFunc(image, userId),
+      { image, userId, type }: { image: string; userId: string; type: string }
+    ) => changeProfileImageFunc(image, userId, type),
     changeProfileNickname: (
       _: any,
       { nickname, userId }: { nickname: string; userId: string }

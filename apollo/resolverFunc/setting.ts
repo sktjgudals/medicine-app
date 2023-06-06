@@ -1,5 +1,7 @@
+import { deleteImageS3 } from "@/utils/api/image";
 import { settingTokenGenerateFunc } from "@/utils/func/setting";
 import { bcryptGenSalt, bcryptHash } from "@/utils/secure";
+import { Prisma } from "@prisma/client";
 
 import prisma from "prisma/prisma";
 
@@ -34,11 +36,14 @@ const changeProfileNicknameFunc = async (nickname: string, userId: string) => {
   }
 };
 
-const changeProfileImageFunc = async (image: string, userId: string) => {
+const changeProfileImageFunc = async (
+  image: string,
+  userId: string,
+  type: string
+) => {
   try {
-    const res = await prisma.user.update({
+    const query: Prisma.UserUpdateArgs = {
       where: { id: userId },
-      data: { image: image },
       select: {
         image: true,
         id: true,
@@ -46,11 +51,25 @@ const changeProfileImageFunc = async (image: string, userId: string) => {
         email: true,
         type: true,
       },
-    });
-    if (res) {
+      data: {},
+    };
+    if (type === "del") {
+      deleteImageS3(image as any);
+      const res = await prisma.user.update({
+        ...query,
+        data: { image: null },
+      });
       return settingTokenGenerateFunc(res);
     } else {
-      return null;
+      const res = await prisma.user.update({
+        ...query,
+        data: { image: image },
+      });
+      if (res) {
+        return settingTokenGenerateFunc(res);
+      } else {
+        return null;
+      }
     }
   } catch (e) {
     return null;
