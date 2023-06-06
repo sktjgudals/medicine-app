@@ -20,7 +20,19 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
   const reactiveTag = useReactiveVar(editorTagState);
   const [mutateFunc, { loading, error }] = useMutation(PostTagMutation);
   const [tag, setTag] = useState<string>("");
-
+  useEffect(() => {
+    return () => {
+      if (edit) {
+        if (tagArr) {
+          for (let i = 0; i < tagArr.length; i++) {
+            append(tagArr[i]);
+          }
+        }
+      } else {
+        editorTagState([]);
+      }
+    };
+  }, []);
   const { control } = useForm({
     defaultValues: {
       tag: [{ name: "" }],
@@ -32,48 +44,12 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
     name: "tag",
   });
 
-  useEffect(() => {
-    return () => {
-      if (edit) {
-        if (tagArr) {
-          console.info("call");
-          for (let i = 0; i < tagArr.length; i++) {
-            append(tagArr[i]);
-          }
-        }
-      } else {
-        editorTagState([]);
-      }
-    };
-  }, [tagArr]);
-
   const subColorQuanaity = (idx: number) => (e: any) => {
     e.preventDefault();
     if (edit && tagArr) {
       tagArr.splice(idx - 1, 1);
     }
     remove(idx);
-  };
-
-  const inputKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.key === "Enter") {
-      if (tag.length !== 0) {
-        for (let i = 0; i < fields.length; i++) {
-          if (fields[i].name === tag) return;
-        }
-        const { data } = await mutateFunc({ variables: { postTag: tag } });
-        if (data.postTagCreate) {
-          append(data.postTagCreate);
-          if (edit) {
-            tagArr?.push(data.postTagCreate);
-          } else {
-            reactiveTag.push(data.postTagCreate);
-          }
-          return setTag("");
-        }
-      }
-    }
   };
 
   const inputOnclick = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -116,7 +92,6 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
             onChange={(e) => setTag(e.target.value)}
             value={tag}
             placeholder="태그를 입력하세요"
-            onKeyUp={inputKeyDown}
           />
           {tag.length !== 0 && (
             <TagButtonContainer style={{ marginLeft: "5px" }}>
