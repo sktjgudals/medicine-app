@@ -36,6 +36,7 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
     return () => {
       if (edit) {
         if (tagArr) {
+          console.info("call");
           for (let i = 0; i < tagArr.length; i++) {
             append(tagArr[i]);
           }
@@ -75,7 +76,7 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
     }
   };
 
-  const inputOnclick = async (e: MouseEvent<HTMLInputElement>) => {
+  const inputOnclick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (tag.length !== 0) {
       for (let i = 0; i < fields.length; i++) {
@@ -114,10 +115,15 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
             type="text"
             onChange={(e) => setTag(e.target.value)}
             value={tag}
-            onClick={inputOnclick}
             placeholder="태그를 입력하세요"
             onKeyUp={inputKeyDown}
           />
+          {tag.length !== 0 && (
+            <TagButtonContainer style={{ marginLeft: "5px" }}>
+              <TagButton onClick={inputOnclick}>태그등록</TagButton>
+            </TagButtonContainer>
+          )}
+
           {loading && (
             <LoadingContainer>
               <Loading

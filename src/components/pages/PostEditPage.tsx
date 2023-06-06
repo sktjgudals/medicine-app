@@ -9,6 +9,8 @@ import { imageUploadFetch } from "@/utils/api/image";
 import { tokenCall } from "@/utils/varible";
 import { POST_TYPE } from "@/types/post";
 import {
+  DelButton,
+  DelButtonContainer,
   MainContainer,
   ThumTitleContainer,
   ThumbnailContent,
@@ -63,7 +65,11 @@ const PostEditPage: FC<POST_TYPE> = ({ id, body, title, tag, thumbnail }) => {
         image={image}
         reactiveVar={editorThumbnail}
       />
-      {image && <button>썸네일 삭제</button>}
+      {image && (
+        <DelButtonContainer>
+          <DelButton onClick={imageDeleteHandler}>삭제</DelButton>
+        </DelButtonContainer>
+      )}
       <LazyEditor body={body} postId={id} tagArr={tagArr} />
     </MainContainer>
   );
