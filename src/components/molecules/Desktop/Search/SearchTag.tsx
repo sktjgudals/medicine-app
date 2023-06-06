@@ -27,7 +27,7 @@ const SearchTag: FC<Props> = ({ keyword, sort, session }) => {
     variables: {
       keyword,
       userId: session ? session.id : null,
-      limit: 1,
+      limit: 10,
       sort: sort,
     },
   });
@@ -35,7 +35,7 @@ const SearchTag: FC<Props> = ({ keyword, sort, session }) => {
     if (data && pageInfo.hasNextPage) {
       fetchMore({
         variables: {
-          limit: 1,
+          limit: 20,
           cursor: posts[posts.length - 1].id,
         },
       });

@@ -29,9 +29,24 @@ const Tabs: FC<Props> = ({ type }) => {
   return (
     <MainContainer>
       <TabWrapper>
-        <TabButton onClick={() => TabClickHandler("body")}>글</TabButton>
-        <TabButton onClick={() => TabClickHandler("tag")}>태그</TabButton>
-        <TabButton onClick={() => TabClickHandler("user")}>유저</TabButton>
+        <TabButton
+          active={tabs === "body"}
+          onClick={() => TabClickHandler("body")}
+        >
+          글
+        </TabButton>
+        <TabButton
+          active={tabs === "tag"}
+          onClick={() => TabClickHandler("tag")}
+        >
+          태그
+        </TabButton>
+        <TabButton
+          active={tabs === "user"}
+          onClick={() => TabClickHandler("user")}
+        >
+          유저
+        </TabButton>
       </TabWrapper>
     </MainContainer>
   );
@@ -42,27 +57,33 @@ export default Tabs;
 const MainContainer = styled.div`
   width: 100%;
   height: 44px;
-  background-color: var(--bg-white-c);
   display: flex;
-  padding 0px 10px 0px 10px;
+  padding 0px 20px 0px 20px;
 `;
 
 const TabWrapper = styled.div`
   display: flex;
   width: 100%;
-  gap: 2px;
+  gap: 4px;
 `;
 
-const TabButton = styled(Button)`
+interface StyledProps {
+  active: boolean;
+}
+
+const TabButton = styled(Button)<StyledProps>`
   width: 100%;
   display: flex;
-  font-size: 14px;
+  font-size: var(--font-size-9);
   line-height: 1;
   align-items: center;
   padding: 0 15px;
-  border-bottom: 2px solid var(--bg-white-c);
-  &:active {
-    color: #f7913b;
-    border-bottom-color: #f7913b;
-  }
+  background-color: var(--color-background-radius-button);
+  ${(props) => (props.active ? "" : "")}
+  border-bottom: 3px solid
+    ${(props) =>
+    props.active
+      ? "var(--color-green-10)"
+      : "var(--color-background-radius-button)"};
+  transition: border-color 0.5s ease-in-out;
 `;

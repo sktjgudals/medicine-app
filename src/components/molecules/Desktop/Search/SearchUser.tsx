@@ -19,7 +19,7 @@ const SearchUser: FC<SearchTabProps> = ({ keyword, sort }) => {
   const { loading, error, data, fetchMore } = useQuery(GetSearchUser, {
     variables: {
       keyword,
-      limit: 1,
+      limit: 10,
       sort: sort,
     },
   });
@@ -27,7 +27,7 @@ const SearchUser: FC<SearchTabProps> = ({ keyword, sort }) => {
     if (data && pageInfo.hasNextPage) {
       fetchMore({
         variables: {
-          limit: 1,
+          limit: 20,
           cursor: users[users.length - 1].id,
         },
       });
@@ -44,7 +44,6 @@ const SearchUser: FC<SearchTabProps> = ({ keyword, sort }) => {
       />
     );
   const { users, pageInfo } = data.getSearchUser;
-  console.info(users);
   return (
     <SearchMainContainer>
       {users.length > 0 ? (

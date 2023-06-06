@@ -52,21 +52,4 @@ const ContentContainer = styled.div`
   max-width: 1024px;
   width: 100%;
   height: 100%;
-  // background: red;
 `;
-
-// function Section({
-//   tabs,
-//   userId,
-// }: {
-//   tabs: "post" | "komyu" | "user";
-//   userId?: string;
-// }) {
-//   if (tabs === "post") {
-//     return <Post userId={userId} />;
-//   } else if (tabs === "komyu") {
-//     return <Komyu />;
-//   } else {
-//     return <User />;
-//   }
-// }
