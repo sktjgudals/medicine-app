@@ -1,6 +1,11 @@
 import prisma from "prisma/prisma";
 import { tokenVerify } from "@/utils/token";
-import { likeCountFunc, postLikeDBFunc } from "@/utils/func/post";
+import {
+  likeCountFunc,
+  postLikeCheck,
+  postLikeDBFunc,
+  postsNotLike,
+} from "@/utils/func/post";
 import { deleteImageS3 } from "@/utils/api/image";
 
 const postDataCreateFunc = async (data: JSON, token: string) => {
@@ -76,68 +81,75 @@ const postGetListFunc = async (
   limit: number,
   sort: string
 ) => {
-  const pageInfo = {
-    hasNextPage: false,
-    cursor,
-  };
-  const newPost = [];
-  if (cursor) {
-    const posts = await prisma.post.findMany({
-      orderBy: { createdAt: "desc" },
-      skip: 1,
-      take: limit,
-      cursor: { id: cursor },
-      include: {
-        like: { select: { userId: true } },
-        user: { select: { id: true, nickname: true, image: true } },
-      },
-    });
-    if (userId) {
-      if (posts.length !== 0) {
-        for (let i = 0; i < posts.length; i++) {
-          let isLike = false;
-          for (let j = 0; j < posts[i].like.length; j++) {
-            if (userId === posts[i].like[j].userId) {
-              isLike = true;
-            }
-          }
-          if (posts.length > limit - 1) {
-            pageInfo["hasNextPage"] = true;
-          }
-          newPost.push({ ...posts[i], isLike });
-        }
-      }
-    }
-    return { posts: newPost, pageInfo };
-  } else {
-    const posts = await prisma.post.findMany({
-      orderBy: { createdAt: "desc" },
-      take: limit,
-      include: {
-        like: { select: { userId: true } },
-        user: { select: { id: true, nickname: true, image: true } },
-      },
-    });
-    if (userId) {
-      if (posts.length !== 0) {
-        for (let i = 0; i < posts.length; i++) {
-          let isLike = false;
-          for (let j = 0; j < posts[i].like.length; j++) {
-            if (userId === posts[i].like[j].userId) {
-              isLike = true;
-            }
-          }
-          if (posts.length > limit - 1) {
-            pageInfo["hasNextPage"] = true;
-          }
-          newPost.push({ ...posts[i], isLike });
-        }
-      }
-      return { posts: newPost, pageInfo };
-    }
-    return null;
-  }
   try {
+    const pageInfo = {
+      hasNextPage: false,
+      cursor,
+    };
+    if (userId) {
+      if (cursor) {
+        const posts = await prisma.post.findMany({
+          orderBy: { createdAt: "desc" },
+          skip: 1,
+          take: limit,
+          cursor: { id: cursor },
+          include: {
+            like: { select: { userId: true } },
+            user: { select: { id: true, nickname: true, image: true } },
+          },
+        });
+        const newPosts = postLikeCheck(posts, userId);
+        if (posts.length > limit - 1) {
+          pageInfo["hasNextPage"] = true;
+        }
+        return { posts: newPosts, pageInfo };
+      } else {
+        const posts = await prisma.post.findMany({
+          orderBy: { createdAt: "desc" },
+          take: limit,
+          include: {
+            like: { select: { userId: true } },
+            user: { select: { id: true, nickname: true, image: true } },
+          },
+        });
+        const newPosts = postLikeCheck(posts, userId);
+        if (posts.length > limit - 1) {
+          pageInfo["hasNextPage"] = true;
+        }
+        return { posts: newPosts, pageInfo };
+      }
+    } else {
+      // postsNotLike;
+      if (cursor) {
+        const posts = await prisma.post.findMany({
+          orderBy: { createdAt: "desc" },
+          skip: 1,
+          take: limit,
+          cursor: { id: cursor },
+          include: {
+            user: { select: { id: true, nickname: true, image: true } },
+          },
+        });
+        const newPosts = postsNotLike(posts);
+        if (posts.length > limit - 1) {
+          pageInfo["hasNextPage"] = true;
+        }
+        return { posts: newPosts, pageInfo };
+      } else {
+        const posts = await prisma.post.findMany({
+          orderBy: { createdAt: "desc" },
+          take: limit,
+          include: {
+            user: { select: { id: true, nickname: true, image: true } },
+          },
+        });
+        const newPosts = postsNotLike(posts);
+        if (posts.length > limit - 1) {
+          pageInfo["hasNextPage"] = true;
+        }
+        return { posts: newPosts, pageInfo };
+      }
+    }
   } catch (e) {
     return null;
   }

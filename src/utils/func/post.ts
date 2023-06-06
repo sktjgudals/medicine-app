@@ -31,4 +31,35 @@ const postLikeDBFunc = async (
   }
 };
 
-export { likeCountFunc, postLikeDBFunc };
+const postLikeCheck = (posts: any[], userId: string | null) => {
+  const newPost = [];
+  if (userId) {
+    for (let i = 0; i < posts.length; i++) {
+      let isLike = false;
+      for (let j = 0; j < posts[i].like.length; j++) {
+        if (userId === posts[i].like[j].userId) {
+          isLike = true;
+        }
+      }
+      newPost.push({ ...posts[i], isLike });
+    }
+    return newPost;
+  } else {
+    for (let i = 0; i < posts.length; i++) {
+      let isLike = false;
+      newPost.push({ ...posts[i], isLike });
+    }
+    return newPost;
+  }
+};
+
+const postsNotLike = (posts: any[]) => {
+  const newPost = [];
+  for (let i = 0; i < posts.length; i++) {
+    let isLike = false;
+    newPost.push({ ...posts[i], isLike });
+  }
+  return newPost;
+};
+
+export { likeCountFunc, postLikeDBFunc, postLikeCheck, postsNotLike };
