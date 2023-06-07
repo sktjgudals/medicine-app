@@ -19,11 +19,12 @@ const Naver: FC<Props> = ({ access_token, refresh_token }) => {
       const redirect_uri = localStorage.getItem("redirect_uri");
       if (redirect_uri) {
         router.push(redirect_uri as string);
-        router.reload();
         localStorage.removeItem("redirect_uri");
-      } else {
+        return router.reload();
+      }
+      if (router.pathname === "/oauth/naver") {
         router.push("/");
-        router.reload();
+        return router.reload();
       }
     }
   }, [access_token, refresh_token]);

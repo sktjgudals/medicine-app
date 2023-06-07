@@ -18,12 +18,13 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
       tokenSet(access_token, refresh_token);
       const redirect_uri = localStorage.getItem("redirect_uri");
       if (redirect_uri) {
-        router.push(redirect_uri as string);
-        router.reload();
+        router.push(`${redirect_uri}` as string);
         localStorage.removeItem("redirect_uri");
-      } else {
+        return router.reload();
+      }
+      if (router.pathname === "/oauth/kakao") {
         router.push("/");
-        router.reload();
+        return router.reload();
       }
     }
   }, [access_token, refresh_token]);
@@ -37,30 +38,30 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
 
 export default Kakao;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const code = context.query.code as string;
-  if (code) {
-    const res = await oauthKakaoUserCode(code);
-    if (res) {
-      return {
-        props: {
-          access_token: res.access_token,
-          refresh_token: res.refresh_token,
-        },
-      };
-    } else {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/",
-        },
-      };
-    }
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/",
-    },
-  };
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const code = context.query.code as string;
+//   if (code) {
+//     const res = await oauthKakaoUserCode(code);
+//     if (res) {
+//       return {
+//         props: {
+//           access_token: res.access_token,
+//           refresh_token: res.refresh_token,
+//         },
+//       };
+//     } else {
+//       return {
+//         redirect: {
+//           permanent: false,
+//           destination: "/",
+//         },
+//       };
+//     }
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/",
+//     },
+//   };
+// };
