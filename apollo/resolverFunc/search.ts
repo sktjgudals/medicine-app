@@ -43,11 +43,11 @@ const getSearchTagFunc = async (
       cursor,
     };
     const postList = await tagSearchListFunc(cursor, keyword, limit, userId);
-
+    const newPosts = postLikeCheck(postList, userId);
     if (postList.length > limit - 1) {
       pageInfo["hasNextPage"] = true;
     }
-    return { posts: postList, pageInfo };
+    return { posts: newPosts, pageInfo };
   } catch (e) {
     return null;
   }
