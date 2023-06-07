@@ -38,30 +38,30 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
 
 export default Kakao;
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const code = context.query.code as string;
-//   if (code) {
-//     const res = await oauthKakaoUserCode(code);
-//     if (res) {
-//       return {
-//         props: {
-//           access_token: res.access_token,
-//           refresh_token: res.refresh_token,
-//         },
-//       };
-//     } else {
-//       return {
-//         redirect: {
-//           permanent: false,
-//           destination: "/",
-//         },
-//       };
-//     }
-//   }
-//   return {
-//     redirect: {
-//       permanent: false,
-//       destination: "/",
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const code = context.query.code as string;
+  if (code) {
+    const res = await oauthKakaoUserCode(code);
+    if (res) {
+      return {
+        props: {
+          access_token: res.access_token,
+          refresh_token: res.refresh_token,
+        },
+      };
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+      };
+    }
+  }
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/",
+    },
+  };
+};
