@@ -4,7 +4,6 @@ import Title from "@/components/atoms/Title";
 import { GetServerSideProps } from "next";
 import { oauthNaverUserCode } from "@/utils/func/oauth";
 import { tokenSet } from "@/utils/varible";
-import NotFoundPage from "../404";
 
 interface Props {
   access_token: string | null;
@@ -20,16 +19,17 @@ const Naver: FC<Props> = ({ access_token, refresh_token }) => {
       const redirect_uri = localStorage.getItem("redirect_uri");
       if (redirect_uri) {
         router.push(redirect_uri as string);
+        router.reload();
         localStorage.removeItem("redirect_uri");
       } else {
         router.push("/");
+        router.reload();
       }
     }
   }, [access_token, refresh_token]);
   return (
     <>
       <Title title={"네이버 로그인 - 약정"} content={"약을 찾아주는 요정"} />
-      <NotFoundPage />
     </>
   );
 };
