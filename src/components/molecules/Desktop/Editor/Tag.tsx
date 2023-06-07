@@ -20,17 +20,7 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
   const reactiveTag = useReactiveVar(editorTagState);
   const [mutateFunc, { loading, error }] = useMutation(PostTagMutation);
   const [tag, setTag] = useState<string>("");
-  useEffect(() => {
-    if (edit) {
-      if (tagArr) {
-        for (let i = 0; i < tagArr.length; i++) {
-          append(tagArr[i]);
-        }
-      }
-    } else {
-      editorTagState([]);
-    }
-  }, [tagArr]);
+
   const { control } = useForm({
     defaultValues: {
       tag: [{ name: "" }],
@@ -42,6 +32,17 @@ const Tag: FC<Props> = ({ edit, tagArr }) => {
     name: "tag",
   });
 
+  useEffect(() => {
+    if (edit) {
+      if (tagArr) {
+        for (let i = 0; i < tagArr.length; i++) {
+          append(tagArr[i]);
+        }
+      }
+    } else {
+      editorTagState([]);
+    }
+  }, [tagArr]);
   const subColorQuanaity = (idx: number) => (e: any) => {
     e.preventDefault();
     if (edit && tagArr) {
