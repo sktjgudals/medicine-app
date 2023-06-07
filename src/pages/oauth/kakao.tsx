@@ -20,14 +20,11 @@ const Kakao: FC<Props> = ({ access_token, refresh_token }) => {
       if (redirect_uri) {
         router.push(`${redirect_uri}` as string);
         localStorage.removeItem("redirect_uri");
-        return router.reload();
       }
-      if (router.pathname === "/oauth/kakao") {
-        router.push("/");
-        return router.reload();
-      }
+    } else {
+      router.push("/");
     }
-  }, [access_token, refresh_token]);
+  }, []);
 
   return (
     <>

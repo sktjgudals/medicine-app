@@ -10,11 +10,8 @@ const logout: FC = () => {
     if (redirect_uri) {
       router.push(redirect_uri);
       localStorage.removeItem("redirect_uri");
-      return router.reload();
-    }
-    if (router.pathname === "/oauth/kakao/logout") {
+    } else {
       router.push("/");
-      return router.reload();
     }
   }, []);
   return (
