@@ -5,19 +5,15 @@ import Link from "next/link";
 import { User_TYPE } from "@/types/user";
 import CircleImage from "@/components/atoms/CircleImage";
 
-interface Props {
-  user: User_TYPE;
-}
-
-const UserContent: FC<Props> = ({ user }) => {
+const UserContent: FC<User_TYPE> = ({ nickname, image }) => {
   return (
     <MainContainer>
-      <Link href={`/profile/${user.nickname}`}>
+      <Link href={`/profile/${nickname}`}>
         <ContentContainer>
           <FirstRowContainer>
-            <CircleImage image={user.image} width={100} height={100} />
+            <CircleImage image={image} width={100} height={100} />
           </FirstRowContainer>
-          <SecondRowContainer>{user.nickname}</SecondRowContainer>
+          <SecondRowContainer>{nickname}</SecondRowContainer>
         </ContentContainer>
       </Link>
     </MainContainer>
@@ -48,9 +44,9 @@ const SecondRowContainer = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
+  justify-content: center;
   font-size: var(--font-size-3);
   font-weight: var(--font-weight-bold);
-  padding-left: 100px;
 `;
 
 const ContentContainer = styled.div`
