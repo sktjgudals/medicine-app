@@ -49,7 +49,7 @@ const SearchUser: FC<SearchTabProps> = ({ keyword, sort }) => {
       {users.length > 0 ? (
         <SearchPostCotainer>
           {users.map((el: User_TYPE) => {
-            return <UserContent key={el.id} user={el} />;
+            return <UserContent key={el.id} {...el} />;
           })}
         </SearchPostCotainer>
       ) : (
