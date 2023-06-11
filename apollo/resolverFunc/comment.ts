@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import prisma from "prisma/prisma";
 
 const uploadCommentFunc = async (
@@ -45,36 +46,33 @@ const getCommentsFunc = async (
       cursor: cursor,
       hasNextPage: false,
     };
+
+    const query: Prisma.CommentFindManyArgs = {
+      where: { postId: postId },
+      orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+      take: limit,
+      include: {
+        user: { select: { id: true, image: true, nickname: true } },
+      },
+    };
+
     if (sort === "new") {
       if (cursor) {
-        const comment = await prisma.comment.findMany({
-          skip: 1,
-          take: limit,
-          orderBy: { createdAt: "desc" },
-          cursor: { id: cursor },
-          where: { postId: postId },
-          include: {
-            user: { select: { id: true, image: true, nickname: true } },
-          },
-        });
-        if (comment.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { comments: comment, pageInfo };
-      } else {
-        const comment = await prisma.comment.findMany({
-          where: { postId: postId },
-          orderBy: { createdAt: "desc" },
-          include: {
-            user: { select: { id: true, image: true, nickname: true } },
-          },
-          take: limit,
-        });
-        if (comment.length > limit - 1) {
-          pageInfo["hasNextPage"] = true;
-        }
-        return { comments: comment, pageInfo };
+        query.cursor = {
+          id: cursor,
+        };
+        query.skip = 1;
       }
+
+      const comment = await prisma.comment.findMany({
+        ...query,
+      });
+
+      if (comment.length > limit - 1) {
+        pageInfo["hasNextPage"] = true;
+      }
+
+      return { comments: comment, pageInfo };
     } else {
       return null;
     }
