@@ -8,6 +8,7 @@ import SearchIcon from "@/components/atoms/icons/SearchIcon";
 
 import styles from "#/styles/molecules/Desktop/Header/Search.module.scss";
 import SearchTray from "./SearchTray";
+import Portal from "@/components/atoms/Portal";
 
 const Search: FC = () => {
   const [value, onChangeValue] = useInput("");
@@ -73,7 +74,9 @@ const Search: FC = () => {
           </SearchButton>
         </div>
       </form>
-      {value.length > 0 && <SearchTray />}
+      {value.length > 0 && (
+        <Portal selector={"search"} children={<SearchTray />} />
+      )}
     </>
   );
 };

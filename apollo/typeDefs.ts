@@ -146,51 +146,62 @@ export const typeDefs = gql`
     pageInfo: PageInfo
   }
 
+  type Response {
+    post: Post
+    user: User
+    comments: [Comment]
+    posts: [Post]
+    users: [User]
+    pageInfo: PageInfo
+    token: String
+    error: String
+  }
+
   type Query {
     findUserEmail(email: String): User
     findUserNickname(nickname: String): User
     getUserData(userId: String!): User
-    postGetData(userId: String, num: Int!): PostResoponse
+    postGetData(userId: String, num: Int!): Response
     postGetList(
       userId: String
       cursor: String
       limit: Int!
       sort: String!
-    ): PostListResponse
+    ): Response
     getProfileData(
       nickname: String!
       cursor: String
       limit: Int!
       postUserId: String
-    ): ProfileDataResponse
+    ): Response
     getComments(
       postId: String!
       userId: String
       cursor: String
       limit: Int!
       sort: String!
-    ): CommentsResponse
+    ): Response
     getSearchPost(
       keyword: String!
       userId: String
       cursor: String
       limit: Int!
       sort: String!
-    ): SearchListResponse
+    ): Response
     getSearchTag(
       keyword: String!
       userId: String
       cursor: String
       limit: Int!
       sort: String!
-    ): SearchListResponse
+    ): Response
     getSearchUser(
       keyword: String!
       userId: String
       cursor: String
       limit: Int!
       sort: String!
-    ): SearchListResponse
+    ): Response
   }
 
   type Mutation {
