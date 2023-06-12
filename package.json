@@ -50,5 +50,6 @@
     "@types/styled-components": "^5.1.26",
     "typescript": "^5.0.2"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "packageManager": "yarn@3.6.0"
 }

@@ -40,5 +40,8 @@ next-env.d.ts
 #lock
 yarn.lock
 
+#yarn 
+.yarn/*
+
 #vscode
 .vscode
