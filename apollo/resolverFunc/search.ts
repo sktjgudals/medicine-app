@@ -1,4 +1,3 @@
-import prisma from "prisma/prisma";
 import { postLikeCheck } from "@/utils/func/post";
 import {
   postSearchListFunc,
