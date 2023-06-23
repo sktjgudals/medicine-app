@@ -86,8 +86,8 @@ const FirstRowContainer = styled.div`
 `;
 
 const DateContainer = styled.div`
-  width: 70px;
+  width: 90px;
   @media screen and (max-width: 490px) {
-    width: 30px;
+    display: none;
   }
 `;
