@@ -7,9 +7,9 @@ import {
   SetStateAction,
   useCallback,
 } from "react";
-import { localTokenVerify, serverTokenVerify } from "@/utils/token";
+import { serverTokenVerify } from "@/utils/token";
 import { SESSIONTYPE } from "@/types/session";
-import { tokenCall, tokenDelete } from "@/utils/varible";
+import { tokenCall } from "@/utils/varible";
 
 export type Session = {
   session: SESSIONTYPE | null;
