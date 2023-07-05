@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import Tilt from "react-parallax-tilt";
 
 import { POST_TYPE } from "@/types/post";
 import Link from "next/link";
@@ -15,39 +16,41 @@ interface Props {
 
 const PostMainList: FC<Props> = ({ posts, session }) => {
   return (
-    <MainContainer>
-      <Link href={`/post/${posts.num}`}>
-        <ContentContainer>
-          <FirstRowContainer>
-            <PostMainThumbnail
-              thumbnail={posts.thumbnail}
-              width={280}
-              height={160}
-              responsiveWidth={170}
-              responsiveHeight={90}
-            />
-          </FirstRowContainer>
-          <SecondRowContainer>
-            <PostListTitle
-              title={posts.title}
-              height={150}
-              fontSize={4}
-              lineClamp={5}
-              paddingTop={10}
-            />
-          </SecondRowContainer>
-        </ContentContainer>
-      </Link>
-      <PostMainToolBar
-        postId={posts.id}
-        isLike={posts.isLike}
-        likeCount={posts.likeCount}
-        userId={session ? session.id : null}
-        user={posts.user}
-        createdAt={posts.createdAt}
-        views={posts.views}
-      />
-    </MainContainer>
+    <Tilt scale={1}>
+      <MainContainer>
+        <Link href={`/post/${posts.num}`}>
+          <ContentContainer>
+            <FirstRowContainer>
+              <PostMainThumbnail
+                thumbnail={posts.thumbnail}
+                width={280}
+                height={160}
+                responsiveWidth={170}
+                responsiveHeight={90}
+              />
+            </FirstRowContainer>
+            <SecondRowContainer>
+              <PostListTitle
+                title={posts.title}
+                height={150}
+                fontSize={4}
+                lineClamp={5}
+                paddingTop={10}
+              />
+            </SecondRowContainer>
+          </ContentContainer>
+        </Link>
+        <PostMainToolBar
+          postId={posts.id}
+          isLike={posts.isLike}
+          likeCount={posts.likeCount}
+          userId={session ? session.id : null}
+          user={posts.user}
+          createdAt={posts.createdAt}
+          views={posts.views}
+        />
+      </MainContainer>
+    </Tilt>
   );
 };
 
